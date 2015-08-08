@@ -1,0 +1,266 @@
+@font-face {
+    font-family: 'basmalah';
+    src: url('./data/fonts/QCF_BSML.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+.surah_name {
+    font-family: 'basmalah';
+    direction: rtl;
+    font-size: 18pt;
+    text-align: center;
+    line-height: 40px;
+    background: url('images/SurahPartition.png') no-repeat 70px;
+    padding-top: 10px;
+}
+
+    .surah_name a {
+        text-decoration: none;
+        color: black;
+    }
+
+.basmalah {
+    font-family: 'basmalah';
+    direction: rtl;
+    font-size: 18pt;
+    text-align: center;
+    line-height: 1.7em;
+}
+
+.ayah {
+}
+
+.line {
+    direction: rtl;
+    font-size: 30px;
+    text-align: center;
+    line-height: 1.6em;
+}
+
+#page001 .line {
+    font-size: 42px;
+}
+
+#page002 .line {
+    font-size: 42px;
+}
+
+.word {
+    cursor: hand;
+    cursor: pointer;
+}
+
+.ayah_number {
+    text-align: center;
+    cursor: hand;
+    cursor: pointer;
+}
+
+#searchsurah_link {
+    position: absolute;
+    left: 400px;
+    top: 5px;
+    z-index: 100;
+    color: black;
+    font-weight: normal;
+    font-size: 16pt;
+    text-decoration: none;
+}
+.error {
+    color: red;
+    font-size: 16px;
+    font-weight: normal;
+    line-height: 1.4;
+    margin-top: 0.5em;
+    float: none;
+    display: none;
+}
+.page {
+    width: 550px;
+    height: 822px;
+    background: url('images/QuranBackground.png') no-repeat 0px 0px;
+    float: left;
+    -webkit-user-select: none;
+}
+
+.page_content {
+    margin-top: 50px;
+}
+
+body {
+    background-color: #f7f1e5;
+    margin: 0;
+    padding: 0;
+}
+
+* {
+    -webkit-font-smoothing: antialiased !important;
+    -webkit-text-stroke: 0.2px;
+    text-shadow: 1px 1px 1px rgba(0,0,0,0.004);
+}
+
+.word:hover {
+    color: red; /*background-color: #ccffcc; -moz-border-radius: 10px; -webkit-border-radius: 10px; */
+}
+
+
+.tooltipster-base .bangla_meaning {
+    text-align: center;
+    font-size: 16pt;
+    font-weigth: bold;
+    line-height: 1.6em;
+    color: yellow;
+}
+
+.tooltipster-base .english_meaning {
+    text-align: center;
+    font-size: 16pt;
+    font-weigth: bold;
+    line-height: 1.6em;
+    color: lightgreen;
+}
+
+.tooltipster-base .lemma {
+    text-align: justify;
+    font-size: 14pt;
+    line-height: 1.6em;
+}
+
+    .tooltipster-base .lemma span {
+        color: lightgreen;
+        font-size: 18pt;
+    }
+
+.tooltipster-base .lemma_meaning {
+    text-align: justify;
+    font-size: 14pt;
+    line-height: 1.6em;
+}
+
+    .tooltipster-base .lemma_meaning span {
+        color: yellow;
+    }
+
+.tooltipster-base .meaning_details {
+    color: lightgrey;
+    cursor: hand;
+    cursor: pointer;
+    text-align: center;
+    margin-top: 1em;
+    margin-bottom: 1em;
+    border: 1px solid dimgray;
+    -moz-border-radius: 5px; 
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    padding: 5px;
+}
+
+.surah_title {
+    position: absolute;
+    left: 40px;
+    top: 5px;
+    text-align: center;
+    width: 130px;
+    vertical-align: middle;
+    line-height: 40px;
+    font-size: 16pt;
+    font-weight: normal;
+    font-family: 'basmalah';
+    direction: rtl;
+}
+
+.surah_title a {
+    text-decoration: none;
+    color: black;
+    font-weight: normal;
+}
+
+.page_no a {
+    text-decoration: none;
+    color: black;
+    font-weight: bold;
+}
+
+.page_no {
+    font-family: 'Arabic typesetting';
+    direction: rtl;
+    position: absolute;
+    left: 260px;
+    top: 792px;
+    text-align: center;
+    width: 30px;
+    font-weight: bold;
+}
+
+#meaningPopup p {
+    clear: both;
+    color: lightcyan;
+    font-family: Georgia;
+}
+
+#meaningPopup .bangla_meaning {
+    font-weight: bold;
+    font-size: 120%;
+}
+
+#meaningPopup .arabic_word {
+    font-size: 200%;
+    font-family: 'KF' 'Arabic Typesetting';
+}
+#meaningPopup a {
+    text-decoration: none;
+    font-weight: normal;
+    color: cyan;
+    border-bottom: 1px dotted cyan;
+}
+#meaningPopup .frequency_wrap {
+    margin-left: 20px; 
+    font-size: 80%;
+    font-style: italic;
+}
+
+#meaningPopup .english_meaning {
+    font-weight: bold;
+    font-style: italic;
+}
+
+#meaningPopup .lemma {
+    font-size: 200%;
+}
+
+#meaningPopup .lemma_meaning {
+    font-weight: bold;
+    font-size: 120%;
+}
+
+#meaningPopup .transliteration {
+    font-weight: bold;
+    font-size: 120%;
+    font-style: italic;
+}
+
+#meaningPopup .root {
+    font-size: 200%;
+}
+
+#meaningPopup .root_meanings {
+    font-style: italic;
+}
+
+#meaningPopup span { color: lightgreen; }
+
+
+#surahpanel .surah_name_english { font-weight: normal; }
+#surahpanel .surah_name_arabic { font-weight: normal; font-family: 'basmalah'; direction: rtl; font-size: 14pt; }
+#surahpanel .surah_name_bangla { font-weight: normal; }
+
+
+.ui-overlay-a, .ui-page-theme-a, .ui-page-theme-a .ui-panel-wrapper, .ui-body-a, .ui-page-theme-a .ui-body-inherit, html .ui-bar-a .ui-body-inherit, html .ui-body-a .ui-body-inherit, html body .ui-group-theme-a .ui-body-inherit, html .ui-panel-page-container-a {
+     background-color: #f7f1e5;
+}
+.ui-panel {
+    width: 20em;
+}
+
+#home>.ui-content { padding: 0; }

@@ -1,0 +1,1076 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Swiper demo</title>
+    <meta name="viewport" content="width=550">
+    <link rel="stylesheet" type="text/css" href="css/jquery.mobile-1.4.5.min.css" />
+    <link rel="stylesheet" type="text/css" href="css/swiper.css">
+    <link rel="stylesheet" type="text/css" href="css/tooltipster.css" />
+    <link rel="stylesheet" type="text/css" href="css/common.css" />
+
+
+    <script type="text/javascript" src="js/jquery-1.11.3.min.js"></script>
+    <script type="text/javascript" src="js/jquery.tooltipster.min.js"></script>
+    <script src="js/jquery.mobile-1.4.5.min.js"></script>
+    <script type="text/javascript" src="js/fontspy.js"></script>
+    <script src="js/jquery.cookie.js"></script>
+
+    <!-- Link Swiper's CSS -->
+    <!-- Demo styles -->
+    <style>
+        .swiper-container {
+            height: 822px;
+            width: 550px;
+        }
+
+        .swiper-slide {
+            width: 550px;
+            height: 822px;
+            /* Center slide text vertically */
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: -webkit-flex;
+            display: flex;
+            -webkit-box-pack: center;
+            -ms-flex-pack: center;
+            -webkit-justify-content: center;
+            justify-content: center;
+            -webkit-box-align: center;
+            -ms-flex-align: center;
+            -webkit-align-items: center;
+            align-items: center;
+        }
+
+        .append-buttons {
+            text-align: center;
+        }
+
+            .append-buttons a {
+                display: inline-block;
+                border: 1px solid #007aff;
+                color: #007aff;
+                text-decoration: none;
+                padding: 4px 10px;
+                border-radius: 4px;
+                margin: 0 10px;
+                font-size: 13px;
+            }
+    </style>
+</head>
+
+
+
+
+<body>
+    <div data-role="page" id="home" data-theme="a">
+        <div role="main" class="ui-content">
+            <!-- Swiper -->
+            <div class="swiper-container">
+                <a href="#searchPopup" data-rel="popup" id="searchsurah_link">&#x1f50d;</a>
+
+                <div class="swiper-wrapper">
+
+                    <div class="swiper-slide"><div class="page" id="page001" pageno="1"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page002" pageno="2"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page003" pageno="3"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page004" pageno="4"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page005" pageno="5"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page006" pageno="6"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page007" pageno="7"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page008" pageno="8"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page009" pageno="9"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page010" pageno="10"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page011" pageno="11"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page012" pageno="12"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page013" pageno="13"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page014" pageno="14"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page015" pageno="15"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page016" pageno="16"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page017" pageno="17"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page018" pageno="18"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page019" pageno="19"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page020" pageno="20"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page021" pageno="21"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page022" pageno="22"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page023" pageno="23"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page024" pageno="24"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page025" pageno="25"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page026" pageno="26"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page027" pageno="27"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page028" pageno="28"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page029" pageno="29"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page030" pageno="30"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page031" pageno="31"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page032" pageno="32"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page033" pageno="33"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page034" pageno="34"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page035" pageno="35"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page036" pageno="36"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page037" pageno="37"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page038" pageno="38"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page039" pageno="39"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page040" pageno="40"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page041" pageno="41"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page042" pageno="42"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page043" pageno="43"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page044" pageno="44"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page045" pageno="45"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page046" pageno="46"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page047" pageno="47"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page048" pageno="48"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page049" pageno="49"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page050" pageno="50"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page051" pageno="51"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page052" pageno="52"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page053" pageno="53"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page054" pageno="54"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page055" pageno="55"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page056" pageno="56"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page057" pageno="57"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page058" pageno="58"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page059" pageno="59"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page060" pageno="60"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page061" pageno="61"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page062" pageno="62"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page063" pageno="63"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page064" pageno="64"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page065" pageno="65"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page066" pageno="66"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page067" pageno="67"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page068" pageno="68"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page069" pageno="69"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page070" pageno="70"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page071" pageno="71"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page072" pageno="72"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page073" pageno="73"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page074" pageno="74"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page075" pageno="75"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page076" pageno="76"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page077" pageno="77"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page078" pageno="78"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page079" pageno="79"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page080" pageno="80"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page081" pageno="81"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page082" pageno="82"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page083" pageno="83"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page084" pageno="84"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page085" pageno="85"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page086" pageno="86"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page087" pageno="87"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page088" pageno="88"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page089" pageno="89"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page090" pageno="90"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page091" pageno="91"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page092" pageno="92"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page093" pageno="93"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page094" pageno="94"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page095" pageno="95"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page096" pageno="96"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page097" pageno="97"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page098" pageno="98"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page099" pageno="99"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page100" pageno="100"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page101" pageno="101"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page102" pageno="102"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page103" pageno="103"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page104" pageno="104"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page105" pageno="105"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page106" pageno="106"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page107" pageno="107"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page108" pageno="108"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page109" pageno="109"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page110" pageno="110"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page111" pageno="111"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page112" pageno="112"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page113" pageno="113"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page114" pageno="114"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page115" pageno="115"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page116" pageno="116"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page117" pageno="117"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page118" pageno="118"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page119" pageno="119"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page120" pageno="120"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page121" pageno="121"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page122" pageno="122"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page123" pageno="123"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page124" pageno="124"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page125" pageno="125"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page126" pageno="126"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page127" pageno="127"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page128" pageno="128"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page129" pageno="129"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page130" pageno="130"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page131" pageno="131"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page132" pageno="132"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page133" pageno="133"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page134" pageno="134"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page135" pageno="135"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page136" pageno="136"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page137" pageno="137"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page138" pageno="138"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page139" pageno="139"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page140" pageno="140"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page141" pageno="141"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page142" pageno="142"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page143" pageno="143"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page144" pageno="144"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page145" pageno="145"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page146" pageno="146"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page147" pageno="147"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page148" pageno="148"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page149" pageno="149"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page150" pageno="150"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page151" pageno="151"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page152" pageno="152"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page153" pageno="153"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page154" pageno="154"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page155" pageno="155"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page156" pageno="156"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page157" pageno="157"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page158" pageno="158"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page159" pageno="159"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page160" pageno="160"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page161" pageno="161"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page162" pageno="162"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page163" pageno="163"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page164" pageno="164"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page165" pageno="165"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page166" pageno="166"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page167" pageno="167"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page168" pageno="168"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page169" pageno="169"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page170" pageno="170"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page171" pageno="171"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page172" pageno="172"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page173" pageno="173"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page174" pageno="174"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page175" pageno="175"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page176" pageno="176"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page177" pageno="177"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page178" pageno="178"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page179" pageno="179"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page180" pageno="180"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page181" pageno="181"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page182" pageno="182"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page183" pageno="183"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page184" pageno="184"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page185" pageno="185"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page186" pageno="186"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page187" pageno="187"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page188" pageno="188"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page189" pageno="189"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page190" pageno="190"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page191" pageno="191"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page192" pageno="192"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page193" pageno="193"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page194" pageno="194"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page195" pageno="195"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page196" pageno="196"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page197" pageno="197"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page198" pageno="198"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page199" pageno="199"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page200" pageno="200"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page201" pageno="201"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page202" pageno="202"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page203" pageno="203"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page204" pageno="204"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page205" pageno="205"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page206" pageno="206"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page207" pageno="207"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page208" pageno="208"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page209" pageno="209"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page210" pageno="210"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page211" pageno="211"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page212" pageno="212"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page213" pageno="213"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page214" pageno="214"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page215" pageno="215"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page216" pageno="216"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page217" pageno="217"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page218" pageno="218"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page219" pageno="219"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page220" pageno="220"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page221" pageno="221"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page222" pageno="222"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page223" pageno="223"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page224" pageno="224"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page225" pageno="225"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page226" pageno="226"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page227" pageno="227"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page228" pageno="228"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page229" pageno="229"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page230" pageno="230"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page231" pageno="231"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page232" pageno="232"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page233" pageno="233"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page234" pageno="234"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page235" pageno="235"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page236" pageno="236"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page237" pageno="237"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page238" pageno="238"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page239" pageno="239"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page240" pageno="240"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page241" pageno="241"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page242" pageno="242"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page243" pageno="243"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page244" pageno="244"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page245" pageno="245"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page246" pageno="246"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page247" pageno="247"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page248" pageno="248"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page249" pageno="249"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page250" pageno="250"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page251" pageno="251"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page252" pageno="252"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page253" pageno="253"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page254" pageno="254"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page255" pageno="255"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page256" pageno="256"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page257" pageno="257"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page258" pageno="258"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page259" pageno="259"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page260" pageno="260"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page261" pageno="261"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page262" pageno="262"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page263" pageno="263"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page264" pageno="264"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page265" pageno="265"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page266" pageno="266"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page267" pageno="267"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page268" pageno="268"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page269" pageno="269"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page270" pageno="270"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page271" pageno="271"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page272" pageno="272"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page273" pageno="273"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page274" pageno="274"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page275" pageno="275"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page276" pageno="276"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page277" pageno="277"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page278" pageno="278"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page279" pageno="279"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page280" pageno="280"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page281" pageno="281"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page282" pageno="282"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page283" pageno="283"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page284" pageno="284"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page285" pageno="285"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page286" pageno="286"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page287" pageno="287"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page288" pageno="288"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page289" pageno="289"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page290" pageno="290"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page291" pageno="291"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page292" pageno="292"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page293" pageno="293"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page294" pageno="294"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page295" pageno="295"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page296" pageno="296"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page297" pageno="297"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page298" pageno="298"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page299" pageno="299"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page300" pageno="300"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page301" pageno="301"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page302" pageno="302"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page303" pageno="303"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page304" pageno="304"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page305" pageno="305"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page306" pageno="306"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page307" pageno="307"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page308" pageno="308"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page309" pageno="309"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page310" pageno="310"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page311" pageno="311"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page312" pageno="312"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page313" pageno="313"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page314" pageno="314"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page315" pageno="315"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page316" pageno="316"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page317" pageno="317"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page318" pageno="318"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page319" pageno="319"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page320" pageno="320"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page321" pageno="321"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page322" pageno="322"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page323" pageno="323"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page324" pageno="324"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page325" pageno="325"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page326" pageno="326"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page327" pageno="327"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page328" pageno="328"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page329" pageno="329"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page330" pageno="330"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page331" pageno="331"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page332" pageno="332"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page333" pageno="333"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page334" pageno="334"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page335" pageno="335"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page336" pageno="336"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page337" pageno="337"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page338" pageno="338"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page339" pageno="339"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page340" pageno="340"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page341" pageno="341"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page342" pageno="342"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page343" pageno="343"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page344" pageno="344"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page345" pageno="345"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page346" pageno="346"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page347" pageno="347"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page348" pageno="348"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page349" pageno="349"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page350" pageno="350"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page351" pageno="351"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page352" pageno="352"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page353" pageno="353"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page354" pageno="354"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page355" pageno="355"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page356" pageno="356"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page357" pageno="357"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page358" pageno="358"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page359" pageno="359"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page360" pageno="360"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page361" pageno="361"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page362" pageno="362"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page363" pageno="363"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page364" pageno="364"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page365" pageno="365"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page366" pageno="366"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page367" pageno="367"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page368" pageno="368"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page369" pageno="369"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page370" pageno="370"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page371" pageno="371"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page372" pageno="372"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page373" pageno="373"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page374" pageno="374"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page375" pageno="375"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page376" pageno="376"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page377" pageno="377"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page378" pageno="378"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page379" pageno="379"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page380" pageno="380"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page381" pageno="381"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page382" pageno="382"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page383" pageno="383"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page384" pageno="384"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page385" pageno="385"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page386" pageno="386"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page387" pageno="387"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page388" pageno="388"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page389" pageno="389"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page390" pageno="390"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page391" pageno="391"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page392" pageno="392"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page393" pageno="393"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page394" pageno="394"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page395" pageno="395"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page396" pageno="396"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page397" pageno="397"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page398" pageno="398"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page399" pageno="399"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page400" pageno="400"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page401" pageno="401"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page402" pageno="402"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page403" pageno="403"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page404" pageno="404"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page405" pageno="405"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page406" pageno="406"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page407" pageno="407"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page408" pageno="408"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page409" pageno="409"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page410" pageno="410"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page411" pageno="411"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page412" pageno="412"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page413" pageno="413"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page414" pageno="414"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page415" pageno="415"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page416" pageno="416"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page417" pageno="417"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page418" pageno="418"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page419" pageno="419"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page420" pageno="420"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page421" pageno="421"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page422" pageno="422"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page423" pageno="423"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page424" pageno="424"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page425" pageno="425"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page426" pageno="426"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page427" pageno="427"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page428" pageno="428"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page429" pageno="429"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page430" pageno="430"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page431" pageno="431"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page432" pageno="432"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page433" pageno="433"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page434" pageno="434"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page435" pageno="435"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page436" pageno="436"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page437" pageno="437"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page438" pageno="438"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page439" pageno="439"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page440" pageno="440"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page441" pageno="441"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page442" pageno="442"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page443" pageno="443"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page444" pageno="444"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page445" pageno="445"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page446" pageno="446"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page447" pageno="447"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page448" pageno="448"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page449" pageno="449"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page450" pageno="450"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page451" pageno="451"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page452" pageno="452"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page453" pageno="453"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page454" pageno="454"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page455" pageno="455"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page456" pageno="456"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page457" pageno="457"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page458" pageno="458"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page459" pageno="459"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page460" pageno="460"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page461" pageno="461"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page462" pageno="462"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page463" pageno="463"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page464" pageno="464"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page465" pageno="465"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page466" pageno="466"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page467" pageno="467"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page468" pageno="468"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page469" pageno="469"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page470" pageno="470"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page471" pageno="471"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page472" pageno="472"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page473" pageno="473"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page474" pageno="474"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page475" pageno="475"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page476" pageno="476"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page477" pageno="477"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page478" pageno="478"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page479" pageno="479"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page480" pageno="480"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page481" pageno="481"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page482" pageno="482"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page483" pageno="483"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page484" pageno="484"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page485" pageno="485"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page486" pageno="486"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page487" pageno="487"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page488" pageno="488"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page489" pageno="489"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page490" pageno="490"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page491" pageno="491"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page492" pageno="492"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page493" pageno="493"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page494" pageno="494"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page495" pageno="495"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page496" pageno="496"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page497" pageno="497"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page498" pageno="498"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page499" pageno="499"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page500" pageno="500"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page501" pageno="501"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page502" pageno="502"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page503" pageno="503"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page504" pageno="504"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page505" pageno="505"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page506" pageno="506"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page507" pageno="507"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page508" pageno="508"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page509" pageno="509"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page510" pageno="510"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page511" pageno="511"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page512" pageno="512"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page513" pageno="513"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page514" pageno="514"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page515" pageno="515"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page516" pageno="516"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page517" pageno="517"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page518" pageno="518"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page519" pageno="519"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page520" pageno="520"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page521" pageno="521"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page522" pageno="522"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page523" pageno="523"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page524" pageno="524"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page525" pageno="525"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page526" pageno="526"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page527" pageno="527"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page528" pageno="528"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page529" pageno="529"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page530" pageno="530"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page531" pageno="531"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page532" pageno="532"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page533" pageno="533"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page534" pageno="534"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page535" pageno="535"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page536" pageno="536"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page537" pageno="537"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page538" pageno="538"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page539" pageno="539"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page540" pageno="540"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page541" pageno="541"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page542" pageno="542"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page543" pageno="543"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page544" pageno="544"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page545" pageno="545"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page546" pageno="546"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page547" pageno="547"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page548" pageno="548"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page549" pageno="549"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page550" pageno="550"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page551" pageno="551"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page552" pageno="552"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page553" pageno="553"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page554" pageno="554"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page555" pageno="555"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page556" pageno="556"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page557" pageno="557"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page558" pageno="558"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page559" pageno="559"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page560" pageno="560"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page561" pageno="561"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page562" pageno="562"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page563" pageno="563"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page564" pageno="564"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page565" pageno="565"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page566" pageno="566"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page567" pageno="567"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page568" pageno="568"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page569" pageno="569"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page570" pageno="570"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page571" pageno="571"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page572" pageno="572"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page573" pageno="573"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page574" pageno="574"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page575" pageno="575"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page576" pageno="576"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page577" pageno="577"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page578" pageno="578"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page579" pageno="579"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page580" pageno="580"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page581" pageno="581"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page582" pageno="582"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page583" pageno="583"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page584" pageno="584"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page585" pageno="585"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page586" pageno="586"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page587" pageno="587"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page588" pageno="588"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page589" pageno="589"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page590" pageno="590"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page591" pageno="591"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page592" pageno="592"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page593" pageno="593"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page594" pageno="594"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page595" pageno="595"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page596" pageno="596"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page597" pageno="597"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page598" pageno="598"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page599" pageno="599"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page600" pageno="600"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page601" pageno="601"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page602" pageno="602"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page603" pageno="603"></div></div>
+                    <div class="swiper-slide"><div class="page" id="page604" pageno="604"></div></div>
+
+                </div>
+                <!-- Add Scrollbar -->
+                <div class="swiper-scrollbar"></div>
+                <!-- Add Arrows -->
+                <div class="swiper-button-next"></div>
+                <div class="swiper-button-prev"></div>
+            </div>
+        </div>
+
+        <div data-role="popup" id="meaningPopup" class="ui-content" style="max-width:400px" data-theme="b">
+
+            <p><a target="_blank" class="arabic_word"></a> &nbsp; <span class="frequency_wrap">(<span class="frequency"></span> times বার)</span></p>
+            <p>বাংলা অর্থ: <span class="bangla_meaning"></span> - <span class="english_meaning"></span></p>
+            <p>Lemma এসেছে: <a target="_blank" class="lemma"></a> : <span class="lemma_meaning"> </span> <span class="frequency_wrap">(<span class="lemma_frequency"></span> times বার)</span></p>
+            <p>Transliteration: <span class="transliteration">l-raḥmāni</span></p>
+            <p>Root মূল: <span class="root"></span></p>
+            <p>Meaning of Root মূলের অর্থ: <span class="root_meanings"></span></p>
+            <div class="dictionary">
+                <a class="ui-btn ui-btn-inline" data-role="button" target="_blank" data-mini="true">See Dictionary </a>
+                <a class="ui-btn ui-btn-inline" data-role="button" data-mini="true" data-rel="back">Close বন্ধ</a>
+            </div>
+
+        </div>
+
+
+        <div data-role="popup" id="searchPopup" class="ui-content" data-theme="b">
+
+            <form>
+                <label for="jumpTo">Surah and Ayah সূরা এবং আয়াত নম্বর</label>
+                <input type="number" data-clear-btn="false" name="jumpTo" pattern="\d+.*\d+" id="jumpTo" value="1:1" />
+                <label for="jumpTo" class="error" generated="true">Invalid surah or ayah number.<br/> সূরা বা আয়াত নম্বরটি ঠিক হয়নি।</label>
+            </form>
+            
+            <a class="ui-btn ui-btn-inline" data-role="button" data-mini="true" id="gotoSurahAyahButton">Goto যাও</a>
+            <a class="ui-btn ui-btn-inline" data-role="button" data-mini="true" data-rel="back">Close বন্ধ</a>
+
+        </div>
+
+        <div data-role="panel" id="surahpanel" data-display="overlay">
+
+            <a href="#closesurahpanel" data-role="button" data-rel="close">Close বন্ধ</a>
+
+            <form>
+                <fieldset data-role="controlgroup" id="surah-controlgroup" data-mini="true"></fieldset>
+            </form>
+        </div><!-- /panel -->
+
+
+
+    </div>
+
+    <div data-role="page" id="pagejumppanel" data-dialog="true" data-close-btn="right">
+        <div data-role="header" data-theme="b">
+            <h1>Change page পেইজ নম্বর</h1>
+        </div>
+        <div role="main" class="ui-content">
+            <form>
+                <label for="pagenumberToJump">Page number পেইজ নম্বর</label>
+                <input type="number" data-clear-btn="false" name="pagenumberToJump" pattern="\d+" id="pagenumberToJump" value="1" />
+            </form>
+            <a class="ui-btn ui-btn-inline" href="#home" data-role="back" data-rel="button" onclick="javascript:slideToPage($('#pagenumberToJump').val())">Goto যাও</a>
+            <a class="ui-btn ui-btn-inline" href="#home" data-role="back" data-rel="button">Close বন্ধ</a>
+        </div>
+    </div>
+
+    <!-- Load swiper after the page markup is done -->
+    <script src="js/swiper.js"></script>
+
+    <script>
+
+        function showDetails(key) {
+
+            var meaning = window.wordbyword[key];
+            if (meaning) {
+
+                $('#meaningPopup .arabic_word').text(meaning.t);
+                $('#meaningPopup .arabic_word').attr('href', 'http://www.almaany.com/en/dict/ar-en/' + meaning.t);
+
+                $('#meaningPopup .frequency').text(meaning.f);
+                $('#meaningPopup .bangla_meaning').text(meaning.b);
+                $('#meaningPopup .english_meaning').text(meaning.e);
+                $('#meaningPopup .lemma').text(meaning.l);
+                $('#meaningPopup .lemma').attr('href', 'http://www.almaany.com/en/dict/ar-en/' + meaning.l);
+                $('#meaningPopup .lemma_meaning').text(meaning.lb);
+                $('#meaningPopup .lemma_frequency').text(meaning.lc);
+                $('#meaningPopup .transliteration').text(meaning.tl);
+                if (meaning.r) {
+                    $('#meaningPopup .root').text(meaning.r[0] + ' ' + meaning.r[1] + ' ' + meaning.r[2] + ' ' + (meaning.r[3] || ""));
+                } else {
+                    $('#meaningPopup .root').text("");
+                }
+                $('#meaningPopup .root_meanings').text(meaning.rm);
+                $('#meaningPopup .dictionary a').attr('href', 'http://ejtaal.net/m/aa/#q=' + meaning.r)
+
+                $('#meaningPopup').popup('open');
+            }
+        }
+
+        function updateSurahPanel(pageNo) {
+            $.each(window.surahs, function (key, value) {
+                if (pageNo == value.p) {
+                    var sura = value.s;
+                    $("#surahpanel").find('input').prop('checked', false).checkboxradio("refresh");
+                    var input = $("#surahpanel").find('input[sura="' + sura + '"]');
+                    input.prop('checked', true).checkboxradio("refresh");
+                    if (input.position()) {
+                        $("#surahpanel fieldset").scrollTop(input.position().top);
+                    }
+                }
+            });
+
+        }
+        $('#searchPopup').popup({
+            afteropen: function (event, ui) {
+                if (!window.suraayahmap) {
+                    $.getScript('sura_ayah_map.js');
+                }
+                $('#gotoSurahAyahButton').click(function () {
+                    gotoSurahAyah($('#jumpTo').val());
+                })
+                $('#searchPopup .error').hide();
+
+            }
+        });
+
+        function gotoSurahAyah(surahAyah) {
+            if (window.suraayahmap) {
+                var result = /(\d+).(\d+)/.exec(surahAyah);
+                var sura = result[1];
+                var ayah = result[2];
+
+                var searchReg = new RegExp(',' + sura + ':' + ayah + '=(\\d+)', "g");
+                var pageMatch = searchReg.exec(window.suraayahmap);
+                if (pageMatch) {
+                    var pageNo = pageMatch[1];
+                    window.highlight = { sura: sura, ayah: ayah };
+                    $('#searchPopup').popup('close');
+                    slideToPage(pageNo);
+                } else {
+                    $('#searchPopup .error').show();
+                }
+            } else {
+                $('#searchPopup .error').show();
+            }
+
+        }
+
+        function slideToPage(pageNo) {
+            pageNo = parseInt(pageNo);
+            if ($.mobile.activePage.is("#home")) {
+                if (window.swiper.activeIndex == pageNo - 1) {
+                    loadPage(pageNo);
+                } else {
+                    window.swiper.slideTo(pageNo - 1);
+                }
+            } else {
+                $('#home').one("pageshow", function (event) {
+                    window.swiper.slideTo(pageNo - 1);
+                });
+            }
+            //loadPage(pageNo);
+        }
+
+        function highlightSurahAyah() {
+            if (window.highlight) {
+                var nodes = $('.word[sura="' + window.highlight.sura + '"][ayah="' + window.highlight.ayah + '"]');
+                nodes.css('background-color', 'cyan');
+                window.setTimeout(function () {
+                    nodes.css('background-color', '');
+                }, 3000);
+                window.highlight = null;
+            }
+        }
+
+        function loadPage(pageNo) {
+
+            var pageStr = "000" + pageNo;
+            pageStr = pageStr.substr(pageStr.length - 3);
+
+            var pageDiv = '#page' + pageStr;
+
+            //$.cookie('p', pageNo, { path: '/', expires: 30 });
+            createCookie('page', pageNo, 30);
+
+            function postContentLoad() {
+                $.mobile.loading('hide');
+                highlightSurahAyah();
+                
+            }
+            // if page is already loaded, nothing to do
+            if ($(pageDiv).attr("loaded")) {
+                postContentLoad();
+                return;
+            }
+            $(pageDiv).attr("loaded", "true");
+
+            $.ajaxSetup({
+                cache: false
+            });
+
+            $.mobile.loading('show');
+            window.setTimeout(function () {
+                $.mobile.loading('hide');
+            }, 30000);
+
+            $.get('page' + pageStr + '.html', function (response) {
+
+                $('<style type="text/css"> \
+					@font-face { \
+					 font-family: "page' + pageStr + '"; \
+					 src: url("./data/fonts/QCF_P' + pageStr + '.woff") format("woff"); \
+					 font-weight: normal; \
+					 font-style: normal; \
+					} \
+					.page' + pageStr + ' { font-family: "page' + pageStr + '"; } \
+				</style>' ).appendTo("head");
+
+                $(pageDiv).html(response);
+
+                $.getScript('page' + pageStr + '.js', function () { });
+
+                $(pageDiv + " .word").tooltipster({
+                    contentAsHTML: true,
+                    interactive: true,
+
+                    functionBefore: function (origin, continueTooltip) {
+
+                        var key = $(this).attr("sura") + ":" + $(this).attr("ayah") + ":" + $(this).attr("word");
+                        var meaning = window.wordbyword[key];
+                        if (meaning) {
+                            origin.tooltipster("content", $("<div>"
+                                + "<div class=\"bangla_meaning\">" + meaning.b + "</div> "
+                                + "<div class=\"english_meaning\">" + meaning.e + "</div> "
+                                + (meaning.l == "" ? "" : "<div class=\"lemma\">যা এসেছে  <span>" + meaning.l + "</span> থেকে।</div>")
+                                + (meaning.lb == "" ? "" : "<div class=\"lemma_meaning\">এর অর্থ: <span>" + meaning.lb + "</span></div>")
+                                + "<div class=\"meaning_details\" onclick=\"$('" + pageDiv + " .word').tooltipster('hide');showDetails('" + key + "')\"><div>Click me for details</div><div>বিস্তারিত জানতে আমাকে চাপুন</div></div>"
+                                + "</div>"));
+                            continueTooltip();
+
+                        }
+                    }
+                });
+
+                $(pageDiv + " .ayah_number").tooltipster({
+                    functionBefore: function (origin, continueTooltip) {
+                        var key = $(this).attr("sura") + ":" + $(this).attr("ayah");
+                        var translation = window.translation[key];
+
+                        origin.tooltipster("content", $("<div>"
+                                + "<div class=\"bangla_meaning\">" + translation.b + "</div> "
+                                + "<div class=\"english_meaning\">(" + key + ") " + translation.e + "</div> "
+                                + "</div>"));
+                        continueTooltip();
+                    }
+                });
+
+                var firstChar = $(pageDiv + ' .word').first().text(); //.charCodeAt(0).toString(16);
+                fontSpy("page" + pageStr, {
+                    glyphs: firstChar,
+                    success: function () {
+
+                        // After the font is loaded, calculate size of all word. if some word are
+                        // smaller than 5px width, then those are tajweed symbol, which aren't really
+                        // actual word in an ayah. So, we need to reset the word number ignoring those
+                        // symbols.
+                        var wordNo; var lastAyah;
+                        $('#page' + pageStr + ' .line').each(function (i, line) {
+                            $(line).find('span.word').each(function (i, word) {
+                                if (lastAyah != $(word).attr("ayah")) {
+                                    wordNo = 1;
+                                }
+                                lastAyah = $(word).attr("ayah");
+                                if ($(word).width() > 5) {
+                                    $(word).attr("word", wordNo++);
+                                }
+                            })
+                        });
+
+                        postContentLoad();
+                    },
+                    failure: function () {
+                        alert("Unable to download arabic font for this page. You may not be connected to the Internet, or your mobile is just too old.");
+                    }
+                });
+
+            }, 'html');
+        }
+
+
+
+    </script>
+
+    <script type="text/javascript" src="surahs.js"></script>
+
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            window.swiper = new Swiper('.swiper-container', {
+                nextButton: '.swiper-button-next',
+                prevButton: '.swiper-button-prev',
+                slidesPerView: 1,
+                centeredSlides: false,
+                scrollbar: '.swiper-scrollbar',
+                scrollbarHide: false,
+                spaceBetween: 0,
+                onSlideChangeEnd: function (swiper) {
+                    //$(document).ready(function () {
+                    loadPage(swiper.activeIndex + 1);
+                    //});
+                },
+                onInit: function (swiper) {
+                    var page = parseInt(readCookie('page'));
+                    if (isNaN(page)) {
+                        page = 1;
+                    }
+                    swiper.slideTo(page - 1);
+                    if (page == 1)
+                        loadPage(page);
+                }
+            });
+        });
+
+        $('#pagejumppanel').on("pageshow", function (event) {
+            $('#pagenumberToJump').val(window.swiper.activeIndex + 1).focus().textinput('refresh');
+        });
+
+
+        $('#home').on("pagecreate", function (event) {
+            //$(document).ready(function () {
+
+            $("#surahpanel").on("panelbeforeclose", function () {
+                var container = $('#surah-controlgroup');
+                var group = container.controlgroup("container");
+                group.children().remove();
+            });
+
+            $("#surahpanel").on("panelbeforeopen", function () {
+
+                window.setTimeout(function () {
+                    //value="on" checked="checked"
+                    var container = $('#surah-controlgroup');
+                    var group = container.controlgroup("container");
+                    $.each(window.surahs, function (key, value) {
+                        group.append('<label><input type="radio" name="surah" id="' + key + '" sura="' + value.s + '" page="' + value.p + '" />\
+                            <span class="surah_name_arabic">' + value.a + '</span>\
+                            <span class="surah_name_english">' + value.e + '</span>\
+                            <span class="surah_name_bangla">' + value.b + '</span></label>');
+                    });
+                    container.enhanceWithin().controlgroup("refresh");
+                    $("#surahpanel").trigger("updatelayout");
+
+                    // preselect the surah which is currently being displayed
+                    updateSurahPanel(window.swiper.activeIndex + 1);
+
+                    // now hook the click event. Don't hook before pre-selecting surah
+                    container.find('[type="radio"]').on('click', function (event) {
+                        var sura = $(this).attr("sura");
+                        var page = $(this).attr("page");
+                        swiper.slideTo(parseInt(page) - 1, 500, true);
+                        $("#closesurahpanel").click();
+                    });
+
+                    container.css('overflow', 'scroll');
+                    container.height(window.innerHeight - container.position().top - 50);
+
+                }, 500);
+            });
+
+            document.documentElement.focus();
+        });
+
+        function createCookie(name, value, days) {
+            if (days) {
+                var date = new Date();
+                date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+                var expires = "; expires=" + date.toGMTString();
+            }
+            else var expires = "";
+            document.cookie = name + "=" + value + expires + "; path=/";
+        }
+
+        function readCookie(name) {
+            var nameEQ = name + "=";
+            var ca = document.cookie.split(';');
+            for (var i = 0; i < ca.length; i++) {
+                var c = ca[i];
+                while (c.charAt(0) == ' ') c = c.substring(1, c.length);
+                if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
+            }
+            return null;
+        }
+
+        function eraseCookie(name) {
+            createCookie(name, "", -1);
+        }
+    </script>
+</body>
+</html>
