@@ -15,6 +15,7 @@
     <script src="js/jquery.mobile-1.4.5.min.js"></script>
     <script type="text/javascript" src="js/fontspy.js"></script>
     <script src="js/jquery.cookie.js"></script>
+    <script defer="defer" type="text/javascript" src="page/surahs.js"></script>
 
     <!-- Link Swiper's CSS -->
     <!-- Demo styles -->
@@ -791,7 +792,7 @@
         $('#searchPopup').popup({
             afteropen: function (event, ui) {
                 if (!window.suraayahmap) {
-                    $.getScript('sura_ayah_map.js');
+                    $.getScript('page/sura_ayah_map.js');
                 }
                 $('#gotoSurahAyahButton').click(function () {
                     gotoSurahAyah($('#jumpTo').val());
@@ -881,7 +882,7 @@
                 $.mobile.loading('hide');
             }, 30000);
 
-            $.get('page' + pageStr + '.html', function (response) {
+            $.get('page/page' + pageStr + '.html', function (response) {
 
                 $('<style type="text/css"> \
 					@font-face { \
@@ -895,7 +896,7 @@
 
                 $(pageDiv).html(response);
 
-                $.getScript('page' + pageStr + '.js', function () { });
+                $.getScript('page/page' + pageStr + '.js', function () { });
 
                 $(pageDiv + " .word").tooltipster({
                     contentAsHTML: true,
@@ -967,8 +968,6 @@
 
 
     </script>
-
-    <script type="text/javascript" src="surahs.js"></script>
 
     <script type="text/javascript">
 

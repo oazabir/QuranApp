@@ -1,6 +1,6 @@
 @font-face {
     font-family: 'basmalah';
-    src: url('./data/fonts/QCF_BSML.woff') format('woff');
+    src: url('../data/fonts/QCF_BSML.woff') format('woff');
     font-weight: normal;
     font-style: normal;
 }
@@ -11,7 +11,7 @@
     font-size: 18pt;
     text-align: center;
     line-height: 40px;
-    background: url('images/SurahPartition.png') no-repeat 70px;
+    background: url('../images/SurahPartition.png') no-repeat 70px;
     padding-top: 10px;
 }
 
@@ -79,7 +79,7 @@
 .page {
     width: 550px;
     height: 822px;
-    background: url('images/QuranBackground.png') no-repeat 0px 0px;
+    background: url('../images/QuranBackground.png') no-repeat 0px 0px;
     float: left;
     -webkit-user-select: none;
 }

@@ -4,7 +4,7 @@ go
 
 DECLARE @page_no numeric = 1;
 
-WHILE @page_no <= 604
+WHILE @page_no <= 5
 BEGIN
 
 declare @pagestr nvarchar(3)
