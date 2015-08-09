@@ -1,5 +1,6 @@
 # Quran Reader with mobile-friendly view
 Mobile friendly Quran Reader web site. 
+
 ![Screenshot](https://raw.githubusercontent.com/oazabir/QuranApp/master/images/screenshot.png)
 ## Features
 
