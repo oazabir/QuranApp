@@ -5,6 +5,12 @@
     font-style: normal;
 }
 
+@font-face {
+  font-family: 'SolaimanLipiNormal';
+  src: url('SolaimanLipiNormal.woff') format('woff');       
+  font-weight: normal;
+  font-style: normal;
+}
 .surah_name {
     font-family: 'basmalah';
     direction: rtl;
@@ -60,7 +66,7 @@
 #searchsurah_link {
     position: absolute;
     left: 400px;
-    top: 5px;
+    top: 8px;
     z-index: 100;
     color: black;
     font-weight: normal;
@@ -107,7 +113,8 @@ body {
 
 .tooltipster-base .bangla_meaning {
     text-align: center;
-    font-size: 16pt;
+    font-size: 14pt;
+    font-family: SolaimanLipiNormal, Nikosh2, SolaimanLipi, Nikosh, NikoshBAN, Georgia, sans-serif !important;
     font-weigth: bold;
     line-height: 1.6em;
     color: yellow;
@@ -115,7 +122,7 @@ body {
 
 .tooltipster-base .english_meaning {
     text-align: center;
-    font-size: 16pt;
+    font-size: 14pt;
     font-weigth: bold;
     line-height: 1.6em;
     color: lightgreen;
@@ -136,6 +143,7 @@ body {
     text-align: justify;
     font-size: 14pt;
     line-height: 1.6em;
+    font-family: SolaimanLipiNormal, Nikosh2, SolaimanLipi, Nikosh, NikoshBAN, Georgia, sans-serif !important;
 }
 
     .tooltipster-base .lemma_meaning span {
@@ -163,7 +171,7 @@ body {
     text-align: center;
     width: 130px;
     vertical-align: middle;
-    line-height: 40px;
+    line-height: 38px;
     font-size: 16pt;
     font-weight: normal;
     font-family: 'basmalah';
@@ -201,12 +209,14 @@ body {
 
 #meaningPopup .bangla_meaning {
     font-weight: bold;
+    font-family: SolaimanLipiNormal, Nikosh2, SolaimanLipi, Nikosh, NikoshBAN, Georgia, sans-serif !important;
     font-size: 120%;
 }
 
 #meaningPopup .arabic_word {
     font-size: 200%;
-    font-family: 'KF' 'Arabic Typesetting';
+    font-family: 'Arabic Typesetting';
+    direction: rtl;
 }
 #meaningPopup a {
     text-decoration: none;
@@ -215,9 +225,10 @@ body {
     border-bottom: 1px dotted cyan;
 }
 #meaningPopup .frequency_wrap {
-    margin-left: 20px; 
+    margin-left: 5px; 
     font-size: 80%;
     font-style: italic;
+    direction: ltr;
 }
 
 #meaningPopup .english_meaning {
@@ -227,10 +238,12 @@ body {
 
 #meaningPopup .lemma {
     font-size: 200%;
+    font-family: 'Arabic Typesetting';
 }
 
 #meaningPopup .lemma_meaning {
     font-weight: bold;
+    font-family: SolaimanLipiNormal, Nikosh2, SolaimanLipi, Nikosh, NikoshBAN, Georgia, sans-serif !important;
     font-size: 120%;
 }
 
@@ -242,6 +255,7 @@ body {
 
 #meaningPopup .root {
     font-size: 200%;
+    font-family: 'Arabic Typesetting';
 }
 
 #meaningPopup .root_meanings {
@@ -253,7 +267,7 @@ body {
 
 #surahpanel .surah_name_english { font-weight: normal; }
 #surahpanel .surah_name_arabic { font-weight: normal; font-family: 'basmalah'; direction: rtl; font-size: 14pt; }
-#surahpanel .surah_name_bangla { font-weight: normal; }
+#surahpanel .surah_name_bangla { font-weight: normal; font-family: SolaimanLipiNormal, Nikosh2, SolaimanLipi, Nikosh, NikoshBAN, Georgia, sans-serif !important; }
 
 
 .ui-overlay-a, .ui-page-theme-a, .ui-page-theme-a .ui-panel-wrapper, .ui-body-a, .ui-page-theme-a .ui-body-inherit, html .ui-bar-a .ui-body-inherit, html .ui-body-a .ui-body-inherit, html body .ui-group-theme-a .ui-body-inherit, html .ui-panel-page-container-a {
@@ -264,3 +278,36 @@ body {
 }
 
 #home>.ui-content { padding: 0; }
+
+ .swiper-container {
+            height: 822px;
+            width: 550px;
+        }
+
+        .swiper-slide {
+            width: 550px;
+            height: 822px;
+            /* Center slide text vertically */
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: -webkit-flex;
+            display: flex;
+            -webkit-box-pack: center;
+            -ms-flex-pack: center;
+            -webkit-justify-content: center;
+            justify-content: center;
+            -webkit-box-align: center;
+            -ms-flex-align: center;
+            -webkit-align-items: center;
+            align-items: center;
+        }
+
+
+
+.swiper-button-next {
+    background: url('../images/left_button.png') !important; 
+}
+
+.swiper-button-prev {
+    background: url('../images/right_button.png') !important;
+}

@@ -2,13 +2,18 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Swiper demo</title>
+    <meta http-equiv="cache-control" content="max-age=0" />
+    <meta http-equiv="cache-control" content="no-cache" />
+    <meta http-equiv="expires" content="0" />
+    <meta http-equiv="expires" content="Tue, 01 Jan 1980 1:00:00 GMT" />
+    <meta http-equiv="pragma" content="no-cache" />
+
+    <title>Mobile Quran Reading বাংলা অথ সহ কুরআন</title>
     <meta name="viewport" content="width=550">
     <link rel="stylesheet" type="text/css" href="css/jquery.mobile-1.4.5.min.css" />
     <link rel="stylesheet" type="text/css" href="css/swiper.css">
     <link rel="stylesheet" type="text/css" href="css/tooltipster.css" />
     <link rel="stylesheet" type="text/css" href="css/common.css" />
-
 
     <script type="text/javascript" src="js/jquery-1.11.3.min.js"></script>
     <script type="text/javascript" src="js/jquery.tooltipster.min.js"></script>
@@ -16,59 +21,14 @@
     <script type="text/javascript" src="js/fontspy.js"></script>
     <script src="js/jquery.cookie.js"></script>
     <script defer="defer" type="text/javascript" src="page/surahs.js"></script>
-
-    <!-- Link Swiper's CSS -->
-    <!-- Demo styles -->
-    <style>
-        .swiper-container {
-            height: 822px;
-            width: 550px;
-        }
-
-        .swiper-slide {
-            width: 550px;
-            height: 822px;
-            /* Center slide text vertically */
-            display: -webkit-box;
-            display: -ms-flexbox;
-            display: -webkit-flex;
-            display: flex;
-            -webkit-box-pack: center;
-            -ms-flex-pack: center;
-            -webkit-justify-content: center;
-            justify-content: center;
-            -webkit-box-align: center;
-            -ms-flex-align: center;
-            -webkit-align-items: center;
-            align-items: center;
-        }
-
-        .append-buttons {
-            text-align: center;
-        }
-
-            .append-buttons a {
-                display: inline-block;
-                border: 1px solid #007aff;
-                color: #007aff;
-                text-decoration: none;
-                padding: 4px 10px;
-                border-radius: 4px;
-                margin: 0 10px;
-                font-size: 13px;
-            }
-    </style>
 </head>
-
-
 
 
 <body>
     <div data-role="page" id="home" data-theme="a">
         <div role="main" class="ui-content">
             <!-- Swiper -->
-            <div class="swiper-container">
-                <a href="#searchPopup" data-rel="popup" id="searchsurah_link">&#x1f50d;</a>
+            <div class="swiper-container" dir="rtl">
 
                 <div class="swiper-wrapper">
 
@@ -683,13 +643,16 @@
                 <!-- Add Arrows -->
                 <div class="swiper-button-next"></div>
                 <div class="swiper-button-prev"></div>
+
+                <a href="#searchPopup" data-rel="popup" id="searchsurah_link">&#x1f50d;</a>
+
             </div>
         </div>
 
         <div data-role="popup" id="meaningPopup" class="ui-content" style="max-width:400px" data-theme="b">
 
-            <p><a target="_blank" class="arabic_word"></a> &nbsp; <span class="frequency_wrap">(<span class="frequency"></span> times বার)</span></p>
-            <p>বাংলা অর্থ: <span class="bangla_meaning"></span> - <span class="english_meaning"></span></p>
+            <p><a target="_blank" class="arabic_word"></a></p>
+            <p><span class="bangla_meaning"></span> <span class="english_meaning"></span><span class="frequency_wrap">(<span class="frequency"></span> times বার)</span></p>
             <p>Lemma এসেছে: <a target="_blank" class="lemma"></a> : <span class="lemma_meaning"> </span> <span class="frequency_wrap">(<span class="lemma_frequency"></span> times বার)</span></p>
             <p>Transliteration: <span class="transliteration">l-raḥmāni</span></p>
             <p>Root মূল: <span class="root"></span></p>
@@ -706,10 +669,10 @@
 
             <form>
                 <label for="jumpTo">Surah and Ayah সূরা এবং আয়াত নম্বর</label>
-                <input type="number" data-clear-btn="false" name="jumpTo" pattern="\d+.*\d+" id="jumpTo" value="1:1" />
-                <label for="jumpTo" class="error" generated="true">Invalid surah or ayah number.<br/> সূরা বা আয়াত নম্বরটি ঠিক হয়নি।</label>
+                <input data-clear-btn="false" name="jumpTo" pattern="\d+.*\d+" id="jumpTo" value="1:1" />
+                <label for="jumpTo" class="error" generated="true">Invalid surah or ayah number.<br /> সূরা বা আয়াত নম্বরটি ঠিক হয়নি।</label>
             </form>
-            
+
             <a class="ui-btn ui-btn-inline" data-role="button" data-mini="true" id="gotoSurahAyahButton">Goto যাও</a>
             <a class="ui-btn ui-btn-inline" data-role="button" data-mini="true" data-rel="back">Close বন্ধ</a>
 
@@ -719,12 +682,124 @@
 
             <a href="#closesurahpanel" data-role="button" data-rel="close">Close বন্ধ</a>
 
-            <form>
-                <fieldset data-role="controlgroup" id="surah-controlgroup" data-mini="true"></fieldset>
-            </form>
-        </div><!-- /panel -->
+            <select> 
+                <option value="1">1 Al-Fatiha সূরা আল ফাতিহা سورة الفاتحة</option>
+                <option value="2">2 Al-Baqara সূরা আল বাক্বারাহ سورة البقرة</option>
+                <option value="3">3 Aal-e-Imran সূরা আল ইমরান سورة آل عمران</option>
+                <option value="4">4 An-Nisa সূরা আন নিসা سورة النساء</option>
+                <option value="5">5 Al-Maeda সূরা আল মায়েদাহ سورة المائدة</option>
+                <option value="6">6 Al-Anaam সূরা আল আন-আম سورة الأنعام</option>
+                <option value="7">7 Al-Araf সূরা আল আ’রাফ سورة الأعراف</option>
+                <option value="8">8 Al-Anfal সূরা আল-আনফাল سورة الأنفال</option>
+                <option value="9">9 At-Taubah সূরা আত তাওবাহ سورة التوبة</option>
+                <option value="10">10 Yunus সূরা ইউনুস سورة يونس</option>
+                <option value="11">11 Hud সূরা হুদ سورة هود</option>
+                <option value="12">12 Yusuf সূরা ইউসূফ سورة يوسف</option>
+                <option value="13">13 Ar-Rad সূরা রা’দ سورة الرعد</option>
+                <option value="14">14 Ibrahim সূরা ইব্রাহীম سورة إبراهيم</option>
+                <option value="15">15 Al-Hijr সূরা হিজর سورة الحجر</option>
+                <option value="16">16 An-Nahl সূরা নাহল سورة النحل</option>
+                <option value="17">17 Al-Isra সূরা বনী ইসরাঈল سورة الإسراء</option>
+                <option value="18">18 Al-Kahf সূরা কাহফ سورة الكهف</option>
+                <option value="19">19 Maryam সূরা মারইয়াম سورة مريم</option>
+                <option value="20">20 Taha সূরা ত্বোয়া-হা سورة طه</option>
+                <option value="21">21 Al-Anbiya সূরা আম্বিয়া سورة الأنبياء</option>
+                <option value="22">22 Al-Hajj সূরা হাজ্জ্ব سورة الحج</option>
+                <option value="23">23 Al-Mumenoon সূরা আল মু’মিনূন سورة المؤمنون</option>
+                <option value="24">24 An-Noor সূরা আন-নূর سورة النور</option>
+                <option value="25">25 Al-Furqan সূরা আল-ফুরকান سورة الفرقان</option>
+                <option value="26">26 Ash-Shuara সূরা আশ-শো’আরা سورة الشعراء</option>
+                <option value="27">27 An-Naml সূরা নমল سورة النمل</option>
+                <option value="28">28 Al-Qasas সূরা আল কাসাস سورة القصص</option>
+                <option value="29">29 Al-Ankaboot সূরা আল আনকাবুত سورة العنكبوت</option>
+                <option value="30">30 Ar-Room সূরা আর-রূম سورة الروم</option>
+                <option value="31">31 Luqman সূরা লোকমান سورة لقمان</option>
+                <option value="32">32 As-Sajda সূরা সেজদাহ سورة السجدة</option>
+                <option value="33">33 Al-Ahzab সূরা আল আহযাব سورة الأحزاب</option>
+                <option value="34">34 Saba সূরা সাবা سورة سبأ</option>
+                <option value="35">35 Fatir সূরা ফাতির سورة فاطر</option>
+                <option value="36">36 Ya Seen সূরা ইয়াসীন سورة يس</option>
+                <option value="37">37 As-Saaffat সূরা আস-সাফফাত سورة الصافات</option>
+                <option value="38">38 Sad সূরা ছোয়াদ سورة ص</option>
+                <option value="39">39 Az-Zumar সূরা আল-যুমার سورة الزمر</option>
+                <option value="40">40 Ghafir সূরা আল-মু’মিন سورة غافر</option>
+                <option value="41">41 Fussilat সূরা হা-মীম সেজদাহ سورة فصلت</option>
+                <option value="42">42 Ash-Shura সূরা আশ-শুরা سورة الشورى</option>
+                <option value="43">43 Az-Zukhruf সূরা যুখরুফ سورة الزخرف</option>
+                <option value="44">44 Ad-Dukhan সূরা আদ দোখান سورة الدخان</option>
+                <option value="45">45 Al-Jathiya সূরা আল জাসিয়া سورة الجاثية</option>
+                <option value="46">46 Al-Ahqaf সূরা আল আহক্বাফ سورة الأحقاف</option>
+                <option value="47">47 Muhammad সূরা মুহাম্মদ سورة محمد</option>
+                <option value="48">48 Al-Fath সূরা আল ফাতহ سورة الفتح</option>
+                <option value="49">49 Al-Hujraat সূরা আল হুজরাত سورة الحجرات</option>
+                <option value="50">50 Qaf সূরা ক্বাফ سورة ق</option>
+                <option value="51">51 Adh-Dhariyat সূরা আয-যারিয়াত سورة الذاريات</option>
+                <option value="52">52 At-tur সূরা আত্ব তূর سورة الطور</option>
+                <option value="53">53 An-Najm সূরা আন-নাজম سورة النجم</option>
+                <option value="54">54 Al-Qamar সূরা আল ক্বামার سورة القمر</option>
+                <option value="55">55 Ar-Rahman সূরা আর রহমান سورة الرحمن</option>
+                <option value="56">56 Al-Waqia সূরা আল ওয়াক্বিয়া سورة الواقعة</option>
+                <option value="57">57 Al-Hadid সূরা আল হাদীদ سورة الحديد</option>
+                <option value="58">58 Al-Mujadila সূরা আল মুজাদালাহ سورة المجادلة</option>
+                <option value="59">59 Al-Hashr সূরা আল হাশর سورة الحشر</option>
+                <option value="60">60 Al-Mumtahana সূরা আল মুমতাহিনা سورة الممتحنة</option>
+                <option value="61">61 As-Saff সূরা আছ-ছফ سورة الصف</option>
+                <option value="62">62 Al-Jumua সূরা আল জুমুআহ سورة الجمعة</option>
+                <option value="63">63 Al-Munafiqoon সূরা মুনাফিকুন سورة المنافقون</option>
+                <option value="64">64 At-Taghabun সূরা আত-তাগাবুন سورة التغابن</option>
+                <option value="65">65 At-Talaq সূরা আত্ব-ত্বালাক্ব سورة الطلاق</option>
+                <option value="66">66 At-Tahrim সূরা আত-তাহরীম سورة التحريم</option>
+                <option value="67">67 Al-Mulk সূরা আল মুলক سورة الملك</option>
+                <option value="68">68 Al-Qalam সূরা আল কলম سورة القلم</option>
+                <option value="69">69 Al-Haaqqa সূরা আল হাক্বক্বাহ سورة الحاقة</option>
+                <option value="70">70 Al-Maarij সূরা আল মা’আরিজ سورة المعارج</option>
+                <option value="71">71 Nooh সূরা নূহ سورة نوح</option>
+                <option value="72">72 Al-Jinn সূরা আল জিন سورة الجن</option>
+                <option value="73">73 Al-Muzzammil  সূরা মুযযামমিল سورة المزمل</option>
+                <option value="74">74 Al-Muddathir সূরা আল মুদ্দাসসির سورة المدثر</option>
+                <option value="75">75 Al-Qiyama সূরা আল ক্বেয়ামাহ سورة القيامة</option>
+                <option value="76">76 Al-Insan সূরা আদ-দাহর سورة الإنسان</option>
+                <option value="77">77 Al-Mursalat সূরা আল মুরসালাত سورة المرسلات</option>
+                <option value="78">78 An-Naba সূরা আন-নাবা سورة النبأ</option>
+                <option value="79">79 An-Naziat সূরা আন-নযিআ’ত سورة النازعات</option>
+                <option value="80">80 Abasa সূরা আবাসা سورة عبس</option>
+                <option value="81">81 At-Takwir সূরা আত-তাকভীর سورة التكوير</option>
+                <option value="82">82 AL-Infitar সূরা আল ইনফিতার سورة الإنفطار</option>
+                <option value="83">83 Al-Mutaffifin সূরা আত-তাতফীফ سورة المطففين</option>
+                <option value="84">84 Al-Inshiqaq সূরা আল ইনশিক্বাক্ব سورة الانشقاق</option>
+                <option value="85">85 Al-Burooj সূরা আল বুরূজ سورة البروج</option>
+                <option value="86">86 At-Tariq সূরা আত্ব-তারিক্ব سورة الطارق</option>
+                <option value="87">87 Al-Ala সূরা আল আ’লা سورة الأعلى</option>
+                <option value="88">88 Al-Ghashiya সূরা আল গাশিয়াহ سورة الغاشية</option>
+                <option value="89">89 Al-Fajr সূরা আল ফজর سورة الفجر</option>
+                <option value="90">90 Al-Balad সূরা আল বালাদ سورة البلد</option>
+                <option value="91">91 Ash-Shams সূরা আশ-শামস سورة الشمس</option>
+                <option value="92">92 Al-Lail সূরা আল লায়ল سورة الليل</option>
+                <option value="93">93 Ad-Dhuha সূরা আদ্ব-দ্বোহা سورة الضحى</option>
+                <option value="94">94 Al-Inshirah সূরা আল ইনশিরাহ سورة الشرح</option>
+                <option value="95">95 At-Tin সূরা ত্বীন سورة التين</option>
+                <option value="96">96 Al-Alaq সূরা আলাক سورة العلق</option>
+                <option value="97">97 Al-Qadr সূরা কদর سورة القدر</option>
+                <option value="98">98 Al-Bayyina সূরা বাইয়্যিনাহ سورة البينة</option>
+                <option value="99">99 Al-Zalzala সূরা যিলযাল سورة الزلزلة</option>
+                <option value="100">100 Al-Adiyat সূরা আদিয়াত سورة العاديات</option>
+                <option value="101">101 Al-Qaria সূরা কারেয়া سورة القارعة</option>
+                <option value="102">102 At-Takathur সূরা তাকাসূর سورة التكاثر</option>
+                <option value="103">103 Al-Asr সূরা আছর سورة العصر</option>
+                <option value="104">104 Al-Humaza সূরা হুমাযাহ سورة الهمزة</option>
+                <option value="105">105 Al-fil সূরা ফীল سورة الفيل</option>
+                <option value="106">106 Quraish সূরা কোরাইশ سورة قريش</option>
+                <option value="107">107 Al-Maun সূরা মাউন سورة الماعون</option>
+                <option value="108">108 Al-Kauther সূরা কাওসার سورة الكوثر</option>
+                <option value="109">109 Al-Kafiroon সূরা কাফিরুন سورة الكافرون</option>
+                <option value="110">110 An-Nasr সূরা নছর سورة النصر</option>
+                <option value="111">111 Al-Masadd সূরা লাহাব سورة المسد</option>
+                <option value="112">112 Al-Ikhlas সূরা এখলাছ سورة الإخلاص</option>
+                <option value="113">113 Al-Falaq সূরা ফালাক্ব سورة الفلق</option>
+                <option value="114">114 An-Nas সূরা নাস سورة الناس</option>
+            </select>
 
-
+        </div>
 
     </div>
 
@@ -745,331 +820,6 @@
     <!-- Load swiper after the page markup is done -->
     <script src="js/swiper.js"></script>
 
-    <script>
-
-        function showDetails(key) {
-
-            var meaning = window.wordbyword[key];
-            if (meaning) {
-
-                $('#meaningPopup .arabic_word').text(meaning.t);
-                $('#meaningPopup .arabic_word').attr('href', 'http://www.almaany.com/en/dict/ar-en/' + meaning.t);
-
-                $('#meaningPopup .frequency').text(meaning.f);
-                $('#meaningPopup .bangla_meaning').text(meaning.b);
-                $('#meaningPopup .english_meaning').text(meaning.e);
-                $('#meaningPopup .lemma').text(meaning.l);
-                $('#meaningPopup .lemma').attr('href', 'http://www.almaany.com/en/dict/ar-en/' + meaning.l);
-                $('#meaningPopup .lemma_meaning').text(meaning.lb);
-                $('#meaningPopup .lemma_frequency').text(meaning.lc);
-                $('#meaningPopup .transliteration').text(meaning.tl);
-                if (meaning.r) {
-                    $('#meaningPopup .root').text(meaning.r[0] + ' ' + meaning.r[1] + ' ' + meaning.r[2] + ' ' + (meaning.r[3] || ""));
-                } else {
-                    $('#meaningPopup .root').text("");
-                }
-                $('#meaningPopup .root_meanings').text(meaning.rm);
-                $('#meaningPopup .dictionary a').attr('href', 'http://ejtaal.net/m/aa/#q=' + meaning.r)
-
-                $('#meaningPopup').popup('open');
-            }
-        }
-
-        function updateSurahPanel(pageNo) {
-            $.each(window.surahs, function (key, value) {
-                if (pageNo == value.p) {
-                    var sura = value.s;
-                    $("#surahpanel").find('input').prop('checked', false).checkboxradio("refresh");
-                    var input = $("#surahpanel").find('input[sura="' + sura + '"]');
-                    input.prop('checked', true).checkboxradio("refresh");
-                    if (input.position()) {
-                        $("#surahpanel fieldset").scrollTop(input.position().top);
-                    }
-                }
-            });
-
-        }
-        $('#searchPopup').popup({
-            afteropen: function (event, ui) {
-                if (!window.suraayahmap) {
-                    $.getScript('page/sura_ayah_map.js');
-                }
-                $('#gotoSurahAyahButton').click(function () {
-                    gotoSurahAyah($('#jumpTo').val());
-                })
-                $('#searchPopup .error').hide();
-
-            }
-        });
-
-        function gotoSurahAyah(surahAyah) {
-            if (window.suraayahmap) {
-                var result = /(\d+).(\d+)/.exec(surahAyah);
-                var sura = result[1];
-                var ayah = result[2];
-
-                var searchReg = new RegExp(',' + sura + ':' + ayah + '=(\\d+)', "g");
-                var pageMatch = searchReg.exec(window.suraayahmap);
-                if (pageMatch) {
-                    var pageNo = pageMatch[1];
-                    window.highlight = { sura: sura, ayah: ayah };
-                    $('#searchPopup').popup('close');
-                    slideToPage(pageNo);
-                } else {
-                    $('#searchPopup .error').show();
-                }
-            } else {
-                $('#searchPopup .error').show();
-            }
-
-        }
-
-        function slideToPage(pageNo) {
-            pageNo = parseInt(pageNo);
-            if ($.mobile.activePage.is("#home")) {
-                if (window.swiper.activeIndex == pageNo - 1) {
-                    loadPage(pageNo);
-                } else {
-                    window.swiper.slideTo(pageNo - 1);
-                }
-            } else {
-                $('#home').one("pageshow", function (event) {
-                    window.swiper.slideTo(pageNo - 1);
-                });
-            }
-            //loadPage(pageNo);
-        }
-
-        function highlightSurahAyah() {
-            if (window.highlight) {
-                var nodes = $('.word[sura="' + window.highlight.sura + '"][ayah="' + window.highlight.ayah + '"]');
-                nodes.css('background-color', 'cyan');
-                window.setTimeout(function () {
-                    nodes.css('background-color', '');
-                }, 3000);
-                window.highlight = null;
-            }
-        }
-
-        function loadPage(pageNo) {
-
-            var pageStr = "000" + pageNo;
-            pageStr = pageStr.substr(pageStr.length - 3);
-
-            var pageDiv = '#page' + pageStr;
-
-            //$.cookie('p', pageNo, { path: '/', expires: 30 });
-            createCookie('page', pageNo, 30);
-
-            function postContentLoad() {
-                $.mobile.loading('hide');
-                highlightSurahAyah();
-                
-            }
-            // if page is already loaded, nothing to do
-            if ($(pageDiv).attr("loaded")) {
-                postContentLoad();
-                return;
-            }
-            $(pageDiv).attr("loaded", "true");
-
-            $.ajaxSetup({
-                cache: false
-            });
-
-            $.mobile.loading('show');
-            window.setTimeout(function () {
-                $.mobile.loading('hide');
-            }, 30000);
-
-            $.get('page/page' + pageStr + '.html', function (response) {
-
-                $('<style type="text/css"> \
-					@font-face { \
-					 font-family: "page' + pageStr + '"; \
-					 src: url("./data/fonts/QCF_P' + pageStr + '.woff") format("woff"); \
-					 font-weight: normal; \
-					 font-style: normal; \
-					} \
-					.page' + pageStr + ' { font-family: "page' + pageStr + '"; } \
-				</style>' ).appendTo("head");
-
-                $(pageDiv).html(response);
-
-                $.getScript('page/page' + pageStr + '.js', function () { });
-
-                $(pageDiv + " .word").tooltipster({
-                    contentAsHTML: true,
-                    interactive: true,
-
-                    functionBefore: function (origin, continueTooltip) {
-
-                        var key = $(this).attr("sura") + ":" + $(this).attr("ayah") + ":" + $(this).attr("word");
-                        var meaning = window.wordbyword[key];
-                        if (meaning) {
-                            origin.tooltipster("content", $("<div>"
-                                + "<div class=\"bangla_meaning\">" + meaning.b + "</div> "
-                                + "<div class=\"english_meaning\">" + meaning.e + "</div> "
-                                + (meaning.l == "" ? "" : "<div class=\"lemma\">যা এসেছে  <span>" + meaning.l + "</span> থেকে।</div>")
-                                + (meaning.lb == "" ? "" : "<div class=\"lemma_meaning\">এর অর্থ: <span>" + meaning.lb + "</span></div>")
-                                + "<div class=\"meaning_details\" onclick=\"$('" + pageDiv + " .word').tooltipster('hide');showDetails('" + key + "')\"><div>Click me for details</div><div>বিস্তারিত জানতে আমাকে চাপুন</div></div>"
-                                + "</div>"));
-                            continueTooltip();
-
-                        }
-                    }
-                });
-
-                $(pageDiv + " .ayah_number").tooltipster({
-                    functionBefore: function (origin, continueTooltip) {
-                        var key = $(this).attr("sura") + ":" + $(this).attr("ayah");
-                        var translation = window.translation[key];
-
-                        origin.tooltipster("content", $("<div>"
-                                + "<div class=\"bangla_meaning\">" + translation.b + "</div> "
-                                + "<div class=\"english_meaning\">(" + key + ") " + translation.e + "</div> "
-                                + "</div>"));
-                        continueTooltip();
-                    }
-                });
-
-                var firstChar = $(pageDiv + ' .word').first().text(); //.charCodeAt(0).toString(16);
-                fontSpy("page" + pageStr, {
-                    glyphs: firstChar,
-                    success: function () {
-
-                        // After the font is loaded, calculate size of all word. if some word are
-                        // smaller than 5px width, then those are tajweed symbol, which aren't really
-                        // actual word in an ayah. So, we need to reset the word number ignoring those
-                        // symbols.
-                        var wordNo; var lastAyah;
-                        $('#page' + pageStr + ' .line').each(function (i, line) {
-                            $(line).find('span.word').each(function (i, word) {
-                                if (lastAyah != $(word).attr("ayah")) {
-                                    wordNo = 1;
-                                }
-                                lastAyah = $(word).attr("ayah");
-                                if ($(word).width() > 5) {
-                                    $(word).attr("word", wordNo++);
-                                }
-                            })
-                        });
-
-                        postContentLoad();
-                    },
-                    failure: function () {
-                        alert("Unable to download arabic font for this page. You may not be connected to the Internet, or your mobile is just too old.");
-                    }
-                });
-
-            }, 'html');
-        }
-
-
-
-    </script>
-
-    <script type="text/javascript">
-
-        $(document).ready(function () {
-            window.swiper = new Swiper('.swiper-container', {
-                nextButton: '.swiper-button-next',
-                prevButton: '.swiper-button-prev',
-                slidesPerView: 1,
-                centeredSlides: false,
-                scrollbar: '.swiper-scrollbar',
-                scrollbarHide: false,
-                spaceBetween: 0,
-                onSlideChangeEnd: function (swiper) {
-                    //$(document).ready(function () {
-                    loadPage(swiper.activeIndex + 1);
-                    //});
-                },
-                onInit: function (swiper) {
-                    var page = parseInt(readCookie('page'));
-                    if (isNaN(page)) {
-                        page = 1;
-                    }
-                    swiper.slideTo(page - 1);
-                    if (page == 1)
-                        loadPage(page);
-                }
-            });
-        });
-
-        $('#pagejumppanel').on("pageshow", function (event) {
-            $('#pagenumberToJump').val(window.swiper.activeIndex + 1).focus().textinput('refresh');
-        });
-
-
-        $('#home').on("pagecreate", function (event) {
-            //$(document).ready(function () {
-
-            $("#surahpanel").on("panelbeforeclose", function () {
-                var container = $('#surah-controlgroup');
-                var group = container.controlgroup("container");
-                group.children().remove();
-            });
-
-            $("#surahpanel").on("panelbeforeopen", function () {
-
-                window.setTimeout(function () {
-                    //value="on" checked="checked"
-                    var container = $('#surah-controlgroup');
-                    var group = container.controlgroup("container");
-                    $.each(window.surahs, function (key, value) {
-                        group.append('<label><input type="radio" name="surah" id="' + key + '" sura="' + value.s + '" page="' + value.p + '" />\
-                            <span class="surah_name_arabic">' + value.a + '</span>\
-                            <span class="surah_name_english">' + value.e + '</span>\
-                            <span class="surah_name_bangla">' + value.b + '</span></label>');
-                    });
-                    container.enhanceWithin().controlgroup("refresh");
-                    $("#surahpanel").trigger("updatelayout");
-
-                    // preselect the surah which is currently being displayed
-                    updateSurahPanel(window.swiper.activeIndex + 1);
-
-                    // now hook the click event. Don't hook before pre-selecting surah
-                    container.find('[type="radio"]').on('click', function (event) {
-                        var sura = $(this).attr("sura");
-                        var page = $(this).attr("page");
-                        swiper.slideTo(parseInt(page) - 1, 500, true);
-                        $("#closesurahpanel").click();
-                    });
-
-                    container.css('overflow', 'scroll');
-                    container.height(window.innerHeight - container.position().top - 50);
-
-                }, 500);
-            });
-
-            document.documentElement.focus();
-        });
-
-        function createCookie(name, value, days) {
-            if (days) {
-                var date = new Date();
-                date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
-                var expires = "; expires=" + date.toGMTString();
-            }
-            else var expires = "";
-            document.cookie = name + "=" + value + expires + "; path=/";
-        }
-
-        function readCookie(name) {
-            var nameEQ = name + "=";
-            var ca = document.cookie.split(';');
-            for (var i = 0; i < ca.length; i++) {
-                var c = ca[i];
-                while (c.charAt(0) == ' ') c = c.substring(1, c.length);
-                if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
-            }
-            return null;
-        }
-
-        function eraseCookie(name) {
-            createCookie(name, "", -1);
-        }
-    </script>
+    <script src="js/index.js"></script>
 </body>
 </html>
