@@ -2,6 +2,11 @@
 Mobile friendly Quran Reader web site. 
 
 ![Screenshot](https://raw.githubusercontent.com/oazabir/QuranApp/master/images/screenshot.png)
+
+## Demo
+
+http://quranapp.omaralzabir.com
+
 ## Features
 
  - Touch on a word to see meaning.
