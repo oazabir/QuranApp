@@ -273,6 +273,8 @@ function loadPage(pageNo) {
         var firstChar = $(pageDivId + ' .word').first().text(); //.charCodeAt(0).toString(16);
         var fontName = "page" + pageStr;
         fontSpy(fontName, {
+            timeOut: 30000,
+            delay: 100,
             glyphs: firstChar,
             success: function () {
 
