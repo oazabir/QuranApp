@@ -244,12 +244,12 @@ function loadPage(pageNo) {
                 var meaning = window.wordbyword[key];
                 if (meaning) {
                     origin.tooltipster("content", $("<div>"
-                        + "<div class=\"bangla_meaning\">" + meaning.b + "</div> "
-                        + "<div class=\"english_meaning\">" + meaning.e + "</div> "
-                        + "<div class=\"indonesia_meaning\">" + meaning.i + "</div> "
+                        + "<span class=\"bangla_meaning\">" + meaning.b + "</span> / "
+                        + "<span class=\"english_meaning\">" + meaning.e + "</span> / "
+                        + "<span class=\"indonesia_meaning\">" + meaning.i + "</span> "
                         + (meaning.l == "" ? "" : "<div class=\"lemma\">যা এসেছে  <span>" + meaning.l + "</span> থেকে।</div>")
                         + (meaning.lb == "" ? "" : "<div class=\"lemma_meaning\">এর অর্থ: <span>" + meaning.lb + "</span></div>")
-                        + "<div class=\"meaning_details\" onclick=\"$('" + pageDivId + " .word').tooltipster('hide');showDetails('" + key + "')\"><div>Click me for details</div><div>বিস্তারিত জানতে আমাকে চাপুন</div></div>"
+                        + "<div class=\"meaning_details\" onclick=\"$('" + pageDivId + " .word').tooltipster('hide');showDetails('" + key + "')\"><div>Details বিস্তারিত...</div></div>"
                         + "</div>"));
                     continueTooltip();
 

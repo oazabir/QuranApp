@@ -131,7 +131,7 @@ body {
 
 .tooltipster-base .bangla_meaning {
     text-align: center;
-    font-size: 14pt;
+    font-size: 12pt;
     font-family: SolaimanLipiNormal, Nikosh2, SolaimanLipi, Nikosh, NikoshBAN, Georgia, sans-serif !important;
     font-weigth: bold;
     line-height: 1.6em;
@@ -140,7 +140,7 @@ body {
 
 .tooltipster-base .indonesia_meaning {
     text-align: center;
-    font-size: 14pt;
+    font-size: 12pt;
     font-weigth: bold;
     line-height: 1.6em;
     color: lightgreen;
@@ -148,7 +148,7 @@ body {
 
 .tooltipster-base .english_meaning {
     text-align: center;
-    font-size: 14pt;
+    font-size: 12pt;
     font-weigth: bold;
     line-height: 1.6em;
     color: lightgreen;
@@ -156,18 +156,18 @@ body {
 
 .tooltipster-base .lemma {
     text-align: justify;
-    font-size: 14pt;
+    font-size: 10pt;
     line-height: 1.6em;
 }
 
     .tooltipster-base .lemma span {
         color: lightgreen;
-        font-size: 18pt;
+        font-size: 14pt;
     }
 
 .tooltipster-base .lemma_meaning {
     text-align: justify;
-    font-size: 14pt;
+    font-size: 12pt;
     line-height: 1.6em;
     font-family: SolaimanLipiNormal, Nikosh2, SolaimanLipi, Nikosh, NikoshBAN, Georgia, sans-serif !important;
 }
@@ -181,8 +181,8 @@ body {
     cursor: hand;
     cursor: pointer;
     text-align: center;
-    margin-top: 1em;
-    margin-bottom: 1em;
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
     border: 1px solid dimgray;
     -moz-border-radius: 5px; 
     -webkit-border-radius: 5px;
