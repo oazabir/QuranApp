@@ -238,7 +238,7 @@ body {
 }
 
 #meaningPopup .bangla_meaning {
-    font-weight: bold;
+    /*font-weight: bold;*/
     font-family: SolaimanLipiNormal, Nikosh2, SolaimanLipi, Nikosh, NikoshBAN, Georgia, sans-serif !important;
     font-size: 120%;
 }
@@ -277,7 +277,7 @@ body {
 }
 
 #meaningPopup .lemma_meaning {
-    font-weight: bold;
+    /*font-weight: bold;*/
     font-family: SolaimanLipiNormal, Nikosh2, SolaimanLipi, Nikosh, NikoshBAN, Georgia, sans-serif !important;
     font-size: 120%;
 }
