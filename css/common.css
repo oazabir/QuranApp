@@ -55,12 +55,22 @@
 .word {
     cursor: hand;
     cursor: pointer;
+    color: #222;
+    word-spacing: 4px;
+    padding-left: 2px;
+    padding-right: 2px;
+    
+}
+
+.highlightword {
+
 }
 
 .ayah_number {
     text-align: center;
     cursor: hand;
     cursor: pointer;
+    color:#040;
 }
 
 #searchsurah_link {
@@ -73,6 +83,10 @@
     font-size: 16pt;
     text-decoration: none;
 }
+.searchsurah_link:hover {
+    color: red; /*background-color: #ccffcc; -moz-border-radius: 10px; -webkit-border-radius: 10px; */
+}
+
 .error {
     color: red;
     font-size: 16px;
@@ -107,6 +121,10 @@ body {
 }
 
 .word:hover {
+    color: red; /*background-color: #ccffcc; -moz-border-radius: 10px; -webkit-border-radius: 10px; */
+}
+
+.ayah_number:hover {
     color: red; /*background-color: #ccffcc; -moz-border-radius: 10px; -webkit-border-radius: 10px; */
 }
 
@@ -190,6 +208,10 @@ body {
     text-decoration: none;
     color: black;
     font-weight: normal;
+}
+
+.surah_title a:hover {
+    color: red; /*background-color: #ccffcc; -moz-border-radius: 10px; -webkit-border-radius: 10px; */
 }
 
 .page_no a {

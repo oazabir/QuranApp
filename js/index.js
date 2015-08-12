@@ -96,18 +96,22 @@ function gotoSurahAyah(surahAyah) {
 
 function slideToPage(pageNo) {
     pageNo = parseInt(pageNo);
-    if ($.mobile.activePage.is("#home")) {
-        if (window.swiper.activeIndex == pageNo - 1) {
-            loadPage(pageNo);
-        } else {
-            window.swiper.slideTo(pageNo - 1);
-        }
+    
+    // ensure the page is created, loaded
+    loadPage(pageNo);
+
+    // get the swiper slide index containing the page
+    var pageDiv = getPageDiv(pageNo);
+    var swiperDiv = pageDiv.parent();    
+    window.swiper.slideTo(swiperDiv.index());
+    
+    /*if ($.mobile.activePage.is("#home")) {
+        
     } else {
         $('#home').one("pageshow", function (event) {
             window.swiper.slideTo(pageNo - 1);
         });
-    }
-    //loadPage(pageNo);
+    }*/
 }
 
 function highlightSurahAyah() {
@@ -121,33 +125,97 @@ function highlightSurahAyah() {
     }
 }
 
-function loadPage(pageNo) {
+function makeSwiperDiv(pageNo) {
+    var pageStr = "000" + pageNo;
+    pageStr = pageStr.substr(pageStr.length - 3);
+    return $('<div class="swiper-slide"><div class="page" id="page' + pageStr + '" pageno="' + pageNo + '"></div></div>');
+}
 
+function getSwiperDiv(pageNo) {
+    var pageDiv = getPageDiv(pageNo);
+    var swiper = pageDiv.parent();
+    return swiper;
+}
+
+function getPageDiv(pageNo) {
+    var pageStr = "000" + pageNo;
+    pageStr = pageStr.substr(pageStr.length - 3);
+    return $('#page' + pageStr);
+}
+
+function loadPage(pageNo) {
+    pageNo = parseInt(""+pageNo);
     var pageStr = "000" + pageNo;
     pageStr = pageStr.substr(pageStr.length - 3);
 
-    var pageDiv = '#page' + pageStr;
+    var pageDivId = '#page' + pageStr;
 
-    $.cookie('page', pageNo, { path: '/', expires: 30 });
-    //createCookie('page', pageNo, 30);
-
+    
     function postContentLoad() {
+        $.cookie('page', pageNo, { path: '/', expires: 30 });
         $.mobile.loading('hide');
         highlightSurahAyah();
-
+        
     }
+    // ensure the page div is there. if not, then create that page div and one before and after.
+    var pageDiv = $(pageDivId);
+    if (pageDiv.length == 0) {
+        swiperDiv = makeSwiperDiv(pageNo);
+
+        var before = getPageDiv(pageNo - 1);
+        var after = getPageDiv(pageNo + 1);
+
+        if (before.length > 0) {
+            swiperDiv.insertAfter(before.parent());
+        } else if (after.length > 0) {
+            swiperDiv.insertBefore(after.parent());
+        } else {
+            // before and after nothing exists. find the highest page div which is before this page and insert after that page
+            var lastPageNo = 1;
+            $('div.page').each(function (i, e) {
+                var thisPageNo = parseInt($(e).attr("pageno"));
+                if (thisPageNo < pageNo)
+                    lastPageNo = thisPageNo;
+            })
+            var lastPageDiv = getPageDiv(lastPageNo);
+            swiperDiv.insertAfter(lastPageDiv.parent());
+        }      
+
+        window.swiper.update(true);
+    }
+
+    // get the newly created div or existing div
+    pageDiv = getPageDiv(pageNo);
+
+    // ensure a page slide exists before this page
+    if (pageNo > 1) {
+        var before = getPageDiv(pageNo - 1);
+        if (before.length == 0) {
+            before = makeSwiperDiv(pageNo - 1);
+            before.insertBefore(pageDiv.parent());
+            window.swiper.activeIndex++;
+            window.swiper.update(true);
+            
+        }
+    }
+    // ensure a page slide exists after this page
+    if (pageNo < 604) {
+        var after = getPageDiv(pageNo + 1);
+        if (after.length == 0) {
+            after = makeSwiperDiv(pageNo + 1);
+            after.insertAfter(pageDiv.parent());
+            window.swiper.update(true);
+        }
+    }
+   
     // if page is already loaded, nothing to do
-    if ($(pageDiv).attr("loaded")) {
+    if (pageDiv.attr("loaded")) {
         postContentLoad();
         return;
     }
-    $(pageDiv).attr("loaded", "true");
+    pageDiv.attr("loaded", "true");
 
     $.mobile.loading('show');
-    window.setTimeout(function () {
-        $.mobile.loading('hide');
-    }, 30000);
-
     $.ajaxSetup({ cache: true });
 
     $.get('page/page' + pageStr + '.html' + versionSuffix, function (response) {
@@ -162,11 +230,11 @@ function loadPage(pageNo) {
 					.page' + pageStr + ' { font-family: "page' + pageStr + '"; } \
 				</style>' ).appendTo("head");
 
-        $(pageDiv).html(response);
+        pageDiv.html(response);
 
         $.cachedScript('page/page' + pageStr + '.js');
 
-        $(pageDiv + " .word").tooltipster({
+        $(pageDivId + " .word").tooltipster({
             contentAsHTML: true,
             interactive: true,
 
@@ -181,7 +249,7 @@ function loadPage(pageNo) {
                         + "<div class=\"indonesia_meaning\">" + meaning.i + "</div> "
                         + (meaning.l == "" ? "" : "<div class=\"lemma\">যা এসেছে  <span>" + meaning.l + "</span> থেকে।</div>")
                         + (meaning.lb == "" ? "" : "<div class=\"lemma_meaning\">এর অর্থ: <span>" + meaning.lb + "</span></div>")
-                        + "<div class=\"meaning_details\" onclick=\"$('" + pageDiv + " .word').tooltipster('hide');showDetails('" + key + "')\"><div>Click me for details</div><div>বিস্তারিত জানতে আমাকে চাপুন</div></div>"
+                        + "<div class=\"meaning_details\" onclick=\"$('" + pageDivId + " .word').tooltipster('hide');showDetails('" + key + "')\"><div>Click me for details</div><div>বিস্তারিত জানতে আমাকে চাপুন</div></div>"
                         + "</div>"));
                     continueTooltip();
 
@@ -189,7 +257,7 @@ function loadPage(pageNo) {
             }
         });
 
-        $(pageDiv + " .ayah_number").tooltipster({
+        $(pageDivId + " .ayah_number").tooltipster({
             functionBefore: function (origin, continueTooltip) {
                 var key = $(this).attr("sura") + ":" + $(this).attr("ayah");
                 var translation = window.translation[key];
@@ -202,8 +270,9 @@ function loadPage(pageNo) {
             }
         });
 
-        var firstChar = $(pageDiv + ' .word').first().text(); //.charCodeAt(0).toString(16);
-        fontSpy("page" + pageStr, {
+        var firstChar = $(pageDivId + ' .word').first().text(); //.charCodeAt(0).toString(16);
+        var fontName = "page" + pageStr;
+        fontSpy(fontName, {
             glyphs: firstChar,
             success: function () {
 
@@ -212,7 +281,7 @@ function loadPage(pageNo) {
                 // actual word in an ayah. So, we need to reset the word number ignoring those
                 // symbols.
                 var wordNo; var lastAyah;
-                $('#page' + pageStr + ' .line').each(function (i, line) {
+                $(pageDivId + ' .line').each(function (i, line) {
                     $(line).find('span.word').each(function (i, word) {
                         if (lastAyah != $(word).attr("ayah")) {
                             wordNo = 1;
@@ -234,6 +303,12 @@ function loadPage(pageNo) {
     }, 'html');
 }
 
+function getCurrentPageNo() {
+    var swiperDiv = swiper.slides[swiper.activeIndex];
+    var pageNo = parseInt($(swiperDiv).find('div.page').attr('pageno'));
+    return pageNo;
+}
+
 
 $(document).ready(function () {
     window.swiper = new Swiper('.swiper-container', {
@@ -247,17 +322,19 @@ $(document).ready(function () {
         //loop: true ,
         onSlideChangeEnd: function (swiper) {
             //$(document).ready(function () {
-            loadPage(swiper.activeIndex + 1);
+            //loadPage(swiper.activeIndex + 1);
             //});
+            pageNo = getCurrentPageNo();
+            loadPage(pageNo);
         },
         onInit: function (swiper) {
-            var page = parseInt($.cookie('page'));
-            if (isNaN(page)) {
-                page = 1;
-            }
-            swiper.slideTo(page - 1);
-            if (page == 1)
-                loadPage(page);
+            window.setTimeout(function () {
+                var page = parseInt($.cookie('page'));
+                if (isNaN(page)) {
+                    page = 1;
+                }
+                slideToPage(page);
+            }, 500)
         }
     });
 });
