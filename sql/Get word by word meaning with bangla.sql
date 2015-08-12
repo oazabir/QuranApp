@@ -2,7 +2,7 @@
 go
 
 
-DECLARE @page_no numeric = 256;
+DECLARE @page_no numeric = 1;
 
 WHILE @page_no <= 604
 BEGIN
@@ -10,6 +10,7 @@ BEGIN
 declare @pagestr nvarchar(3)
 set @pagestr =  RIGHT('000'+ CONVERT(VARCHAR,@page_no),3) 
 
+/*
 
 -- generate html output
 
@@ -73,6 +74,8 @@ set @html = @html + N'<div class="page_no"><a href="#pagejumppanel" id="pagejump
 
 set @html = @html + CHAR(13) + '</div>' --+ CHAR(13) + '</div>' + CHAR(13)
 
+*/
+
 -- Generate JSON for the page
 
 DECLARE @json NVARCHAR(max)  
@@ -82,7 +85,7 @@ set @json = @json + 'window.wordbyword = $.extend(window.wordbyword || {}, {'
 
 SELECT @json = COALESCE(@json + char(13), '') + json FROM 
 (
-select N'"' + convert(nvarchar(50),chapter)+':'+convert(nvarchar(50),verse)+':'+convert(nvarchar(50),word) 
+select top 100 percent N'"' + convert(nvarchar(50),chapter)+':'+convert(nvarchar(50),verse)+':'+convert(nvarchar(50),word) 
 	+ '" : {s: ' + convert(nvarchar(50),chapter) 
 	+ ', a: ' + convert(nvarchar(50),verse) 
 	+ ', w: ' + convert(nvarchar(50),word) 
@@ -91,11 +94,12 @@ select N'"' + convert(nvarchar(50),chapter)+':'+convert(nvarchar(50),verse)+':'+
 	+ '", l: "' + lemma 
 	+ '", lc: ' + convert(nvarchar(5),lemmacount)
 	+ ', tl: "' + replace(Transliteration, '"', '')
-	+ '", lb: "' + replace(LemmaBangla, '"', '')
-	+ '",e: "' + replace(meaning, '"', '')
-	+ '", b: "' + replace(bangla, '"', '')
-	+ '", f: ' + convert(nvarchar(50),frequency) 
-	+ ', rm: "' + replace(RootMeaning, '"', '')
+	+ '", lb: "' + replace(ltrim(rtrim(LemmaBangla)), '"', '')
+	+ '",e: "' + replace(ltrim(rtrim(meaning)), '"', '')
+	+ '", b: "' + replace(rtrim(ltrim(bangla)), '"', '')
+	+ '", i: "' + replace(Indonesia, '"', '')
+	+ '", f: ' + convert(nvarchar(6),frequency) 
+	+ ', rm: "' + replace(replace(replace(RootMeaning, '"', ''), char(13), ' '),char(10), '')
 	+ '"},' as json FROM
 
 
@@ -119,6 +123,8 @@ select N'"' + convert(nvarchar(50),chapter)+':'+convert(nvarchar(50),verse)+':'+
 		,isnull((select top 1 replace(rtrim(ltrim(EnglishMeaning)),'"', '') from Meanings where SurahNo = chapter and VerseNo = verse and WordNo = word),Meaning) as meaning
 		--,replace(rtrim(ltrim(meaning)),'"', '') as meaning
 		
+		,isnull((select translation_id from Indonesia where sura = w.Chapter and vers = w.Verse and pos = w.Word), '') as Indonesia
+
 		,replace(
 		replace(
 		ltrim(rtrim(ISNULL((
@@ -128,7 +134,7 @@ select N'"' + convert(nvarchar(50),chapter)+':'+convert(nvarchar(50),verse)+':'+
 		,'''', '')
 		as Bangla
 		
-		,ISNULL((select top 1 frequency from [BanglaWordbyWord] b where b.Word = w.Text ), 0) as Frequency
+		,ISNULL((select count(1) from [WordInformation] w1 where w1.root = w.root and w1.text = w.text ), 0) as Frequency
 	
 		,replace(
 			ISNULL((select top 1 b.Bangla from 
@@ -144,15 +150,19 @@ select N'"' + convert(nvarchar(50),chapter)+':'+convert(nvarchar(50),verse)+':'+
 		as RootMeaning
 
 		from wordinformation w 
+		
 		where word > 0
 		and exists (select * FROM surah_page 
 		where page = @page_no and Chapter = sura and Verse = ayah)
-	) A	
+	) A		
 ) B
-group by chapter, verse, word, text, Root, Lemma, LemmaCount, Transliteration, LemmaBangla, meaning, Bangla, Frequency, rootmeaning
+--order by B.Chapter, B.Verse, B.Word
+group by chapter, verse, word, text, Root, Lemma, LemmaCount, Transliteration, LemmaBangla, meaning, Bangla, Indonesia, Frequency, rootmeaning
 ) C
 
+
 set @json = @json + CHAR(13) + '});' + CHAR(13) -- + '</script>' + CHAR(13)
+
 
 declare @translations nvarchar(max)
 set @translations = N'window.translation = $.extend(window.translation || {}, {'
@@ -181,19 +191,19 @@ set @translations = @translations + CHAR(13) + '});' + CHAR(13)
 
 -- Output to file
 
-print @html
+--print @html
 
 print @json
 
-print @translations
+--print @translations
 
 declare @path varchar(100)
 declare @filename varchar(100)
 
 -- html
-set @path = 'E:\Google Drive2\Islam\QuranApp\page'
+set @path = 'E:\GitHub\QuranApp\page'
 set @filename = 'page' + @pagestr + '.html'
-exec [dbo].[spWriteStringToFile]  @html, @path, @filename
+--exec [dbo].[spWriteStringToFile]  @html, @path, @filename
 
 -- json
 declare @content nvarchar(max)

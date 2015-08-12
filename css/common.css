@@ -85,7 +85,7 @@
 .page {
     width: 550px;
     height: 822px;
-    background: url('../images/QuranBackground.png') no-repeat 0px 0px;
+    background: url('../images/QuranBackground.png?v=1') no-repeat 0px 0px;
     float: left;
     -webkit-user-select: none;
 }
@@ -118,6 +118,14 @@ body {
     font-weigth: bold;
     line-height: 1.6em;
     color: yellow;
+}
+
+.tooltipster-base .indonesia_meaning {
+    text-align: center;
+    font-size: 14pt;
+    font-weigth: bold;
+    line-height: 1.6em;
+    color: lightgreen;
 }
 
 .tooltipster-base .english_meaning {
@@ -232,6 +240,11 @@ body {
 }
 
 #meaningPopup .english_meaning {
+    font-weight: bold;
+    font-style: italic;
+}
+
+#meaningPopup .indonesia_meaning {
     font-weight: bold;
     font-style: italic;
 }
