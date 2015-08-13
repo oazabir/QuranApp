@@ -44,17 +44,10 @@ function showDetails(key) {
 
 function updateSurahPanel(pageNo) {
     $.each(window.surahs, function (key, value) {
-        if (pageNo == value.p) {
-            var sura = value.s;
-
+        if (pageNo < value.p) {
+            var sura = value.s-1;
             $('#surahpanel select').val(sura).selectmenu( "refresh" );
-
-            //$("#surahpanel").find('input').prop('checked', false).checkboxradio("refresh");
-            //var input = $("#surahpanel").find('input[sura="' + sura + '"]');
-            //input.prop('checked', true).checkboxradio("refresh");
-            //if (input.position()) {
-            //    $("#surahpanel fieldset").scrollTop(input.position().top);
-            //}
+            return false;
         }
     });
 
@@ -193,7 +186,7 @@ function loadPage(pageNo) {
         if (before.length == 0) {
             before = makeSwiperDiv(pageNo - 1);
             before.insertBefore(pageDiv.parent());
-            window.swiper.activeIndex++;
+            window.swiper.activeIndex++; // current slide will be pushed by one slide
             window.swiper.update(true);
             
         }
@@ -323,9 +316,6 @@ $(document).ready(function () {
         spaceBetween: 0,
         //loop: true ,
         onSlideChangeEnd: function (swiper) {
-            //$(document).ready(function () {
-            //loadPage(swiper.activeIndex + 1);
-            //});
             pageNo = getCurrentPageNo();
             loadPage(pageNo);
         },
@@ -342,7 +332,7 @@ $(document).ready(function () {
 });
 
 $('#pagejumppanel').on("pageshow", function (event) {
-    $('#pagenumberToJump').val(window.swiper.activeIndex + 1).focus().textinput('refresh');
+    $('#pagenumberToJump').val(getCurrentPageNo()).focus().textinput('refresh');
 });
 
 
@@ -362,7 +352,7 @@ $('#home').on("pagecreate", function (event) {
     });
 
     $("#surahpanel").on("panelbeforeopen", function () {
-        updateSurahPanel(window.swiper.activeIndex + 1);
+        updateSurahPanel(getCurrentPageNo());
 
         //$.mobile.loading('show');
         
