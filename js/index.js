@@ -63,7 +63,7 @@ $('#searchPopup').popup({
         if (!window.suraayahmap) {
             $.cachedScript('page/sura_ayah_map.js');
         }
-        $('#gotoSurahAyahButton').click(function () {
+        $('#gotoSurahAyahButton').one('click', function () {
             gotoSurahAyah($('#jumpTo').val());
         })
         $('#searchPopup .error').hide();
@@ -119,8 +119,10 @@ function hideAllTooltips() {
 }
 
 function highlightSurahAyah(highlight) {
-    if (window.highlight || highlight) {
-        var nodes = $('.word[sura="' + window.highlight.sura + '"][ayah="' + window.highlight.ayah + '"]');
+    var h = highlight || window.highlight;
+    if (h) {
+        var template = '.word[sura="{sura}"][ayah="{ayah}"]';
+        var nodes = $(template.assign(h));
         nodes.css('background-color', 'lightgreen');
         window.setTimeout(function () {
             nodes.css('background-color', '');
@@ -130,9 +132,9 @@ function highlightSurahAyah(highlight) {
 }
 
 function makeSwiperDiv(pageNo) {
-    var pageStr = "000" + pageNo;
-    pageStr = pageStr.substr(pageStr.length - 3);
-    return $('<div class="swiper-slide"><div class="page" id="page' + pageStr + '" pageno="' + pageNo + '"></div></div>');
+    var pageStr = pageNo.pad(3);
+    var template = '<div class="swiper-slide"><div class="page" id="page{pageStr}" pageno="{pageNo}"></div></div>';
+    return $(template.assign({pageStr: pageStr, pageNo: pageNo}));
 }
 
 function getSwiperDiv(pageNo) {
@@ -160,6 +162,7 @@ function loadPage(pageNo) {
         $.mobile.loading('hide');
         highlightSurahAyah();
         hideAllTooltips();
+        pageDiv.attr("status", "loaded");
     }
     // ensure the page div is there. if not, then create that page div and one before and after.
     var pageDiv = $(pageDivId);
@@ -198,8 +201,7 @@ function loadPage(pageNo) {
             before = makeSwiperDiv(pageNo - 1);
             before.insertBefore(pageDiv.parent());
             window.swiper.activeIndex++; // current slide will be pushed by one slide
-            window.swiper.update(true);
-            
+            window.swiper.update(true);            
         }
     }
     // ensure a page slide exists after this page
@@ -212,27 +214,29 @@ function loadPage(pageNo) {
         }
     }
    
-    // if page is already loaded, nothing to do
-    if (pageDiv.attr("loaded")) {
+    // if page is already loading/loaded, nothing to do
+    if (pageDiv.attr("status") == "loading" || pageDiv.attr("status") == "loaded") {
         postContentLoad();
         return;
     }
-    pageDiv.attr("loaded", "true");
+    pageDiv.attr("status", "loading");
 
     $.mobile.loading('show');
     $.ajaxSetup({ cache: true });
 
     $.get('page/page' + pageStr + '.html' + versionSuffix, function (response) {
 
-        $('<style type="text/css"> \
+        var template = '<style type="text/css"> \
 					@font-face { \
-					 font-family: "page' + pageStr + '"; \
-					 src: url("./data/fonts/QCF_P' + pageStr + '.woff") format("woff"); \
+					 font-family: "page{pageStr}"; \
+					 src: url("./data/fonts/QCF_P{pageStr}.woff") format("woff"); \
 					 font-weight: normal; \
 					 font-style: normal; \
 					} \
-					.page' + pageStr + ' { font-family: "page' + pageStr + '"; } \
-				</style>' ).appendTo("head");
+					.page{pageStr} { font-family: "page{pageStr}"; } \
+				</style>';
+        var output = template.assign({ pageStr: pageStr });
+        $(output).appendTo("head");
 
         pageDiv.html(response);
 
@@ -267,10 +271,12 @@ function loadPage(pageNo) {
                 var key = $(this).attr("sura") + ":" + $(this).attr("ayah");
                 var translation = window.translation[key];
 
-                origin.tooltipster("content", $("<div>"
-                        + "<div class=\"bangla_meaning\">" + translation.b + "</div> "
-                        + "<div class=\"english_meaning\">(" + key + ") " + translation.e + "</div> "
-                        + "</div>"));
+                var template = '<div> \
+                        <div class="bangla_meaning">{b}</div> \
+                        <div class="english_meaning">({key}) {e}</div> \
+                        </div>';
+                var output = template.assign(translation, { key: key });
+                origin.tooltipster("content", $(output));
                 continueTooltip();
             }
         });
