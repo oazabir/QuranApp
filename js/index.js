@@ -1,4 +1,10 @@
-﻿
+﻿/// <reference path="sugar.js" />
+/// <reference path="swiper.js" />
+/// <reference path="jquery.mobile-1.4.5.min.js" />
+/// <reference path="jquery-1.11.3.min.js" />
+/// <reference path="fontspy.js" />
+/// <reference path="jquery.cookie.js" />
+
 
 jQuery.cachedScript = function (url, options) {
 
@@ -241,16 +247,17 @@ function loadPage(pageNo) {
                 var key = $(this).attr("sura") + ":" + $(this).attr("ayah") + ":" + $(this).attr("word");
                 var meaning = window.wordbyword[key];
                 if (meaning) {
-                    origin.tooltipster("content", $("<div>"
-                        + "<span class=\"bangla_meaning\">" + meaning.b + "</span> / "
-                        + "<span class=\"english_meaning\">" + meaning.e + "</span> / "
-                        + "<span class=\"indonesia_meaning\">" + meaning.i + "</span> "
-                        + (meaning.l == "" ? "" : "<div><span class=\"lemma\">যা এসেছে  <span>" + meaning.l + "</span> থেকে।</span>")
-                        + (meaning.lb == "" ? "" : "<span class=\"lemma_meaning\">এর অর্থ: <span>" + meaning.lb + "</span></span></div>")
-                        + "<a class=\"meaning_details ui-btn\" onclick=\"$('" + pageDivId + " .word').tooltipster('hide');showDetails('" + key + "')\">Details বিস্তারিত...</a>"
-                        + "</div>"));
+                    var template = '<div> \
+                        <span class="bangla_meaning">{b}</span> \
+                        <span class="english_meaning">{e}</span> \
+                        <span class="indonesia_meaning">{i}</span> \
+                        <div><span class="lemma">যা এসেছে  <span>{l}</span> থেকে।</span> \
+                        <span class="lemma_meaning">এর অর্থ: <span>{lb}</span></span></div> \
+                        <a class="meaning_details ui-btn" onclick="$(\'{pageDivId} .word\').tooltipster(\'hide\');showDetails(\'{key}\')">Details বিস্তারিত...</a> \
+                        </div>';
+                    var output = template.assign(meaning, { pageDivId: pageDivId, key: key });
+                    origin.tooltipster("content", $(output));
                     continueTooltip();
-
                 }
             }
         });
