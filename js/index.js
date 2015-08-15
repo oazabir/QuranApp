@@ -105,10 +105,15 @@ function slideToPage(pageNo) {
             window.swiper.slideTo(pageNo - 1);
         });
     }*/
+    
 }
 
-function highlightSurahAyah() {
-    if (window.highlight) {
+function hideAllTooltips() {
+    $('.tooltipstered').tooltipster('hide')
+}
+
+function highlightSurahAyah(highlight) {
+    if (window.highlight || highlight) {
         var nodes = $('.word[sura="' + window.highlight.sura + '"][ayah="' + window.highlight.ayah + '"]');
         nodes.css('background-color', 'lightgreen');
         window.setTimeout(function () {
@@ -148,7 +153,7 @@ function loadPage(pageNo) {
         $.cookie('page', pageNo, { path: '/', expires: 30 });
         $.mobile.loading('hide');
         highlightSurahAyah();
-        
+        hideAllTooltips();
     }
     // ensure the page div is there. if not, then create that page div and one before and after.
     var pageDiv = $(pageDivId);
@@ -240,9 +245,9 @@ function loadPage(pageNo) {
                         + "<span class=\"bangla_meaning\">" + meaning.b + "</span> / "
                         + "<span class=\"english_meaning\">" + meaning.e + "</span> / "
                         + "<span class=\"indonesia_meaning\">" + meaning.i + "</span> "
-                        + (meaning.l == "" ? "" : "<div class=\"lemma\">যা এসেছে  <span>" + meaning.l + "</span> থেকে।</div>")
-                        + (meaning.lb == "" ? "" : "<div class=\"lemma_meaning\">এর অর্থ: <span>" + meaning.lb + "</span></div>")
-                        + "<div class=\"meaning_details\" onclick=\"$('" + pageDivId + " .word').tooltipster('hide');showDetails('" + key + "')\"><div>Details বিস্তারিত...</div></div>"
+                        + (meaning.l == "" ? "" : "<div><span class=\"lemma\">যা এসেছে  <span>" + meaning.l + "</span> থেকে।</span>")
+                        + (meaning.lb == "" ? "" : "<span class=\"lemma_meaning\">এর অর্থ: <span>" + meaning.lb + "</span></span></div>")
+                        + "<a class=\"meaning_details ui-btn\" onclick=\"$('" + pageDivId + " .word').tooltipster('hide');showDetails('" + key + "')\">Details বিস্তারিত...</a>"
                         + "</div>"));
                     continueTooltip();
 
@@ -331,7 +336,7 @@ $(document).ready(function () {
     });
 });
 
-$('#pagejumppanel').on("pageshow", function (event) {
+$('#pagejumppanel').on("popupafteropen", function (event) {
     $('#pagenumberToJump').val(getCurrentPageNo()).focus().textinput('refresh');
 });
 
@@ -389,5 +394,6 @@ $('#home').on("pagecreate", function (event) {
 
     // this is to prevent a bug in jquery mobile.
     document.documentElement.focus();
+    
 });
 
