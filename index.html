@@ -8,7 +8,7 @@
     <meta http-equiv="expires" content="Tue, 01 Jan 1980 1:00:00 GMT" />
     <meta http-equiv="pragma" content="no-cache" />
 
-    <title>Mobile Quran Reading বাংলা অথ সহ কুরআন</title>
+    <title>Mobile Quran Reading বাংলা অর্থ সহ কুরআন</title>
     <meta name="viewport" content="width=550">
     <link rel="stylesheet" type="text/css" href="css/jquery.mobile-1.4.5.min.css" />
     <link rel="stylesheet" type="text/css" href="css/swiper.css">
@@ -24,6 +24,7 @@
     <script type="text/javascript" src="js/fontspy.js"></script>
     <script src="js/jquery.cookie.js"></script>
     <script defer="defer" type="text/javascript" src="page/surahs.js"></script>
+    <script defer="defer" type="text/javascript" src="js/sugar.js"></script>
 </head>
 
 
@@ -82,7 +83,21 @@
 
         </div>
 
-        <div data-role="panel" id="surahpanel" data-display="overlay">
+        <div data-role="popup" id="pagejumppanel" data-theme="b">
+            <div data-role="header" data-theme="b">
+                <h1>Change page পেইজ নম্বর</h1>
+            </div>
+            <div role="main" class="ui-content">
+                <form>
+                    <label for="pagenumberToJump">Page number পেইজ নম্বর</label>
+                    <input type="number" data-clear-btn="false" name="pagenumberToJump" pattern="\d+" id="pagenumberToJump" value="1" />
+                </form>
+                <a class="ui-btn ui-btn-inline" href="#home" data-role="back" data-rel="button" onclick="javascript:slideToPage($('#pagenumberToJump').val())">Goto যাও</a>
+                <a class="ui-btn ui-btn-inline" href="#home" data-role="back" data-rel="button">Close বন্ধ</a>
+            </div>
+        </div>
+
+        <div data-role="panel" id="surahpanel" data-display="overlay" >
 
             <a href="#closesurahpanel" data-role="button" data-rel="close">Close বন্ধ</a>
 
@@ -207,19 +222,7 @@
 
     </div>
 
-    <div data-role="page" id="pagejumppanel" data-dialog="true" data-close-btn="right">
-        <div data-role="header" data-theme="b">
-            <h1>Change page পেইজ নম্বর</h1>
-        </div>
-        <div role="main" class="ui-content">
-            <form>
-                <label for="pagenumberToJump">Page number পেইজ নম্বর</label>
-                <input type="number" data-clear-btn="false" name="pagenumberToJump" pattern="\d+" id="pagenumberToJump" value="1" />
-            </form>
-            <a class="ui-btn ui-btn-inline" href="#home" data-role="back" data-rel="button" onclick="javascript:slideToPage($('#pagenumberToJump').val())">Goto যাও</a>
-            <a class="ui-btn ui-btn-inline" href="#home" data-role="back" data-rel="button">Close বন্ধ</a>
-        </div>
-    </div>
+    
 
     <!-- Load swiper after the page markup is done -->
     <script src="js/swiper.js"></script>

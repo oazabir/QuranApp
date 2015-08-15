@@ -146,6 +146,8 @@ body {
     color: lightblue;
 }
 
+.tooltipster-base { max-width: 400px; }
+
 .tooltipster-base .english_meaning {
     text-align: center;
     font-size: 12pt;
@@ -158,6 +160,7 @@ body {
     text-align: justify;
     font-size: 10pt;
     line-height: 1.6em;
+    clear: both;
 }
 
     .tooltipster-base .lemma span {

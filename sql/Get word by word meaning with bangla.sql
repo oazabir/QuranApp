@@ -10,18 +10,13 @@ BEGIN
 declare @pagestr nvarchar(3)
 set @pagestr =  RIGHT('000'+ CONVERT(VARCHAR,@page_no),3) 
 
-/*
-
 -- generate html output
 
 DECLARE @html NVARCHAR(max)  
-set @html = N''
---set @html = N'<div class="page section" id="page' + @pagestr + '" pageno="' + @pagestr + '">' + CHAR(13)
---set @html = N'<div class="page section" id="page' + @pagestr + '">' + CHAR(13)
+set @html = N' '
 
 -- get surah name
 declare @surahname nvarchar(max)
---select @surahname = name from [SurahNames] where languageid = 2 and surahno = (select min(sura) from madani_text where page = @page_no)
 select @surahname = text from madani_page
 where sura = (select min(sura) from madani_page where page = @page_no)
 and ayah = 0 and len(text) < 20
@@ -70,11 +65,13 @@ order by B.line
 
 -- generate page number
 
-set @html = @html + N'<div class="page_no"><a href="#pagejumppanel" id="pagejumpbutton" data-transition="flip">' + dbo.udf_GetArabicNumbers(@page_no) + N'</a></div>'
+set @html = @html + N'<div class="page_no"><a href="#pagejumppanel" id="pagejumpbutton" data-rel="popup">' + dbo.udf_GetArabicNumbers(@page_no) + N'</a></div>'
 
 set @html = @html + CHAR(13) + '</div>' --+ CHAR(13) + '</div>' + CHAR(13)
 
-*/
+print @html
+
+/*
 
 -- Generate JSON for the page
 
@@ -188,14 +185,11 @@ select N'"' + convert(nvarchar(50),surahno)+':'+convert(nvarchar(50),ayahno)
 
 set @translations = @translations + CHAR(13) + '});' + CHAR(13) 
 
-
--- Output to file
-
---print @html
-
-print @json
+--print @json
 
 --print @translations
+
+*/
 
 declare @path varchar(100)
 declare @filename varchar(100)
@@ -203,14 +197,17 @@ declare @filename varchar(100)
 -- html
 set @path = 'E:\GitHub\QuranApp\page'
 set @filename = 'page' + @pagestr + '.html'
---exec [dbo].[spWriteStringToFile]  @html, @path, @filename
+exec [dbo].[spWriteStringToFile]  @html, @path, @filename
+
 
 -- json
+/*
 declare @content nvarchar(max)
 set @content = @json + @translations
 set @filename = 'page' + @pagestr + '.js'
 exec [dbo].[spWriteStringToFile]  @content, @path, @filename
+*/
+
 
    SET @page_no = @page_no + 1;
 END;
-
