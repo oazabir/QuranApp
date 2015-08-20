@@ -15,7 +15,7 @@
     <link rel="stylesheet" type="text/css" href="css/tooltipster.css" />
     <link rel="stylesheet" type="text/css" href="css/common.css?v=6" />
     <script type="text/javascript">
-        var version = 4;
+        var version = 6;
         var versionSuffix = "?v=" + version;
     </script>
     <script type="text/javascript" src="js/jquery-1.11.3.min.js"></script>
@@ -38,10 +38,10 @@
 
                     <div class="swiper-slide"><div class="page" id="page001" pageno="1"></div></div>
                     <div class="swiper-slide"><div class="page" id="page002" pageno="2"></div></div>
-                    
+
                     <div class="swiper-slide"><div class="page" id="page603" pageno="603"></div></div>
                     <div class="swiper-slide"><div class="page" id="page604" pageno="604"></div></div>
-                    
+
                 </div>
                 <!-- Add Scrollbar -->
                 <div class="swiper-scrollbar"></div>
@@ -49,8 +49,49 @@
                 <div class="swiper-button-next"></div>
                 <div class="swiper-button-prev"></div>
 
-                <a href="#searchPopup" data-rel="popup" id="searchsurah_link">&#x1f50d;</a>
+                <div class="feature_bar">
+                    <a href="#searchPopup" data-rel="popup" id="searchsurah_link">&#x1f50d;</a>
+                    <a href="#bookmarkPopup" data-rel="popup" id="bookmark_link">&#x1f516;</a>
+                </div>
+            </div>
+        </div>
 
+        <div data-role="popup" id="bookmarkPopup" class="ui-content" data-theme="a">
+            <a class="ui-btn ui-mini ui-btn-inline" data-role="button" data-mini="true" id="addPageBookmark">Bookmark this page</a>
+            <a class="ui-btn ui-mini ui-btn-inline" data-role="button" data-mini="true" data-rel="back">Close বন্ধ</a>
+
+            <div id="listDiv">
+                <div class="ui-corner-all custom-corners">
+                    <div class="ui-bar">
+                        <h3>Page</h3>
+                    </div>
+                    <ul data-role="listview" id="pageBookmarkListView" class="listviewfix">
+                        <li data-icon="delete">
+                            <a href="acura.html"><span>Al-Fātiĥah</span> <span>سورة الفاتحة</span> <span>1:1</span> <p class="ui-li-aside ayah-snippet"><span>وَلْيَحْكُمْ أَهْلُ ٱلْإِنجِيلِ بِمَآ</span></p><span class="ui-li-count">12</span></a>
+
+                        </li>
+                        <li data-icon="delete">
+                            <a href="acura.html"><span>Al-Fātiĥah</span> <span>سورة الفاتحة</span> <span>1:1</span> <p class="ui-li-aside ayah-snippet"><span>وَلْيَحْكُمْ أَهْلُ ٱلْإِنجِيلِ بِمَآ</span></p><span class="ui-li-count">12</span></a>
+
+                        </li>
+                        <li data-icon="delete">
+                            <a href="acura.html"><span>Al-Fātiĥah</span> <span>سورة الفاتحة</span> <span>1:1</span> <p class="ui-li-aside ayah-snippet"><span>وَلْيَحْكُمْ أَهْلُ ٱلْإِنجِيلِ بِمَآ</span></p><span class="ui-li-count">12</span></a>
+
+                        </li>
+                        <li data-icon="delete">
+                            <a href="acura.html"><span>Al-Fātiĥah</span> <span>سورة الفاتحة</span> <span>1:1</span> <p class="ui-li-aside ayah-snippet"><span>وَلْيَحْكُمْ أَهْلُ ٱلْإِنجِيلِ بِمَآ</span></p><span class="ui-li-count">12</span></a>
+
+                        </li>
+                    </ul>
+                    <div class="ui-bar">
+                        <h3>Ayah</h3>
+                    </div>
+                    <ul id="ayahBookmarkListView" data-role="listview"  class="listviewfix"></ul>
+                    <div class="ui-bar">
+                        <h3>Word</h3>
+                    </div>
+                    <ul id="wordBookmarkListView" data-role="listview"  class="listviewfix"></ul>
+                </div>
             </div>
         </div>
 
@@ -97,11 +138,11 @@
             </div>
         </div>
 
-        <div data-role="panel" id="surahpanel" data-display="overlay" >
+        <div data-role="panel" id="surahpanel" data-display="overlay">
 
             <a href="#closesurahpanel" data-role="button" data-rel="close">Close বন্ধ</a>
 
-            <select> 
+            <select>
                 <option value="1">1 Al-Fatiha সূরা আল ফাতিহা سورة الفاتحة</option>
                 <option value="2">2 Al-Baqara সূরা আল বাক্বারাহ سورة البقرة</option>
                 <option value="3">3 Aal-e-Imran সূরা আল ইমরান سورة آل عمران</option>
@@ -222,7 +263,7 @@
 
     </div>
 
-    
+
 
     <!-- Load swiper after the page markup is done -->
     <script src="js/swiper.js"></script>

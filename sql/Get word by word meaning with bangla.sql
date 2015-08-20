@@ -71,7 +71,7 @@ set @html = @html + CHAR(13) + '</div>' --+ CHAR(13) + '</div>' + CHAR(13)
 
 print @html
 
-/*
+
 
 -- Generate JSON for the page
 
@@ -159,6 +159,7 @@ group by chapter, verse, word, text, Root, Lemma, LemmaCount, Transliteration, L
 
 
 set @json = @json + CHAR(13) + '});' + CHAR(13) -- + '</script>' + CHAR(13)
+print @json
 
 
 declare @translations nvarchar(max)
@@ -171,12 +172,15 @@ select N'"' + convert(nvarchar(50),surahno)+':'+convert(nvarchar(50),ayahno)
 	+ ', a: ' + convert(nvarchar(50),ayahno) 	
 	+ ', e: "' + replace(English, '"', '')
 	+ '", b: "' + replace(Bangla, '"', '')
+	+ '", t: "' + replace(Arabic, '"', '')
 	+ '"},' as json FROM
 	(
-		select e.surahno, e.ayahno, e.content as English, b.content as Bangla
+		select e.surahno, e.ayahno, a.Content as Arabic, e.content as English, b.content as Bangla
 		from Ayahs e inner join Ayahs b on b.SurahNo = e.SurahNo and b.AyahNo = e.AyahNo
+		inner join Ayahs a on a.SurahNo = e.SurahNo and a.AyahNo = e.AyahNo
 		where 
-		e.TranslatorID = 45
+		a.TranslatorID = 7
+		and e.TranslatorID = 45
 		AND b.TranslatorID = 5
 		and exists (select * FROM surah_page 
 		where page = @page_no and e.surahno = sura and e.ayahno = ayah)
@@ -187,9 +191,9 @@ set @translations = @translations + CHAR(13) + '});' + CHAR(13)
 
 --print @json
 
---print @translations
+print @translations
 
-*/
+
 
 declare @path varchar(100)
 declare @filename varchar(100)
@@ -201,12 +205,12 @@ exec [dbo].[spWriteStringToFile]  @html, @path, @filename
 
 
 -- json
-/*
+
 declare @content nvarchar(max)
 set @content = @json + @translations
 set @filename = 'page' + @pagestr + '.js'
 exec [dbo].[spWriteStringToFile]  @content, @path, @filename
-*/
+
 
 
    SET @page_no = @page_no + 1;

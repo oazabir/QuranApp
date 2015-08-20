@@ -73,16 +73,30 @@
     color:#040;
 }
 
-#searchsurah_link {
+.feature_bar {
     position: absolute;
     left: 400px;
-    top: 8px;
-    z-index: 100;
-    color: black;
+    top: 2px;
+    z-index: 100;    
+    word-spacing: 10px; 
+}
+
+.feature_bar a {
+    color: #333;
     font-weight: normal;
-    font-size: 16pt;
+    font-size: 25px;
     text-decoration: none;
 }
+
+#searchsurah_link {
+    
+}
+
+#bookmarkPopup {
+    height: 400px;
+    width: 400px;
+}
+
 .searchsurah_link:hover {
     color: red; /*background-color: #ccffcc; -moz-border-radius: 10px; -webkit-border-radius: 10px; */
 }
@@ -349,4 +363,84 @@ body {
 
 .swiper-button-prev {
     background: url('../images/right_button.png') !important;
+}
+
+
+#listDiv {
+    position: absolute;
+    top: 0px;
+    left:0px;
+    right: 0px;
+    bottom: 0px;
+    margin-top: 60px;
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+        #listDiv li span {
+            margin-left: 0.5em;
+            overflow: hidden;
+            white-space:nowrap;
+            text-overflow:ellipsis;            
+            display:inline-block;
+        }
+
+.listviewfix {
+    margin: 0px !important;
+}
+        
+.ayah-snippet {
+    color: #666;
+    font-style: italic;
+    font-weight: normal;
+    overflow: hidden;
+    white-space:nowrap;
+    text-overflow:ellipsis;   
+}
+
+.bookmark-surahname {
+    
+}
+
+
+#bookmark_ayah {
+    color: ivory;
+    font-size: 30px;
+    text-decoration: none;
+}
+
+.bookmarked_ayah {
+    color: red;
+}
+
+#bookmark_ayah.bookmarked_ayah {
+    color: cyan;
+}
+
+
+#bookmark_word {
+    color: ivory;
+    font-size: 30px;
+    text-decoration: none;
+}
+
+.bookmarked_word {
+    color: red;
+}
+
+#bookmark_word.bookmarked_word {
+    color: cyan;
+}
+
+.tooltip_actions {
+    margin: 5px;
+}
+
+.ui-bar {
+    border-top: solid 1px lightgrey;
+    
+}
+
+.ui-listview, .ui-listview > li, .ui-listview > li > a {
+    font-size: 12px;
 }
