@@ -214,7 +214,7 @@ body {
         color: yellow;
     }
 
-.tooltipster-base .meaning_details {
+/*.tooltipster-base .meaning_details {
     color: lightgrey;
     cursor: hand;
     cursor: pointer;
@@ -226,7 +226,7 @@ body {
     -webkit-border-radius: 5px;
     border-radius: 5px;
     padding: 5px;
-}
+}*/
 
 .surah_title {
     position: absolute;
@@ -451,6 +451,12 @@ body {
     color: cyan;
 }
 
+#meaningDetails {
+    color: ivory;
+    font-size: 30px;
+    text-decoration: none;
+    float: right;
+}
 
 #bookmark_word {
     color: ivory;

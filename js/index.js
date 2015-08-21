@@ -304,6 +304,10 @@ function loadPage(pageNo) {
 
                         if (meaning) {
                             var template = '<div> \
+                            <div class="tooltip_actions"> \
+                            <a href="#bookmarkPopup" class="{bookmarkedClass}" bookmarked="{isBookmarked}" id="bookmark_word" sura="{sura}" ayah="{ayah}" word="{word}" onclick="toggleWordBookmark()">&#x1f516;</a> \
+                            <a href="#meaningPopup" data-rel="popup" onclick="hideAllTooltips(); showDetails(\'{key}\')" id="meaningDetails" class="meaning_details" >&#x1f50d;</a> \
+                            </div> \
                             <span class="arabic_word">{t}</span> <span class="transliteration">{tl}</span> <span class="root">{root}</span> \
                             <div> \
                             <span class="bangla_meaning">{b}</span> \
