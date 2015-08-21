@@ -51,17 +51,12 @@ function showDetails(key) {
 function getCurrentSura() {
     var lastSura;
     var surahs = Object.values(window.surahs);
+    var pageNo = getCurrentPageNo();
     surahs.find(function (s) {
         lastSura = s;
         return pageNo < s.p;
     });
     return lastSura;
-}
-
-function updateSurahPanel(pageNo) {
-
-
-    
 }
 
 function loadSurahAyahMap() {
@@ -475,6 +470,7 @@ $(document).ready(function () {
 });
 
 $('#pagejumppanel').on("popupafteropen", function (event) {
+    loadSurahAyahMap();
     $('#pagenumberToJump').val(getCurrentPageNo()).focus().textinput('refresh');
 });
 
@@ -662,7 +658,7 @@ var BookmarkManager = {
     },
 
     wordBookmarkRender: function (bookmark) {
-        var template = '<span>{arabicWord}</span>' +
+        var template = '<span class="arabic">{arabicWord}</span>' +
                 '<span>{word1}</span>' +
                 '<span>{word2}</span>' +
                 '<span>{sura}:{ayah}</span>' +

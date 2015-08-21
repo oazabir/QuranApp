@@ -23,14 +23,16 @@
     <script src="js/jquery.mobile-1.4.5.min.js"></script>
     <script type="text/javascript" src="js/fontspy.js"></script>
     <script src="js/jquery.cookie.js"></script>
-    <script defer="defer" type="text/javascript" src="page/surahs.js"></script>
-    <script defer="defer" type="text/javascript" src="js/sugar.js"></script>
+
+    
 </head>
 
 
 <body>
     <div data-role="page" id="home" data-theme="a">
+       
         <div role="main" class="ui-content">
+            
             <!-- Swiper -->
             <div class="swiper-container" dir="rtl">
 
@@ -49,46 +51,32 @@
                 <div class="swiper-button-next"></div>
                 <div class="swiper-button-prev"></div>
 
-                <div class="feature_bar">
-                    <a href="#searchPopup" data-rel="popup" id="searchsurah_link">&#x1f50d;</a>
-                    <a href="#bookmarkPopup" data-rel="popup" id="bookmark_link">&#x1f516;</a>
-                </div>
+                
+            </div>
+            <div class="feature_bar">
+                <a href="#searchPopup" data-rel="popup" id="searchsurah_link">&#x1f50d;</a>
+                <a href="#bookmarkPopup" data-rel="popup" id="bookmark_link">&#x1f516;</a>
             </div>
         </div>
 
         <div data-role="popup" id="bookmarkPopup" class="ui-content" data-theme="a">
-            <a class="ui-btn ui-mini ui-btn-inline" data-role="button" data-mini="true" id="addPageBookmark">Bookmark this page</a>
+            <a class="ui-btn ui-mini ui-btn-inline" data-role="button" data-mini="true" id="addPageBookmark">Bookmark this page পৃষ্ঠা মার্ক</a>
             <a class="ui-btn ui-mini ui-btn-inline" data-role="button" data-mini="true" data-rel="back">Close বন্ধ</a>
 
             <div id="listDiv">
                 <div class="ui-corner-all custom-corners">
                     <div class="ui-bar">
-                        <h3>Page</h3>
+                        <h3>Page পৃষ্ঠা</h3>
                     </div>
                     <ul data-role="listview" id="pageBookmarkListView" class="listviewfix">
-                        <li data-icon="delete">
-                            <a href="acura.html"><span>Al-Fātiĥah</span> <span>سورة الفاتحة</span> <span>1:1</span> <p class="ui-li-aside ayah-snippet"><span>وَلْيَحْكُمْ أَهْلُ ٱلْإِنجِيلِ بِمَآ</span></p><span class="ui-li-count">12</span></a>
-
-                        </li>
-                        <li data-icon="delete">
-                            <a href="acura.html"><span>Al-Fātiĥah</span> <span>سورة الفاتحة</span> <span>1:1</span> <p class="ui-li-aside ayah-snippet"><span>وَلْيَحْكُمْ أَهْلُ ٱلْإِنجِيلِ بِمَآ</span></p><span class="ui-li-count">12</span></a>
-
-                        </li>
-                        <li data-icon="delete">
-                            <a href="acura.html"><span>Al-Fātiĥah</span> <span>سورة الفاتحة</span> <span>1:1</span> <p class="ui-li-aside ayah-snippet"><span>وَلْيَحْكُمْ أَهْلُ ٱلْإِنجِيلِ بِمَآ</span></p><span class="ui-li-count">12</span></a>
-
-                        </li>
-                        <li data-icon="delete">
-                            <a href="acura.html"><span>Al-Fātiĥah</span> <span>سورة الفاتحة</span> <span>1:1</span> <p class="ui-li-aside ayah-snippet"><span>وَلْيَحْكُمْ أَهْلُ ٱلْإِنجِيلِ بِمَآ</span></p><span class="ui-li-count">12</span></a>
-
-                        </li>
+                  
                     </ul>
                     <div class="ui-bar">
-                        <h3>Ayah</h3>
+                        <h3>Ayah আয়াত</h3>
                     </div>
                     <ul id="ayahBookmarkListView" data-role="listview"  class="listviewfix"></ul>
                     <div class="ui-bar">
-                        <h3>Word</h3>
+                        <h3>Word শব্দ</h3>
                     </div>
                     <ul id="wordBookmarkListView" data-role="listview"  class="listviewfix"></ul>
                 </div>
@@ -269,5 +257,10 @@
     <script src="js/swiper.js"></script>
 
     <script src="js/index.js?v=6"></script>
+
+    <script defer="defer" type="text/javascript" src="page/surahs.js"></script>
+    <script defer="defer" type="text/javascript" src="js/sugar.js"></script>
+    <script defer="defer" type="text/javascript" src="page/sura_ayah_map.js"></script>
+
 </body>
 </html>

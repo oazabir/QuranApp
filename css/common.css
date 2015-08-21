@@ -75,10 +75,11 @@
 
 .feature_bar {
     position: absolute;
-    left: 400px;
-    top: 2px;
-    z-index: 100;    
-    word-spacing: 10px; 
+    left: 50%;
+    top: 4px;
+    z-index: 10000;
+    word-spacing: 10px;
+    margin-left: 130px;
 }
 
 .feature_bar a {
@@ -385,6 +386,13 @@ body {
             display:inline-block;
         }
 
+#listDiv span.arabic {
+    font-size: 140%;
+
+    font-stretch: extra-condensed;
+}
+
+
 .listviewfix {
     margin: 0px !important;
 }
@@ -396,6 +404,13 @@ body {
     overflow: hidden;
     white-space:nowrap;
     text-overflow:ellipsis;   
+    margin-left: 10px;
+}
+
+.bangla_subtitle {
+    clear: both;
+    font-size: 10px;
+    margin-left: 1em;
 }
 
 .bookmark-surahname {
