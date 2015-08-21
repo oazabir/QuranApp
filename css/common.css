@@ -143,6 +143,24 @@ body {
     color: red; /*background-color: #ccffcc; -moz-border-radius: 10px; -webkit-border-radius: 10px; */
 }
 
+.tooltipster-base .arabic_word {
+    color: lightgreen;
+    font-size: 200%;
+    margin-right: 1em;
+}
+
+.tooltipster-base .transliteration {
+    color: yellow;
+    font-family: Georgia;
+    font-style: italic;
+    margin-right: 1em;
+}
+
+.tooltipster-base .root {
+    color: #f99;
+    font-weight: bold;
+    font-size: 150%;
+}
 
 .tooltipster-base .bangla_meaning {
     text-align: center;
@@ -180,7 +198,8 @@ body {
 
     .tooltipster-base .lemma span {
         color: lightgreen;
-        font-size: 14pt;
+         font-size: 200%;
+    
     }
 
 .tooltipster-base .lemma_meaning {
@@ -437,6 +456,7 @@ body {
     color: ivory;
     font-size: 30px;
     text-decoration: none;
+    float: right;
 }
 
 .bookmarked_word {
