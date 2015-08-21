@@ -49,13 +49,14 @@ function showDetails(key) {
 }
 
 function getCurrentSura() {
-    var lastSura;
     var surahs = Object.values(window.surahs);
     var pageNo = getCurrentPageNo();
-    surahs.find(function (s) {
-        lastSura = s;
-        return pageNo < s.p;
-    });
+    var lastSura = surahs[0];
+    var s = 0;
+    while(s < surahs.length && surahs[s].p <= pageNo) {
+        lastSura = surahs[s];
+        s++;
+    }
     return lastSura;
 }
 
@@ -717,6 +718,12 @@ function jQueryMobileHack() {
 }
 
 
+function updateSurahPanel() {
+    var sura = getCurrentSura();
+    $("#surahpanel select")[0].selectedIndex = sura.s - 1;
+    $("#surahpanel select").selectmenu('refresh');
+}
+
 $('#home').on("pagecreate", function (event) {
 
     $('#surahpanel select').bind("change", function (event, ui) {
@@ -726,10 +733,11 @@ $('#home').on("pagecreate", function (event) {
     });
 
     $("#surahpanel").on("panelbeforeopen", function () {
-        updateSurahPanel(getCurrentPageNo());       
+        updateSurahPanel();       
     });
 
     
     jQueryMobileHack();
 });
 
+$.mobile.popup.prototype.options.history = false;
