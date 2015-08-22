@@ -485,3 +485,22 @@ body {
 .ui-listview, .ui-listview > li, .ui-listview > li > a {
     font-size: 12px;
 }
+
+table {
+    
+}
+
+#VerbForms table, #VerbForms th, #VerbForms td {
+    border: 1px solid #555;
+    color: cyan;
+    font-weight: normal;
+    padding: 5px;
+}
+
+#VerbForms td {
+    font-size: 150%;
+}
+#VerbForms {
+    font-size: 120%;
+    border-collapse: collapse;
+}

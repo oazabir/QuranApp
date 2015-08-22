@@ -36,6 +36,9 @@ function showDetails(key) {
         $('#meaningPopup .lemma_meaning').text(meaning.lb);
         $('#meaningPopup .lemma_frequency').text(meaning.lc);
         $('#meaningPopup .transliteration').text(meaning.tl);
+        $('#VerbForms tbody').html("");
+        var verbFormsHtml = window.verbforms[meaning.r] ? window.verbforms[meaning.r]["I"] : "";
+        $('#VerbForms tbody').html(verbFormsHtml);
         if (meaning.r) {
             $('#meaningPopup .root').text(meaning.r[0] + ' ' + meaning.r[1] + ' ' + meaning.r[2] + ' ' + (meaning.r[3] || ""));
         } else {

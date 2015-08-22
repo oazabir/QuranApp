@@ -193,6 +193,39 @@ set @translations = @translations + CHAR(13) + '});' + CHAR(13)
 
 print @translations
 
+declare @verbforms nvarchar(max)
+set @verbforms = N'window.verbforms = window.verbforms || {};' + char(13)
+
+SELECT @verbforms = COALESCE(@verbforms + char(13), '') + json FROM 
+(
+select 
+	N'window.verbforms["'+root+'"] = (window.verbforms["'+root+'"]||{}); window.verbforms["'+root+'"]["'+Form+'"] ="<tr><td>'+ISNULL(Form,'')+'</td><td>'+ISNULL(Perfect,'')+'</td><td>'+ISNULL(Imperfect,'')+'</td><td>'+ISNULL(ActiveParticiple,'')+'</td><td>'+ISNULL(PassiveParticiple,'')+'</td><td>'+ISNULL(VerbalNoun,'')+'</td></tr>";' 
+	as json
+	FROM
+(
+SELECT [Root]
+      ,[Form]
+      ,[Perfect]
+      ,[Imperfect]
+      ,[ActiveParticiple]
+      ,[PassiveParticiple]
+      ,[VerbalNoun]
+  FROM [Quran].[dbo].[VerbFormsByRoot]
+  where root in (select distinct root from wordpartinformation 		
+		where word > 0
+		and type = 'STEM'
+		and Position = 'V'
+		and exists (select * FROM surah_page 
+		where page = @page_no and Chapter = sura and Verse = ayah))
+		
+		/*(select distinct root from WordInformation
+		where word > 0		
+		and exists (select * FROM surah_page 
+		where page = @page_no and Chapter = sura and Verse = ayah))*/
+) A
+) B
+
+print @verbforms
 
 
 declare @path varchar(100)
@@ -207,10 +240,9 @@ exec [dbo].[spWriteStringToFile]  @html, @path, @filename
 -- json
 
 declare @content nvarchar(max)
-set @content = @json + @translations
+set @content = @json + @translations + @verbforms
 set @filename = 'page' + @pagestr + '.js'
 exec [dbo].[spWriteStringToFile]  @content, @path, @filename
-
 
 
    SET @page_no = @page_no + 1;
