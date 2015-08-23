@@ -24,30 +24,19 @@ function showDetails(key) {
 
     var meaning = window.wordbyword[key];
     if (meaning) {
+        var popup = $('#meaningPopup');
+        // pickup the template from saved location, if the html has been modified during last popup show
+        var template = popup.data('template') || popup.html();
+        popup.data('template', template);
 
-        $('#meaningPopup .arabic_word').text(meaning.t);
-        $('#meaningPopup .arabic_word').attr('href', 'http://www.almaany.com/en/dict/ar-en/' + meaning.t);
+        var output = template.assign(meaning, {
+            textlink: 'http://www.almaany.com/en/dict/ar-en/' + meaning.t,
+            lemmalink: 'http://www.almaany.com/en/dict/ar-en/' + meaning.l,
+            rootsplit: meaning.r == "" ? "" : meaning.r[0] + ' ' + meaning.r[1] + ' ' + meaning.r[2] + ' ' + (meaning.r[3] || ""),
+            rootlink: 'http://ejtaal.net/m/aa/#q=' + meaning.r
+        });
 
-        $('#meaningPopup .frequency').text(meaning.f);
-        $('#meaningPopup .bangla_meaning').text(meaning.b);
-        $('#meaningPopup .english_meaning').text(meaning.e);
-        $('#meaningPopup .lemma').text(meaning.l);
-        $('#meaningPopup .lemma').attr('href', 'http://www.almaany.com/en/dict/ar-en/' + meaning.l);
-        $('#meaningPopup .lemma_meaning').text(meaning.lb);
-        $('#meaningPopup .lemma_frequency').text(meaning.lc);
-        $('#meaningPopup .transliteration').text(meaning.tl);
-        //$('#VerbForms tbody').html("");
-        //var verbFormsHtml = window.verbforms[meaning.r] ? window.verbforms[meaning.r]["I"] : "";
-        //$('#VerbForms tbody').html(verbFormsHtml);
-        if (meaning.r) {
-            $('#meaningPopup .root').text(meaning.r[0] + ' ' + meaning.r[1] + ' ' + meaning.r[2] + ' ' + (meaning.r[3] || ""));
-        } else {
-            $('#meaningPopup .root').text("");
-        }
-        $('#meaningPopup .root_meanings').text(meaning.rm);
-        $('#meaningPopup .dictionary a').attr('href', 'http://ejtaal.net/m/aa/#q=' + meaning.r)
-
-        $('#meaningPopup').popup('open');
+        popup.html(output).popup('open');
     }
 }
 

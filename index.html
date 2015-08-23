@@ -15,7 +15,7 @@
     <link rel="stylesheet" type="text/css" href="css/tooltipster.css" />
     <link rel="stylesheet" type="text/css" href="css/common.css?v=6" />
     <script type="text/javascript">
-        var version = 8;
+        var version = 9;
         var versionSuffix = "?v=" + version;
     </script>
     <script type="text/javascript" src="js/jquery-1.11.3.min.js"></script>
@@ -85,12 +85,12 @@
 
         <div data-role="popup" id="meaningPopup" class="ui-content" style="max-width:400px" data-theme="b">
 
-            <p><a target="_blank" class="arabic_word"></a></p>
-            <p><span class="bangla_meaning"></span> <span class="english_meaning"></span><span class="frequency_wrap">(<span class="frequency"></span> times বার)</span></p>
-            <p>Lemma এসেছে: <a target="_blank" class="lemma"></a> : <span class="lemma_meaning"> </span> <span class="frequency_wrap">(<span class="lemma_frequency"></span> times বার)</span></p>
-            <p>Transliteration: <span class="transliteration">l-raḥmāni</span></p>
-            <p>Root মূল: <span class="root"></span></p>
-            <p>Meaning of Root মূলের অর্থ: <span class="root_meanings"></span></p>
+            <p><a target="_blank" href="{textlink}" class="arabic_word">{t}</a></p>
+            <p><span class="bangla_meaning">{b}</span> <span class="english_meaning">{e}</span><span class="frequency_wrap">(<span class="frequency">{f}</span> times বার)</span></p>
+            <p>Lemma এসেছে: <a target="_blank" href="{lemmalink}" class="lemma">{l}</a> : <span class="lemma_meaning">{lb}</span> <span class="frequency_wrap">(<span class="lemma_frequency">{lc}</span> times বার)</span></p>
+            <p>Transliteration: <span class="transliteration">{tl}</span></p>
+            <p>Root মূল: <span class="root">{rootsplit}</span></p>
+            <p>Meaning of Root মূলের অর্থ: <span class="root_meanings">{rm}</span></p>
             <!--<table id="VerbForms">
                 <thead>
                     <tr><th>Form</th><th>الماضي</th><th>المضارع</th><th>اسم الفاعل</th><th>اسم المفعول</th><th>المصدر</th></tr>
@@ -100,7 +100,7 @@
                 </tbody>
             </table>-->
             <div class="dictionary">
-                <a class="ui-btn ui-btn-inline" data-role="button" target="_blank" data-mini="true">See Dictionary </a>
+                <a class="ui-btn ui-btn-inline" data-role="button" target="_blank" data-mini="true" href="{rootlink}">See Dictionary </a>
                 <a class="ui-btn ui-btn-inline" data-role="button" data-mini="true" data-rel="back">Close বন্ধ</a>
             </div>
 
@@ -264,7 +264,7 @@
     <!-- Load swiper after the page markup is done -->
     <script src="js/swiper.js"></script>
 
-    <script src="js/index.js?v=6"></script>
+    <script src="js/index.js?v=8"></script>
 
     <script defer="defer" type="text/javascript" src="page/surahs.js"></script>
     <script defer="defer" type="text/javascript" src="js/sugar.js"></script>
