@@ -146,14 +146,14 @@ body {
 .tooltipster-base .arabic_word {
     color: lightgreen;
     font-size: 200%;
-    margin-right: 1em;
+    margin-right: 0.5m;
 }
 
 .tooltipster-base .transliteration {
     color: yellow;
     font-family: Georgia;
     font-style: italic;
-    margin-right: 1em;
+    margin-right: 0.5em;
 }
 
 .tooltipster-base .root {

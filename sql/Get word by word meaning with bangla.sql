@@ -2,9 +2,9 @@
 go
 
 
-DECLARE @page_no numeric = 1;
+DECLARE @page_no numeric = 2;
 
-WHILE @page_no <= 604
+WHILE @page_no <= 2
 BEGIN
 
 declare @pagestr nvarchar(3)
@@ -192,7 +192,7 @@ set @translations = @translations + CHAR(13) + '});' + CHAR(13)
 --print @json
 
 print @translations
-
+/*
 declare @verbforms nvarchar(max)
 set @verbforms = N'window.verbforms = window.verbforms || {};' + char(13)
 
@@ -218,15 +218,12 @@ SELECT [Root]
 		and exists (select * FROM surah_page 
 		where page = @page_no and Chapter = sura and Verse = ayah))
 		
-		/*(select distinct root from WordInformation
-		where word > 0		
-		and exists (select * FROM surah_page 
-		where page = @page_no and Chapter = sura and Verse = ayah))*/
+		
 ) A
 ) B
 
 print @verbforms
-
+*/
 
 declare @path varchar(100)
 declare @filename varchar(100)
