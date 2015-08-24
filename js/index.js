@@ -162,8 +162,9 @@ function buildAyahNumberTooltip(ayahMark, sura, ayah, isBookmarked) {
 
     }
 
-    var actionsTemplate = '<div class="ayah_actions"> \
+    var actionsTemplate = '<div id="ayah_actions"> \
                     <a href="#bookmarkPopup" class="{bookmarked}" id="bookmark_ayah" sura="{sura}" ayah="{ayah}" onclick="toggleAyahBookmark()">&#x1f516;</a> \
+                    <a href="#" id="translation_ayah" sura="{sura}" ayah="{ayah}" onclick="showTranslationAyah()">&#x1f4d6;</a> \
                     </div>';
     var actionContent = actionsTemplate.assign({ sura: sura, ayah: ayah, bookmarked: isBookmarked ? 'bookmarked_ayah' : '' });
     ayahMark.tooltipster({
@@ -248,7 +249,7 @@ function loadPage(pageNo) {
     pageDiv.attr("status", "loading");
 
     $.mobile.loading('show');
-    $.ajaxSetup({ cache: true });
+    $.ajaxSetup({ cache: false });
 
     $.get('page/page' + pageStr + '.html' + versionSuffix, function (response) {
 
@@ -368,6 +369,18 @@ function loadPage(pageNo) {
             jQueryMobileHack();
         }
 
+        window.showTranslationAyah = function () {
+            var e = jQuery.event.fix(event || window.event);
+            var link = $(e.target);
+
+            var sura = link.attr("sura");
+            var ayah = link.attr("ayah");
+            window.translationJump = { sura: sura, ayah: ayah };
+
+            $('#translationPopup').popup('open', { positionTo: '#pagejumpbutton' });
+            return true;
+        }
+
         // When clicked on ayah bookmark:
         // 1. Add the word in the bookmark, or remove it.        
         // 3. Make the word show (un)bookmarked color.
@@ -473,6 +486,35 @@ $('#pagejumppanel').on("popupafteropen", function (event) {
     $('#pagenumberToJump').val(getCurrentPageNo()).focus().textinput('refresh');
 });
 
+
+$('#translationPopup').on("popupafteropen", function (event) {
+    var pageNo = getCurrentPageNo();
+    var url = "page/bangla" + (pageNo.pad(3)) + ".html";
+    var contentArea = $('#translationContent');
+    contentArea.load(url, function () {
+        var firstWord = getPageDiv(pageNo).find('.word').first();
+        var suraNo = firstWord.attr('sura');
+        var ayahNo = firstWord.attr('ayah');
+
+        if (window.translationJump) {
+            suraNo = window.translationJump.sura;
+            ayahNo = window.translationJump.ayah;
+            window.translationJump = null;
+        }
+        
+        var ayahBookmark = $('#translationContent a[name="' + suraNo + ':' + ayahNo + '"]');
+        var verseP = ayahBookmark.parent();
+        var scrollY = ayahBookmark.offset().top - contentArea.offset().top - 15 * 2;
+        contentArea.scrollTop(scrollY);
+
+        verseP.addClass('highlighted');
+        window.setTimeout(function () {
+            verseP.removeClass('highlighted');
+        }, 3000);
+    });
+    
+    
+});
 
 var BookmarkManager = {
     pageBoomarksName : "pageBookmarks",
@@ -710,6 +752,8 @@ $('#bookmarkPopup').on("popupafteropen", function (event) {
 
 });
 
+
+
 function jQueryMobileHack() {
     // this is to prevent a bug in jquery mobile.
     document.documentElement.focus();
@@ -733,9 +777,9 @@ $('#home').on("pagecreate", function (event) {
     $("#surahpanel").on("panelbeforeopen", function () {
         updateSurahPanel();       
     });
-
     
     jQueryMobileHack();
 });
 
 $.mobile.popup.prototype.options.history = false;
+

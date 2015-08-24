@@ -78,8 +78,9 @@
     left: 50%;
     top: 4px;
     z-index: 10000;
-    word-spacing: 10px;
-    margin-left: 130px;
+    word-spacing: 8px;
+    margin-left: 120px;
+    font-family: Arial;
 }
 
 .feature_bar a {
@@ -437,12 +438,6 @@ body {
 }
 
 
-#bookmark_ayah {
-    color: ivory;
-    font-size: 30px;
-    text-decoration: none;
-}
-
 .bookmarked_ayah {
     color: red;
 }
@@ -456,6 +451,13 @@ body {
     font-size: 30px;
     text-decoration: none;
     float: right;
+}
+
+#ayah_actions a {
+    color: ivory;
+    font-size: 30px;
+    text-decoration: none;
+    word-spacing: 5px;
 }
 
 #bookmark_word {
@@ -504,3 +506,34 @@ table {
     font-size: 120%;
     border-collapse: collapse;
 }
+
+#translationContent {
+    height: 300px;
+    overflow: auto;
+    background-color:rgba(0,0,0,0.8);
+    padding: 15px;
+}
+
+#translationPopup { width: 500px; color: white;  }
+
+#translationContent .surah {
+    line-height: 40px;
+    background: url('../images/SurahPartition.png') no-repeat 20px;
+    text-align: center;
+    color: black;
+    font-family: SolaimanLipiNormal, Nikosh2, SolaimanLipi, Nikosh, NikoshBAN, Georgia, sans-serif;
+    font-size: 15px;
+}
+
+p.verse, p.bismillah {
+    position: relative;
+    font-family: SolaimanLipiNormal, Nikosh2, SolaimanLipi, Nikosh, NikoshBAN, Georgia, sans-serif;
+    line-height: 1.5em;
+    font-size: 16px;
+    margin: 0;
+}
+
+p.verse.highlighted {
+    background-color: darkgreen;
+}
+

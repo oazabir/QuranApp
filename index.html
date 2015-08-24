@@ -15,7 +15,7 @@
     <link rel="stylesheet" type="text/css" href="css/tooltipster.css" />
     <link rel="stylesheet" type="text/css" href="css/common.css?v=6" />
     <script type="text/javascript">
-        var version = 9;
+        var version = 10;
         var versionSuffix = "?v=" + version;
     </script>
     <script type="text/javascript" src="js/jquery-1.11.3.min.js"></script>
@@ -56,8 +56,16 @@
             <div class="feature_bar">
                 <a href="#searchPopup" data-rel="popup" id="searchsurah_link">&#x1f50d;</a>
                 <a href="#bookmarkPopup" data-rel="popup" id="bookmark_link">&#x1f516;</a>
+                <a href="#translationPopup" data-rel="popup" id="translation_link" data-position-to="#pagejumpbutton" >&#x1f4d6;</a>
             </div>
+           
         </div>
+        
+        <div data-role="popup" id="translationPopup"  data-theme="none" data-corners="false">
+            <a href="#" data-rel="back" class="ui-btn ui-btn-b ui-corner-all ui-shadow ui-btn-a ui-icon-delete ui-btn-icon-notext ui-btn-right">Close</a>
+            <div id="translationContent"></div>
+        </div>
+
 
         <div data-role="popup" id="bookmarkPopup" class="ui-content" data-theme="a">
             <a class="ui-btn ui-mini ui-btn-inline" data-role="button" data-mini="true" id="addPageBookmark">Bookmark this page পৃষ্ঠা মার্ক</a>

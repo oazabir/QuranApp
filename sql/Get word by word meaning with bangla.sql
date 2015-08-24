@@ -2,9 +2,9 @@
 go
 
 
-DECLARE @page_no numeric = 2;
+DECLARE @page_no numeric = 1;
 
-WHILE @page_no <= 2
+WHILE @page_no <= 604
 BEGIN
 
 declare @pagestr nvarchar(3)
@@ -71,6 +71,39 @@ set @html = @html + CHAR(13) + '</div>' --+ CHAR(13) + '</div>' + CHAR(13)
 
 print @html
 
+
+
+declare @trans nvarchar(max)
+set @trans = N'';
+
+-- Generate translation pages
+with getBasmalah AS 
+(
+	select Content, TranslatorID from Ayahs where SurahNo = 1 and AyahNo = 1
+)
+SELECT @trans = COALESCE(@trans + char(13), '') + text FROM 
+(
+select sura, ayah,
+	(case  
+		when ayah = 1 then 
+			'<p class="surah">' + (select Name from SurahNames where SurahNo = Sura and LanguageID = 2) + '</p>' + char(13)
+			+ '<p class="bismillah">' + (select Content from getBasmalah where TranslatorID = 5) + '</p>' + char(13)
+			
+		else ''
+	end) 
+	+ '<p class="verse"><a name="'+ convert(nvarchar(3), sura) + ':' + convert(nvarchar(3), ayah)+'" />' 
+	+ convert(nvarchar(3),ayah) + ': '
+	+ (select Content from Ayahs where SurahNo = sura and AyahNo = ayah and TranslatorID = 5)
+	+ '</p>'	
+	as text
+FROM
+	(
+		select sura, ayah, text from surah_page p where page=@page_no
+	) A
+) B
+order by sura, ayah
+
+print @trans
 
 
 -- Generate JSON for the page
@@ -234,10 +267,15 @@ set @filename = 'page' + @pagestr + '.html'
 exec [dbo].[spWriteStringToFile]  @html, @path, @filename
 
 
+-- translation
+set @path = 'E:\GitHub\QuranApp\page'
+set @filename = 'bangla' + @pagestr + '.html'
+exec [dbo].[spWriteStringToFile]  @trans, @path, @filename
+
 -- json
 
 declare @content nvarchar(max)
-set @content = @json + @translations + @verbforms
+set @content = @json + @translations -- + @verbforms
 set @filename = 'page' + @pagestr + '.js'
 exec [dbo].[spWriteStringToFile]  @content, @path, @filename
 
