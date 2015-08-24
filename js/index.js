@@ -249,7 +249,7 @@ function loadPage(pageNo) {
     pageDiv.attr("status", "loading");
 
     $.mobile.loading('show');
-    $.ajaxSetup({ cache: false });
+    $.ajaxSetup({ cache: true });
 
     $.get('page/page' + pageStr + '.html' + versionSuffix, function (response) {
 
