@@ -513,7 +513,7 @@ table {
     padding: 15px;
 }
 
-#translationPopup { width: 500px; color: white; height: 300px; }
+#translationPopup { width: 500px; color: white; }
 
 #translationContent .surah {
     line-height: 40px;

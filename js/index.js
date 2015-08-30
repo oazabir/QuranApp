@@ -487,7 +487,7 @@ $('#pagejumppanel').on("popupafteropen", function (event) {
 });
 $('#translationPopup').on("popupbeforeposition", function (event) {
     var maxHeight = $(window).height() - 30;
-    $(this).css('height', (maxHeight * 0.4) + "px");
+    //$(this).css('height', (maxHeight * 0.4) + "px");
 });
 
 $('#translationPopup').on("popupafteropen", function (event) {
