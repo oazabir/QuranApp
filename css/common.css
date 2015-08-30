@@ -511,9 +511,10 @@ table {
     overflow: auto;
     background-color:rgba(0,0,0,0.8);
     padding: 15px;
+    height: 300px;
 }
 
-#translationPopup { width: 500px; color: white; }
+#translationPopup { width: 500px; color: white; max-height: 40%; }
 
 #translationContent .surah {
     line-height: 40px;
