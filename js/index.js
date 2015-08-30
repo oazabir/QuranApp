@@ -153,7 +153,8 @@ function buildAyahNumberTooltip(ayahMark, sura, ayah, isBookmarked) {
     
     ayahMark.tooltipster({
         contentAsHTML: true,
-        content: output
+        content: output,
+        delay: 500
     });
 
     if (isBookmarked) {
@@ -172,7 +173,8 @@ function buildAyahNumberTooltip(ayahMark, sura, ayah, isBookmarked) {
         interactive: true,
         content: actionContent,
         multiple: true,
-        position: 'right'
+        position: 'right',
+        delay: 500
     });
 }
 
@@ -285,6 +287,7 @@ function loadPage(pageNo) {
                 $(this).tooltipster({
                     contentAsHTML: true,
                     interactive: true,
+                    delay: 500,
 
                     functionBefore: function (origin, continueTooltip) {
                         var sura = $(this).attr("sura");
