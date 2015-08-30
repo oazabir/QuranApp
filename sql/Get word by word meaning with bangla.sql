@@ -2,7 +2,7 @@
 go
 
 
-DECLARE @page_no numeric = 256;
+DECLARE @page_no numeric = 1;
 
 WHILE @page_no <= 604
 BEGIN
@@ -10,17 +10,13 @@ BEGIN
 declare @pagestr nvarchar(3)
 set @pagestr =  RIGHT('000'+ CONVERT(VARCHAR,@page_no),3) 
 
-
 -- generate html output
 
 DECLARE @html NVARCHAR(max)  
-set @html = N''
---set @html = N'<div class="page section" id="page' + @pagestr + '" pageno="' + @pagestr + '">' + CHAR(13)
---set @html = N'<div class="page section" id="page' + @pagestr + '">' + CHAR(13)
+set @html = N' '
 
 -- get surah name
 declare @surahname nvarchar(max)
---select @surahname = name from [SurahNames] where languageid = 2 and surahno = (select min(sura) from madani_text where page = @page_no)
 select @surahname = text from madani_page
 where sura = (select min(sura) from madani_page where page = @page_no)
 and ayah = 0 and len(text) < 20
@@ -69,9 +65,46 @@ order by B.line
 
 -- generate page number
 
-set @html = @html + N'<div class="page_no"><a href="#pagejumppanel" id="pagejumpbutton" data-transition="flip">' + dbo.udf_GetArabicNumbers(@page_no) + N'</a></div>'
+set @html = @html + N'<div class="page_no"><a href="#pagejumppanel" id="pagejumpbutton" data-rel="popup">' + dbo.udf_GetArabicNumbers(@page_no) + N'</a></div>'
 
 set @html = @html + CHAR(13) + '</div>' --+ CHAR(13) + '</div>' + CHAR(13)
+
+print @html
+
+
+
+declare @trans nvarchar(max)
+set @trans = N'';
+
+-- Generate translation pages
+with getBasmalah AS 
+(
+	select Content, TranslatorID from Ayahs where SurahNo = 1 and AyahNo = 1
+)
+SELECT @trans = COALESCE(@trans + char(13), '') + text FROM 
+(
+select sura, ayah,
+	(case  
+		when ayah = 1 then 
+			'<p class="surah">' + (select Name from SurahNames where SurahNo = Sura and LanguageID = 2) + '</p>' + char(13)
+			+ '<p class="bismillah">' + (select Content from getBasmalah where TranslatorID = 5) + '</p>' + char(13)
+			
+		else ''
+	end) 
+	+ '<p class="verse"><a name="'+ convert(nvarchar(3), sura) + ':' + convert(nvarchar(3), ayah)+'" />' 
+	+ convert(nvarchar(3),ayah) + ': '
+	+ (select Content from Ayahs where SurahNo = sura and AyahNo = ayah and TranslatorID = 5)
+	+ '</p>'	
+	as text
+FROM
+	(
+		select sura, ayah, text from surah_page p where page=@page_no
+	) A
+) B
+order by sura, ayah
+
+print @trans
+
 
 -- Generate JSON for the page
 
@@ -82,7 +115,7 @@ set @json = @json + 'window.wordbyword = $.extend(window.wordbyword || {}, {'
 
 SELECT @json = COALESCE(@json + char(13), '') + json FROM 
 (
-select N'"' + convert(nvarchar(50),chapter)+':'+convert(nvarchar(50),verse)+':'+convert(nvarchar(50),word) 
+select top 100 percent N'"' + convert(nvarchar(50),chapter)+':'+convert(nvarchar(50),verse)+':'+convert(nvarchar(50),word) 
 	+ '" : {s: ' + convert(nvarchar(50),chapter) 
 	+ ', a: ' + convert(nvarchar(50),verse) 
 	+ ', w: ' + convert(nvarchar(50),word) 
@@ -91,11 +124,12 @@ select N'"' + convert(nvarchar(50),chapter)+':'+convert(nvarchar(50),verse)+':'+
 	+ '", l: "' + lemma 
 	+ '", lc: ' + convert(nvarchar(5),lemmacount)
 	+ ', tl: "' + replace(Transliteration, '"', '')
-	+ '", lb: "' + replace(LemmaBangla, '"', '')
-	+ '",e: "' + replace(meaning, '"', '')
-	+ '", b: "' + replace(bangla, '"', '')
-	+ '", f: ' + convert(nvarchar(50),frequency) 
-	+ ', rm: "' + replace(RootMeaning, '"', '')
+	+ '", lb: "' + replace(ltrim(rtrim(LemmaBangla)), '"', '')
+	+ '",e: "' + replace(ltrim(rtrim(meaning)), '"', '')
+	+ '", b: "' + replace(rtrim(ltrim(bangla)), '"', '')
+	+ '", i: "' + replace(Indonesia, '"', '')
+	+ '", f: ' + convert(nvarchar(6),frequency) 
+	+ ', rm: "' + replace(replace(replace(RootMeaning, '"', ''), char(13), ' '),char(10), '')
 	+ '"},' as json FROM
 
 
@@ -119,6 +153,8 @@ select N'"' + convert(nvarchar(50),chapter)+':'+convert(nvarchar(50),verse)+':'+
 		,isnull((select top 1 replace(rtrim(ltrim(EnglishMeaning)),'"', '') from Meanings where SurahNo = chapter and VerseNo = verse and WordNo = word),Meaning) as meaning
 		--,replace(rtrim(ltrim(meaning)),'"', '') as meaning
 		
+		,isnull((select translation_id from Indonesia where sura = w.Chapter and vers = w.Verse and pos = w.Word), '') as Indonesia
+
 		,replace(
 		replace(
 		ltrim(rtrim(ISNULL((
@@ -128,7 +164,7 @@ select N'"' + convert(nvarchar(50),chapter)+':'+convert(nvarchar(50),verse)+':'+
 		,'''', '')
 		as Bangla
 		
-		,ISNULL((select top 1 frequency from [BanglaWordbyWord] b where b.Word = w.Text ), 0) as Frequency
+		,ISNULL((select count(1) from [WordInformation] w1 where w1.root = w.root and w1.text = w.text ), 0) as Frequency
 	
 		,replace(
 			ISNULL((select top 1 b.Bangla from 
@@ -144,15 +180,20 @@ select N'"' + convert(nvarchar(50),chapter)+':'+convert(nvarchar(50),verse)+':'+
 		as RootMeaning
 
 		from wordinformation w 
+		
 		where word > 0
 		and exists (select * FROM surah_page 
 		where page = @page_no and Chapter = sura and Verse = ayah)
-	) A	
+	) A		
 ) B
-group by chapter, verse, word, text, Root, Lemma, LemmaCount, Transliteration, LemmaBangla, meaning, Bangla, Frequency, rootmeaning
+--order by B.Chapter, B.Verse, B.Word
+group by chapter, verse, word, text, Root, Lemma, LemmaCount, Transliteration, LemmaBangla, meaning, Bangla, Indonesia, Frequency, rootmeaning
 ) C
 
+
 set @json = @json + CHAR(13) + '});' + CHAR(13) -- + '</script>' + CHAR(13)
+print @json
+
 
 declare @translations nvarchar(max)
 set @translations = N'window.translation = $.extend(window.translation || {}, {'
@@ -164,12 +205,15 @@ select N'"' + convert(nvarchar(50),surahno)+':'+convert(nvarchar(50),ayahno)
 	+ ', a: ' + convert(nvarchar(50),ayahno) 	
 	+ ', e: "' + replace(English, '"', '')
 	+ '", b: "' + replace(Bangla, '"', '')
+	+ '", t: "' + replace(Arabic, '"', '')
 	+ '"},' as json FROM
 	(
-		select e.surahno, e.ayahno, e.content as English, b.content as Bangla
+		select e.surahno, e.ayahno, a.Content as Arabic, e.content as English, b.content as Bangla
 		from Ayahs e inner join Ayahs b on b.SurahNo = e.SurahNo and b.AyahNo = e.AyahNo
+		inner join Ayahs a on a.SurahNo = e.SurahNo and a.AyahNo = e.AyahNo
 		where 
-		e.TranslatorID = 45
+		a.TranslatorID = 7
+		and e.TranslatorID = 45
 		AND b.TranslatorID = 5
 		and exists (select * FROM surah_page 
 		where page = @page_no and e.surahno = sura and e.ayahno = ayah)
@@ -178,29 +222,63 @@ select N'"' + convert(nvarchar(50),surahno)+':'+convert(nvarchar(50),ayahno)
 
 set @translations = @translations + CHAR(13) + '});' + CHAR(13) 
 
-
--- Output to file
-
-print @html
-
-print @json
+--print @json
 
 print @translations
+/*
+declare @verbforms nvarchar(max)
+set @verbforms = N'window.verbforms = window.verbforms || {};' + char(13)
+
+SELECT @verbforms = COALESCE(@verbforms + char(13), '') + json FROM 
+(
+select 
+	N'window.verbforms["'+root+'"] = (window.verbforms["'+root+'"]||{}); window.verbforms["'+root+'"]["'+Form+'"] ="<tr><td>'+ISNULL(Form,'')+'</td><td>'+ISNULL(Perfect,'')+'</td><td>'+ISNULL(Imperfect,'')+'</td><td>'+ISNULL(ActiveParticiple,'')+'</td><td>'+ISNULL(PassiveParticiple,'')+'</td><td>'+ISNULL(VerbalNoun,'')+'</td></tr>";' 
+	as json
+	FROM
+(
+SELECT [Root]
+      ,[Form]
+      ,[Perfect]
+      ,[Imperfect]
+      ,[ActiveParticiple]
+      ,[PassiveParticiple]
+      ,[VerbalNoun]
+  FROM [Quran].[dbo].[VerbFormsByRoot]
+  where root in (select distinct root from wordpartinformation 		
+		where word > 0
+		and type = 'STEM'
+		and Position = 'V'
+		and exists (select * FROM surah_page 
+		where page = @page_no and Chapter = sura and Verse = ayah))
+		
+		
+) A
+) B
+
+print @verbforms
+*/
 
 declare @path varchar(100)
 declare @filename varchar(100)
 
 -- html
-set @path = 'E:\Google Drive2\Islam\QuranApp\page'
+set @path = 'E:\GitHub\QuranApp\page'
 set @filename = 'page' + @pagestr + '.html'
 exec [dbo].[spWriteStringToFile]  @html, @path, @filename
 
+
+-- translation
+set @path = 'E:\GitHub\QuranApp\page'
+set @filename = 'bangla' + @pagestr + '.html'
+exec [dbo].[spWriteStringToFile]  @trans, @path, @filename
+
 -- json
+
 declare @content nvarchar(max)
-set @content = @json + @translations
+set @content = @json + @translations -- + @verbforms
 set @filename = 'page' + @pagestr + '.js'
 exec [dbo].[spWriteStringToFile]  @content, @path, @filename
 
+
    SET @page_no = @page_no + 1;
 END;
-

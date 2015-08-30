@@ -55,24 +55,54 @@
 .word {
     cursor: hand;
     cursor: pointer;
+    color: #222;
+    word-spacing: 4px;
+    padding-left: 2px;
+    padding-right: 2px;
+    
+}
+
+.highlightword {
+
 }
 
 .ayah_number {
     text-align: center;
     cursor: hand;
     cursor: pointer;
+    color:#040;
+}
+
+.feature_bar {
+    position: absolute;
+    left: 50%;
+    top: 4px;
+    z-index: 10000;
+    word-spacing: 8px;
+    margin-left: 120px;
+    font-family: Arial;
+}
+
+.feature_bar a {
+    color: #333;
+    font-weight: normal;
+    font-size: 25px;
+    text-decoration: none;
 }
 
 #searchsurah_link {
-    position: absolute;
-    left: 400px;
-    top: 8px;
-    z-index: 100;
-    color: black;
-    font-weight: normal;
-    font-size: 16pt;
-    text-decoration: none;
+    
 }
+
+#bookmarkPopup {
+    height: 400px;
+    width: 400px;
+}
+
+.searchsurah_link:hover {
+    color: red; /*background-color: #ccffcc; -moz-border-radius: 10px; -webkit-border-radius: 10px; */
+}
+
 .error {
     color: red;
     font-size: 16px;
@@ -85,7 +115,7 @@
 .page {
     width: 550px;
     height: 822px;
-    background: url('../images/QuranBackground.png') no-repeat 0px 0px;
+    background: url('../images/QuranBackground.png?v=1') no-repeat 0px 0px;
     float: left;
     -webkit-user-select: none;
 }
@@ -110,19 +140,51 @@ body {
     color: red; /*background-color: #ccffcc; -moz-border-radius: 10px; -webkit-border-radius: 10px; */
 }
 
+.ayah_number:hover {
+    color: red; /*background-color: #ccffcc; -moz-border-radius: 10px; -webkit-border-radius: 10px; */
+}
+
+.tooltipster-base .arabic_word {
+    color: lightgreen;
+    font-size: 200%;
+    margin-right: 0.5m;
+}
+
+.tooltipster-base .transliteration {
+    color: yellow;
+    font-family: Georgia;
+    font-style: italic;
+    margin-right: 0.5em;
+}
+
+.tooltipster-base .root {
+    color: #f99;
+    font-weight: bold;
+    font-size: 150%;
+}
 
 .tooltipster-base .bangla_meaning {
     text-align: center;
-    font-size: 14pt;
+    font-size: 12pt;
     font-family: SolaimanLipiNormal, Nikosh2, SolaimanLipi, Nikosh, NikoshBAN, Georgia, sans-serif !important;
-    font-weigth: bold;
+    font-weigth: normal;
     line-height: 1.6em;
     color: yellow;
 }
 
+.tooltipster-base .indonesia_meaning {
+    text-align: center;
+    font-size: 12pt;
+    font-weigth: bold;
+    line-height: 1.6em;
+    color: lightblue;
+}
+
+.tooltipster-base { max-width: 400px; }
+
 .tooltipster-base .english_meaning {
     text-align: center;
-    font-size: 14pt;
+    font-size: 12pt;
     font-weigth: bold;
     line-height: 1.6em;
     color: lightgreen;
@@ -130,39 +192,42 @@ body {
 
 .tooltipster-base .lemma {
     text-align: justify;
-    font-size: 14pt;
+    font-size: 10pt;
     line-height: 1.6em;
+    clear: both;
 }
 
     .tooltipster-base .lemma span {
         color: lightgreen;
-        font-size: 18pt;
+         font-size: 200%;
+    
     }
 
 .tooltipster-base .lemma_meaning {
     text-align: justify;
-    font-size: 14pt;
+    font-size: 12pt;
     line-height: 1.6em;
     font-family: SolaimanLipiNormal, Nikosh2, SolaimanLipi, Nikosh, NikoshBAN, Georgia, sans-serif !important;
+    font-weight: normal;
 }
 
     .tooltipster-base .lemma_meaning span {
         color: yellow;
     }
 
-.tooltipster-base .meaning_details {
+/*.tooltipster-base .meaning_details {
     color: lightgrey;
     cursor: hand;
     cursor: pointer;
     text-align: center;
-    margin-top: 1em;
-    margin-bottom: 1em;
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
     border: 1px solid dimgray;
     -moz-border-radius: 5px; 
     -webkit-border-radius: 5px;
     border-radius: 5px;
     padding: 5px;
-}
+}*/
 
 .surah_title {
     position: absolute;
@@ -182,6 +247,10 @@ body {
     text-decoration: none;
     color: black;
     font-weight: normal;
+}
+
+.surah_title a:hover {
+    color: red; /*background-color: #ccffcc; -moz-border-radius: 10px; -webkit-border-radius: 10px; */
 }
 
 .page_no a {
@@ -208,7 +277,7 @@ body {
 }
 
 #meaningPopup .bangla_meaning {
-    font-weight: bold;
+    /*font-weight: bold;*/
     font-family: SolaimanLipiNormal, Nikosh2, SolaimanLipi, Nikosh, NikoshBAN, Georgia, sans-serif !important;
     font-size: 120%;
 }
@@ -236,13 +305,18 @@ body {
     font-style: italic;
 }
 
+#meaningPopup .indonesia_meaning {
+    font-weight: bold;
+    font-style: italic;
+}
+
 #meaningPopup .lemma {
     font-size: 200%;
     font-family: 'Arabic Typesetting';
 }
 
 #meaningPopup .lemma_meaning {
-    font-weight: bold;
+    /*font-weight: bold;*/
     font-family: SolaimanLipiNormal, Nikosh2, SolaimanLipi, Nikosh, NikoshBAN, Georgia, sans-serif !important;
     font-size: 120%;
 }
@@ -311,3 +385,155 @@ body {
 .swiper-button-prev {
     background: url('../images/right_button.png') !important;
 }
+
+
+#listDiv {
+    position: absolute;
+    top: 0px;
+    left:0px;
+    right: 0px;
+    bottom: 0px;
+    margin-top: 60px;
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+        #listDiv li span {
+            margin-left: 0.5em;
+            overflow: hidden;
+            white-space:nowrap;
+            text-overflow:ellipsis;            
+            display:inline-block;
+        }
+
+#listDiv span.arabic {
+    font-size: 140%;
+
+    font-stretch: extra-condensed;
+}
+
+
+.listviewfix {
+    margin: 0px !important;
+}
+        
+.ayah-snippet {
+    color: #666;
+    font-style: italic;
+    font-weight: normal;
+    overflow: hidden;
+    white-space:nowrap;
+    text-overflow:ellipsis;   
+    margin-left: 10px;
+}
+
+.bangla_subtitle {
+    clear: both;
+    font-size: 10px;
+    margin-left: 1em;
+}
+
+.bookmark-surahname {
+    
+}
+
+
+.bookmarked_ayah {
+    color: red;
+}
+
+#bookmark_ayah.bookmarked_ayah {
+    color: cyan;
+}
+
+#meaningDetails {
+    color: ivory;
+    font-size: 30px;
+    text-decoration: none;
+    float: right;
+}
+
+#ayah_actions a {
+    color: ivory;
+    font-size: 30px;
+    text-decoration: none;
+    word-spacing: 5px;
+}
+
+#bookmark_word {
+    color: ivory;
+    font-size: 30px;
+    text-decoration: none;
+    float: right;
+}
+
+.bookmarked_word {
+    color: red;
+}
+
+#bookmark_word.bookmarked_word {
+    color: cyan;
+}
+
+.tooltip_actions {
+    margin: 5px;
+}
+
+.ui-bar {
+    border-top: solid 1px lightgrey;
+    
+}
+
+.ui-listview, .ui-listview > li, .ui-listview > li > a {
+    font-size: 12px;
+}
+
+table {
+    
+}
+
+#VerbForms table, #VerbForms th, #VerbForms td {
+    border: 1px solid #555;
+    color: cyan;
+    font-weight: normal;
+    padding: 5px;
+}
+
+#VerbForms td {
+    font-size: 150%;
+}
+#VerbForms {
+    font-size: 120%;
+    border-collapse: collapse;
+}
+
+#translationContent {
+    height: 300px;
+    overflow: auto;
+    background-color:rgba(0,0,0,0.8);
+    padding: 15px;
+}
+
+#translationPopup { width: 500px; color: white;  }
+
+#translationContent .surah {
+    line-height: 40px;
+    background: url('../images/SurahPartition.png') no-repeat 20px;
+    text-align: center;
+    color: black;
+    font-family: SolaimanLipiNormal, Nikosh2, SolaimanLipi, Nikosh, NikoshBAN, Georgia, sans-serif;
+    font-size: 15px;
+}
+
+p.verse, p.bismillah {
+    position: relative;
+    font-family: SolaimanLipiNormal, Nikosh2, SolaimanLipi, Nikosh, NikoshBAN, Georgia, sans-serif;
+    line-height: 1.5em;
+    font-size: 16px;
+    margin: 0;
+}
+
+p.verse.highlighted {
+    background-color: darkgreen;
+}
+
