@@ -485,12 +485,16 @@ $('#pagejumppanel').on("popupafteropen", function (event) {
     loadSurahAyahMap();
     $('#pagenumberToJump').val(getCurrentPageNo()).focus().textinput('refresh');
 });
-
+$('#translationPopup').on("popupbeforeposition", function (event) {
+    var maxHeight = $(window).height() - 30;
+    $(this).css('height', (maxHeight * 0.4) + "px");
+});
 
 $('#translationPopup').on("popupafteropen", function (event) {
     var pageNo = getCurrentPageNo();
     var url = "page/bangla" + (pageNo.pad(3)) + ".html";
     var contentArea = $('#translationContent');
+    
     contentArea.load(url, function () {
         var firstWord = getPageDiv(pageNo).find('.word').first();
         var suraNo = firstWord.attr('sura');
@@ -511,6 +515,7 @@ $('#translationPopup').on("popupafteropen", function (event) {
         window.setTimeout(function () {
             verseP.removeClass('highlighted');
         }, 3000);
+
     });
     
     
