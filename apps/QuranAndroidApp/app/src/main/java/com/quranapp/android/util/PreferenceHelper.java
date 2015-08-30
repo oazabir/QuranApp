@@ -21,7 +21,16 @@ public class PreferenceHelper {
         return getLastDataBundleUpdateTime() != 0;
     }
 
+    public void setBundleDownloadDate() {
+        setLong(LAST_BUNDLE_UPDATE, System.currentTimeMillis());
+    }
+
     public long getLong(String key) {
         return getPreference().getLong(key, 0L);
     }
+
+    public void setLong(String key, long value) {
+        getPreference().edit().putLong(key, value);
+    }
+
 }

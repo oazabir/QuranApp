@@ -10,9 +10,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         style="@android:style/Widget.ProgressBar.Small"/>
-    <TextView android:text="Loading..."
+    <TextView
+        android:id="@+id/progress_text"
+        android:text="Loading..."
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
         android:layout_centerInParent="true"/>
 
 </LinearLayout>

@@ -9,12 +9,12 @@ import com.quranapp.android.BuildConfig;
 import com.quranapp.android.R;
 
 
-public class MainActivity extends AppCompatActivity {
+public class ReadingActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_reading);
 
         WebView webView = (WebView) findViewById(R.id.webview);
         WebSettings settings = webView.getSettings();
