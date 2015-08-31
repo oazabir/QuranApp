@@ -33,7 +33,7 @@ function showDetails(key) {
             textlink: 'http://www.almaany.com/en/dict/ar-en/' + meaning.t,
             lemmalink: 'http://www.almaany.com/en/dict/ar-en/' + meaning.l,
             rootsplit: meaning.r == "" ? "" : meaning.r[0] + ' ' + meaning.r[1] + ' ' + meaning.r[2] + ' ' + (meaning.r[3] || ""),
-            rootlink: 'http://ejtaal.net/m/aa/#q=' + meaning.r + ',hw4=,pr=,mgf=,dhq=,ll=,ls=,mis=h,la=h,amr=h,auh=h,umr=h,ulq=h,uqa=h,uqq=h,sg=h,ha=h,mr=h,mn=h,kz=h,uqw=h,ums=h,umj=h,bdw=h,asb=h,mht=h,msb=h,tla=h,amj=h,ens=h,aan=h,vi=h'
+            rootlink: 'http://ejtaal.net/m/aa/#q=' + meaning.r + ',dhq=,mgf=,hw4=,pr=,ll=,ls=,mis=h,la=h,amr=h,auh=h,umr=h,ulq=h,uqa=h,uqq=h,sg=h,ha=h,mr=h,mn=h,kz=h,uqw=h,ums=h,umj=h,bdw=h,asb=h,mht=h,msb=h,tla=h,amj=h,ens=h,aan=h,vi=h'
         });
 
         popup.html(output).popup('open');
