@@ -1,0 +1,12 @@
+.gradle
+/local.properties
+/.idea/workspace.xml
+/.idea/libraries
+.DS_Store
+/build
+/captures
+
+#Gradle build folders
+build/
+.gradle/*
+java-tests/.gradle/*
