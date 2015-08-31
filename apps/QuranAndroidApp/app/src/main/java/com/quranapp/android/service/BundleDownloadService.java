@@ -5,7 +5,7 @@ import android.content.Intent;
 import android.util.Log;
 
 import com.quranapp.android.QuranApp;
-import com.quranapp.android.util.Constants;
+import com.quranapp.android.Constants;
 import com.quranapp.android.util.IntentExtraKeys;
 import com.quranapp.android.util.OkHttpClientFactory;
 import com.quranapp.android.util.PreferenceHelper;
