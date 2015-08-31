@@ -153,7 +153,8 @@ function buildAyahNumberTooltip(ayahMark, sura, ayah, isBookmarked) {
     
     ayahMark.tooltipster({
         contentAsHTML: true,
-        content: output
+        content: output,
+        delay: 200
     });
 
     if (isBookmarked) {
@@ -172,7 +173,8 @@ function buildAyahNumberTooltip(ayahMark, sura, ayah, isBookmarked) {
         interactive: true,
         content: actionContent,
         multiple: true,
-        position: 'right'
+        position: 'right',
+        delay: 200
     });
 }
 
@@ -285,6 +287,7 @@ function loadPage(pageNo) {
                 $(this).tooltipster({
                     contentAsHTML: true,
                     interactive: true,
+                    delay: 200,
 
                     functionBefore: function (origin, continueTooltip) {
                         var sura = $(this).attr("sura");
@@ -485,12 +488,16 @@ $('#pagejumppanel').on("popupafteropen", function (event) {
     loadSurahAyahMap();
     $('#pagenumberToJump').val(getCurrentPageNo()).focus().textinput('refresh');
 });
-
+$('#translationPopup').on("popupbeforeposition", function (event) {
+    var maxHeight = $(window).height() - 30;
+    //$(this).css('height', (maxHeight * 0.4) + "px");
+});
 
 $('#translationPopup').on("popupafteropen", function (event) {
     var pageNo = getCurrentPageNo();
     var url = "page/bangla" + (pageNo.pad(3)) + ".html";
     var contentArea = $('#translationContent');
+    
     contentArea.load(url, function () {
         var firstWord = getPageDiv(pageNo).find('.word').first();
         var suraNo = firstWord.attr('sura');
@@ -511,6 +518,7 @@ $('#translationPopup').on("popupafteropen", function (event) {
         window.setTimeout(function () {
             verseP.removeClass('highlighted');
         }, 3000);
+
     });
     
     
