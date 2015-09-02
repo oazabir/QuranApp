@@ -495,11 +495,12 @@ $('#translationPopup').on("popupbeforeposition", function (event) {
     //$(this).css('height', (maxHeight * 0.4) + "px");
 });
 
-$('#translationPopup').on("popupafteropen", function (event) {
+function loadTranslation() {
     var pageNo = getCurrentPageNo();
-    var url = "page/bangla" + (pageNo.pad(3)) + ".html";
+    var currentSource = $('#translationSource').val();
+    var url = "page/" + currentSource + (pageNo.pad(3)) + ".html";
     var contentArea = $('#translationContent');
-    
+
     contentArea.load(url, function () {
         var firstWord = getPageDiv(pageNo).find('.word').first();
         var suraNo = firstWord.attr('sura');
@@ -510,7 +511,7 @@ $('#translationPopup').on("popupafteropen", function (event) {
             ayahNo = window.translationJump.ayah;
             window.translationJump = null;
         }
-        
+
         var ayahBookmark = $('#translationContent a[name="' + suraNo + ':' + ayahNo + '"]');
         var verseP = ayahBookmark.parent();
         var scrollY = ayahBookmark.offset().top - contentArea.offset().top - 15 * 2;
@@ -522,8 +523,15 @@ $('#translationPopup').on("popupafteropen", function (event) {
         }, 3000);
 
     });
-    
-    
+}
+
+$('#translationPopup').on("popupafteropen", function (event) {
+    $('#translationSource').off('change').on('change', function () {
+        loadTranslation();
+        $(this).selectmenu('refresh');
+    });
+
+    loadTranslation();
 });
 
 var BookmarkManager = {
