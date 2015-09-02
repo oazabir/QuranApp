@@ -40,17 +40,18 @@ select line,
 
 				select STUFF((
 				select '<span ' 
-					+ 'class="' + (case B.type when 0 then 'word' when 1 then 'ayah_number' else 'surah_name' end) 
+					+ 'class="' + (case B.type when 0 then 'word' when 1 then 'ayah_number' when 2 then 'stop_mark' else 'surah_name' end) 
 					+ '" sura="' + convert(nvarchar(3), B.sura) 
 					+ '" ayah="' + convert(nvarchar(3), B.ayah) 
 					+ '" word="' + convert(nvarchar(3), B.word) 
+					+ '" type="' + convert(nvarchar(3), B.type) 
 					+ '">' 
 					+ text + '</span>'
 				FROM
 					(		 
-						select line, sura, ayah, word, type, text from madani_text m where m.page = @page_no and m.line = A.line
+						select line, pos, sura, ayah, word, type, text from madani_text m where m.page = @page_no and m.line = A.line
 					) B
-				order by sura, ayah, word
+				order by line, pos --sura, ayah, word, type
 				FOR XML PATH(''), TYPE).value('.', 'NVARCHAR(MAX)'), 1, 0, '')
 
 			)
@@ -73,38 +74,15 @@ print @html
 
 
 
-declare @trans nvarchar(max)
-set @trans = N'';
+declare @bangla_translation nvarchar(max)
+set @bangla_translation = dbo.GenerateTranslation( 5, 2, @page_no) -- bangla
 
--- Generate translation pages
-with getBasmalah AS 
-(
-	select Content, TranslatorID from Ayahs where SurahNo = 1 and AyahNo = 1
-)
-SELECT @trans = COALESCE(@trans + char(13), '') + text FROM 
-(
-select sura, ayah,
-	(case  
-		when ayah = 1 then 
-			'<p class="surah">' + (select Name from SurahNames where SurahNo = Sura and LanguageID = 2) + '</p>' + char(13)
-			+ '<p class="bismillah">' + (select Content from getBasmalah where TranslatorID = 5) + '</p>' + char(13)
-			
-		else ''
-	end) 
-	+ '<p class="verse"><a name="'+ convert(nvarchar(3), sura) + ':' + convert(nvarchar(3), ayah)+'" />' 
-	+ convert(nvarchar(3),ayah) + ': '
-	+ (select Content from Ayahs where SurahNo = sura and AyahNo = ayah and TranslatorID = 5)
-	+ '</p>'	
-	as text
-FROM
-	(
-		select sura, ayah, text from surah_page p where page=@page_no
-	) A
-) B
-order by sura, ayah
 
-print @trans
+declare @english_translation nvarchar(max)
+set @english_translation = dbo.GenerateTranslation( 45, 1, @page_no) -- bangla
 
+print @bangla_translation
+print @english_translation
 
 -- Generate JSON for the page
 
@@ -268,9 +246,11 @@ exec [dbo].[spWriteStringToFile]  @html, @path, @filename
 
 
 -- translation
-set @path = 'E:\GitHub\QuranApp\page'
 set @filename = 'bangla' + @pagestr + '.html'
-exec [dbo].[spWriteStringToFile]  @trans, @path, @filename
+exec [dbo].[spWriteStringToFile]  @bangla_translation, @path, @filename
+
+set @filename = 'english' + @pagestr + '.html'
+exec [dbo].[spWriteStringToFile]  @english_translation, @path, @filename
 
 -- json
 

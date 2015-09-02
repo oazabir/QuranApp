@@ -52,7 +52,7 @@
     font-size: 42px;
 }
 
-.word {
+.word, .stop_mark {
     cursor: hand;
     cursor: pointer;
     color: #222;
