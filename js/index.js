@@ -493,6 +493,7 @@ $('#pagejumppanel').on("popupafteropen", function (event) {
 $('#translationPopup').on("popupbeforeposition", function (event) {
     var maxHeight = $(window).height() - 30;
     //$(this).css('height', (maxHeight * 0.4) + "px");
+    $('#translationContent').height(maxHeight * 0.3);
 });
 
 function loadTranslation() {
@@ -513,8 +514,10 @@ function loadTranslation() {
         }
 
         var ayahBookmark = $('#translationContent a[name="' + suraNo + ':' + ayahNo + '"]');
+        var surahNameHeight = $('#translationContent .surah').first().outerHeight();
+        var bismillahHeight = $('#translationContent .bismillah').first().outerHeight();
         var verseP = ayahBookmark.parent();
-        var scrollY = ayahBookmark.offset().top - contentArea.offset().top - 15 * 2;
+        var scrollY = ayahBookmark.offset().top - contentArea.offset().top - 15 * 2 - surahNameHeight - bismillahHeight;
         contentArea.scrollTop(scrollY);
 
         verseP.addClass('highlighted');
