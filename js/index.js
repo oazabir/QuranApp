@@ -535,7 +535,7 @@ function demo() {
     $.cookie('demo', 'true', { path: '/', expires: 30 });
 
     var deltaX = 39, deltaY = 15;
-    var delay = 500;
+    var delay = 2000;
     var pageNo = getCurrentPageNo();
 
     var hand = $('#hand');
@@ -620,7 +620,7 @@ function demo() {
         },
         {
             e: '#translationSource', f: function (e, resume) {
-                e.trigger('click');
+                //e.trigger('click');
                 resume.delay(delay);
             }
         },
