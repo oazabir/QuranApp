@@ -532,7 +532,7 @@ function loadTranslation() {
 }
 
 function demo() {
-    //if ($.cookie('demo') != null) return;
+    if ($.cookie('demo') != null) return;
 
     $.cookie('demo', 'true', { path: '/', expires: 30 });
 
