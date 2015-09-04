@@ -162,13 +162,14 @@ body {
     color: #f99;
     font-weight: bold;
     font-size: 150%;
+    word-break: keep-all;
 }
 
 .tooltipster-base .bangla_meaning {
     text-align: center;
     font-size: 12pt;
     font-family: SolaimanLipiNormal, Nikosh2, SolaimanLipi, Nikosh, NikoshBAN, Georgia, sans-serif !important;
-    font-weigth: normal;
+    font-weight: normal;
     line-height: 1.6em;
     color: yellow;
 }
@@ -447,26 +448,15 @@ body {
     color: cyan;
 }
 
-#meaningDetails {
-    color: ivory;
-    font-size: 30px;
-    text-decoration: none;
-    float: right;
-}
 
 #ayah_actions a {
     color: ivory;
     font-size: 30px;
     text-decoration: none;
     word-spacing: 5px;
+    margin-right: 10px;
 }
 
-#bookmark_word {
-    color: ivory;
-    font-size: 30px;
-    text-decoration: none;
-    float: right;
-}
 
 .bookmarked_word {
     color: red;
@@ -478,6 +468,14 @@ body {
 
 .tooltip_actions {
     margin: 5px;
+}
+
+.tooltip_actions a {
+    color: ivory;
+    font-size: 30px;
+    text-decoration: none;
+    float: right;
+    margin-right: 10px;
 }
 
 .ui-bar {
