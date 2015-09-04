@@ -302,20 +302,7 @@ function loadPage(pageNo) {
                         var meaning = window.wordbyword[key];
 
                         if (meaning) {
-                            var template = '<div> \
-                        <div class="tooltip_actions"> \
-                        <a href="#bookmarkPopup" class="{bookmarkedClass}" bookmarked="{isBookmarked}" id="bookmark_word" sura="{sura}" ayah="{ayah}" word="{word}" onclick="toggleWordBookmark()">&#x1f516;</a> \
-                        <a href="#meaningPopup" data-rel="popup" onclick="hideAllTooltips(); showDetails(\'{key}\')" id="meaningDetails" class="meaning_details" >&#x1f50d;</a> \
-                        </div> \
-                        <span class="arabic_word">{t}</span> <span class="transliteration">{tl}</span> <span class="root">{root}</span> \
-                        <div> \
-                        <span class="bangla_meaning">{b}</span> \
-                        <span class="english_meaning">{e}</span> \
-                        <span class="indonesia_meaning">{i}</span> \
-                        </div> \
-                        <div><span class="lemma">Lemma এসেছে <span>{l}</span> থেকে।</span> \
-                        <span class="lemma_meaning">এর অর্থ: <span>{lb}</span></span></div> \
-                        </div>';
+                            var template = $('#word_tooltip_template').html();
                             var root = meaning.r ? meaning.r[0] + ' ' + meaning.r[1] + ' ' + meaning.r[2] + ' ' + (meaning.r[3] || "") : "";
                             
                             var output = template.assign(meaning, {

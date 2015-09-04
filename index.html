@@ -15,7 +15,7 @@
     <link rel="stylesheet" type="text/css" href="css/tooltipster.css" />
     <link rel="stylesheet" type="text/css" href="css/common.css?v=8" />
     <script type="text/javascript">
-        var version = 12;
+        var version = 15;
         var versionSuffix = "?v=" + version;
     </script>
     <script type="text/javascript" src="js/jquery-1.11.3.min.js"></script>
@@ -101,7 +101,12 @@
             <p><a target="_blank" href="{textlink}" class="arabic_word">{t}</a></p>
             <p><span class="bangla_meaning">{b}</span> <span class="english_meaning">{e}</span><span class="frequency_wrap">(<span class="frequency">{f}</span> times বার)</span></p>
             <p>Lemma এসেছে: <a target="_blank" href="{lemmalink}" class="lemma">{l}</a> : <span class="lemma_meaning">{lb}</span> <span class="frequency_wrap">(<span class="lemma_frequency">{lc}</span> times বার)</span></p>
+            <p>Similar একই ধরণের: <span class="similar">{lu}</span></p>
             <p>Transliteration: <span class="transliteration">{tl}</span></p>
+            <p>Grammar: 
+                <span class="english_grammar">{eg}</span>
+                <span class="arabic_grammar">{ag}</span>
+            </p>
             <p>Root মূল: <span class="root">{rootsplit}</span></p>
             <p>Meaning of Root মূলের অর্থ: <span class="root_meanings">{rm}</span></p>
             <!--<table id="VerbForms">
@@ -270,7 +275,30 @@
 
         </div>
 
-        
+        <div id="word_tooltip_template">
+            <div>
+                
+                <div class="tooltip_actions">                    
+                    <a href="#bookmarkPopup" class="{bookmarkedClass}" bookmarked="{isBookmarked}" id="bookmark_word" sura="{sura}" ayah="{ayah}" word="{word}" onclick="toggleWordBookmark()">&#x1f516;</a> 
+                    <a href="#meaningPopup" data-rel="popup" onclick="hideAllTooltips(); showDetails('{key}')" id="meaningDetails" class="meaning_details">&#x1f50d;</a> 
+                </div> 
+                <span class="arabic_word">{t}</span> <span class="transliteration">{tl}</span> <span class="root">{root}</span> 
+                <div>
+                    
+                    <span class="bangla_meaning">{b}</span> 
+                    <span class="english_meaning">{e}</span> 
+                    <span class="indonesia_meaning">{i}</span> 
+                </div> 
+                <div>
+                    <span class="english_grammar">{eg}</span>
+                    <span class="arabic_grammar">{ag}</span>
+                </div>
+                <div>
+                    <span class="lemma">Lemma এসেছে <span>{l}</span> থেকে।</span> 
+                    <span class="lemma_meaning">এর অর্থ: <span>{lb}</span></span>
+                </div> 
+            </div>
+        </div>
 
     </div>
 

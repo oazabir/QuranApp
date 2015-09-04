@@ -93,42 +93,54 @@ set @json = @json + 'window.wordbyword = $.extend(window.wordbyword || {}, {'
 
 SELECT @json = COALESCE(@json + char(13), '') + json FROM 
 (
-select top 100 percent N'"' + convert(nvarchar(50),chapter)+':'+convert(nvarchar(50),verse)+':'+convert(nvarchar(50),word) 
-	+ '" : {s: ' + convert(nvarchar(50),chapter) 
-	+ ', a: ' + convert(nvarchar(50),verse) 
-	+ ', w: ' + convert(nvarchar(50),word) 
-	+ ', r: "' + Root 
-	+ '", t: "' + text 
-	+ '", l: "' + lemma 
-	+ '", lc: ' + convert(nvarchar(5),lemmacount)
-	+ ', tl: "' + replace(Transliteration, '"', '')
-	+ '", lb: "' + replace(ltrim(rtrim(LemmaBangla)), '"', '')
-	+ '",e: "' + replace(ltrim(rtrim(meaning)), '"', '')
-	+ '", b: "' + replace(rtrim(ltrim(bangla)), '"', '')
-	+ '", i: "' + replace(Indonesia, '"', '')
-	+ '", f: ' + convert(nvarchar(6),frequency) 
-	+ ', rm: "' + replace(replace(replace(RootMeaning, '"', ''), char(13), ' '),char(10), '')
-	+ '"},' as json FROM
+	select chapter, verse, word, N'"' + convert(nvarchar(50),chapter)+':'+convert(nvarchar(50),verse)+':'+convert(nvarchar(50),word) 
+		+ '" : {s: ' + convert(nvarchar(50),chapter) 
+		+ ', a: ' + convert(nvarchar(50),verse) 
+		+ ', w: ' + convert(nvarchar(50),word) 
+		+ ', r: "' + Root 
+		+ '", t: "' + text 
+		+ '", l: "' + lemma 
+		+ '", lc: ' + convert(nvarchar(5),lemmacount)
+		+ ', tl: "' + replace(Transliteration, '"', '')
+		+ '", lb: "' + replace(ltrim(rtrim(LemmaBangla)), '"', '')
+		+ '",e: "' + replace(ltrim(rtrim(meaning)), '"', '')
+		+ '", b: "' + replace(rtrim(ltrim(bangla)), '"', '')
+		+ '", i: "' + replace(Indonesia, '"', '')
+		+ '", f: ' + convert(nvarchar(6),frequency) 
+		+ ', rm: "' + replace(replace(replace(RootMeaning, '"', ''), char(13), ' '),char(10), '')
+		+ '", ag: "' + replace(replace(replace(ArabicGrammar, '"', ''), char(13), ' '),char(10), '')
+		+ '", eg: "' + replace(replace(replace(EnglishGrammar, '"', ''), char(13), ' '),char(10), '')
+
+		+ '", tag: "' + replace(ltrim(rtrim(ISNULL(Tag,''))), '"', '')
+		+ '", pos: "' + replace(ltrim(rtrim(ISNULL([Position],''))), '"', '')
+		+ '", att: "' + replace(ltrim(rtrim(ISNULL([Attribute],''))), '"', '')
+		+ '", qual: "' + replace(ltrim(rtrim(ISNULL([Qualifier],''))), '"', '')
+		+ '", deg: "' + replace(ltrim(rtrim(ISNULL([PersonDegree],''))), '"', '')
+		+ '", gen: "' + replace(ltrim(rtrim(ISNULL([PersonGender],''))), '"', '')
+		+ '", num: "' + replace(ltrim(rtrim(ISNULL([PersonNumber],''))), '"', '')
+		+ '", mood: "' + replace(ltrim(rtrim(ISNULL([Mood],''))), '"', '')
+
+		+ '", lu: "' + replace(ltrim(rtrim(ISNULL(LemmaUsage,''))), '"', '')
+		+ '"},' COLLATE Latin1_General_CI_AS  as json FROM
 
 
-(
-	select * from 
 	(
 		select 
-		chapter 
-		,verse 
+
+		w.chapter 
+		,w.verse 
 		,case  
-			when chapter > 1 and verse = 1 then word-4 
-			else word end 
+			when w.chapter > 1 and w.verse = 1 then w.word-4 
+			else w.word end 
 		as Word
-		,Root
-		,lemma
-		,isnull((select count(1) from WordInformation w1 where w1.root = w.root and w1.lemma = w.lemma),0) as lemmacount
-		,isnull((select arabic from ArabicWords where ID = (select top 1 ArabicWordID from Meanings where SurahNo = chapter and VerseNo = verse and WordNo = word)), Transliteration) as Transliteration
+		,w.Root
+		,w.lemma
+		,isnull((select Totals from RootLemmaCount w1 where w1.root = w.root and w1.lemma = w.lemma),0) as lemmacount
+		,isnull((select arabic from ArabicWords where ID = m.ArabicWordID), w.Transliteration) as Transliteration
 		
-		,ltrim(rtrim(text)) as text
+		,ltrim(rtrim(w.text)) as text
 		
-		,isnull((select top 1 replace(rtrim(ltrim(EnglishMeaning)),'"', '') from Meanings where SurahNo = chapter and VerseNo = verse and WordNo = word),Meaning) as meaning
+		,isnull(m.EnglishMeaning, w.Meaning) as meaning
 		--,replace(rtrim(ltrim(meaning)),'"', '') as meaning
 		
 		,isnull((select translation_id from Indonesia where sura = w.Chapter and vers = w.Verse and pos = w.Word), '') as Indonesia
@@ -142,7 +154,7 @@ select top 100 percent N'"' + convert(nvarchar(50),chapter)+':'+convert(nvarchar
 		,'''', '')
 		as Bangla
 		
-		,ISNULL((select count(1) from [WordInformation] w1 where w1.root = w.root and w1.text = w.text ), 0) as Frequency
+		,ISNULL(rtc.Totals, 0) as Frequency
 	
 		,replace(
 			ISNULL((select top 1 b.Bangla from 
@@ -155,18 +167,46 @@ select top 100 percent N'"' + convert(nvarchar(50),chapter)+':'+convert(nvarchar
 		,replace(
 			ISNULL((SELECT Meaning from ArabicRootMeaning a WHERE a.Root = w.Root),'')
 		,'''', '')
-		as RootMeaning
+		as RootMeaning,
+
+		ISNULL(g.ArabicGrammar, '') as ArabicGrammar,
+		ISNULL(g.EnglishGrammar, '') as EnglishGrammar
+		
+		,p.Tag
+		,p.[Position]
+		,p.[Attribute]
+		,p.[Qualifier]
+		,p.[PersonDegree]
+		,p.[PersonGender]
+		,p.[PersonNumber]
+		,p.[Mood]
+
+		,dbo.GetLemmaUsage(w.Root, NULL, 5) as LemmaUsage
 
 		from wordinformation w 
-		
-		where word > 0
+		left join WordGrammar g on g.Chapter = w.Chapter and g.Verse = w.Verse and g.Word = w.Word
+		left join WordPartInformation p on 
+			p.Chapter = w.Chapter and 
+			p.Verse = w.Verse and 
+			p.Word = w.Word and
+			p.Type = 'STEM'
+		left join Meanings m ON 
+			m.SurahNo = w.chapter and 
+			m.VerseNo = w.verse and 
+			m.WordNo = w.word
+		left join RootTextCount rtc on rtc.root = w.root and rtc.text = w.text
+		where w.word > 0
 		and exists (select * FROM surah_page 
-		where page = @page_no and Chapter = sura and Verse = ayah)
-	) A		
-) B
---order by B.Chapter, B.Verse, B.Word
-group by chapter, verse, word, text, Root, Lemma, LemmaCount, Transliteration, LemmaBangla, meaning, Bangla, Indonesia, Frequency, rootmeaning
-) C
+		where page = @page_no and sura = w.Chapter and ayah = w.Verse)
+	) INLINE_QUERY		
+	--order by Chapter, Verse, Word
+--) B
+	--order by Chapter, Verse
+--group by chapter, verse, word, text, Root, Lemma, LemmaCount, Transliteration, LemmaBangla, meaning, Bangla, Indonesia, Frequency, rootmeaning
+--order by Chapter, Verse, Word
+) JSON
+group by Chapter, Verse, Word, json
+
 
 
 set @json = @json + CHAR(13) + '});' + CHAR(13) -- + '</script>' + CHAR(13)

@@ -149,6 +149,14 @@ body {
     color: lightgreen;
     font-size: 200%;
     margin-right: 0.5em;
+    direction: rtl;
+}
+
+.tooltipster-base .arabic_grammar {
+    color: lightgreen;
+    font-size: 140%;
+    margin-right: 0.5em;
+    direction: rtl;
 }
 
 .tooltipster-base .transliteration {
@@ -163,6 +171,7 @@ body {
     font-weight: bold;
     font-size: 150%;
     word-break: keep-all;
+    direction: rtl;
 }
 
 .tooltipster-base .bangla_meaning {
@@ -276,6 +285,7 @@ body {
     clear: both;
     color: lightcyan;
     font-family: Georgia;
+    line-height: 1.5em;
 }
 
 #meaningPopup .bangla_meaning {
@@ -284,16 +294,15 @@ body {
     font-size: 120%;
 }
 
-#meaningPopup .arabic_word {
+#meaningPopup .arabic_word, .arabic_grammar, .similar {
     font-size: 200%;
     font-family: 'Arabic Typesetting';
     direction: rtl;
 }
 #meaningPopup a {
-    text-decoration: none;
+    text-decoration: dotted;
     font-weight: normal;
     color: cyan;
-    border-bottom: 1px dotted cyan;
 }
 #meaningPopup .frequency_wrap {
     margin-left: 5px; 
@@ -545,4 +554,9 @@ p.verse.highlighted {
     top: 0px;    
     display: none;
     z-index: 65535;
+}
+
+#word_tooltip_template {
+    display:none;
+    position:absolute;
 }
