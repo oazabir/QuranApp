@@ -517,9 +517,10 @@ table {
 
 #translationContent {
     overflow: auto;
-    background-color:rgba(0,0,0,0.8);
+    /*background-color:rgba(0,0,0,0.8);*/
+    background-color: #faefe5;
     padding: 15px;
-    
+    color: black;
 }
 
 #translationPopup { width: 500px; color: white; }
@@ -542,7 +543,7 @@ p.verse, p.bismillah {
 }
 
 p.verse.highlighted {
-    background-color: darkgreen;
+    background-color: lightgreen;
 }
 
 #hand {
