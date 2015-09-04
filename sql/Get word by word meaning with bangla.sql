@@ -243,21 +243,22 @@ declare @filename varchar(100)
 set @path = 'E:\GitHub\QuranApp\page'
 set @filename = 'page' + @pagestr + '.html'
 exec [dbo].[spWriteStringToFile]  @html, @path, @filename
-
-
--- translation
-set @filename = 'bangla' + @pagestr + '.html'
-exec [dbo].[spWriteStringToFile]  @bangla_translation, @path, @filename
-
-set @filename = 'english' + @pagestr + '.html'
-exec [dbo].[spWriteStringToFile]  @english_translation, @path, @filename
-
 -- json
 
 declare @content nvarchar(max)
 set @content = @json + @translations -- + @verbforms
 set @filename = 'page' + @pagestr + '.js'
 exec [dbo].[spWriteStringToFile]  @content, @path, @filename
+
+
+-- translation
+set @path = 'E:\GitHub\QuranApp\translations\bangla'
+set @filename = @pagestr + '.html'
+exec [dbo].[spWriteStringToFile]  @bangla_translation, @path, @filename
+
+set @path = 'E:\GitHub\QuranApp\translations\english'
+set @filename = @pagestr + '.html'
+exec [dbo].[spWriteStringToFile]  @english_translation, @path, @filename
 
 
    SET @page_no = @page_no + 1;

@@ -88,6 +88,7 @@
     font-weight: normal;
     font-size: 25px;
     text-decoration: none;
+    position: relative;
 }
 
 #searchsurah_link {
@@ -125,7 +126,7 @@
 }
 
 body {
-    background-color: #f7f1e5;
+    background-color: #faefe5; /*#f7f1e5;*/
     margin: 0;
     padding: 0;
 }
@@ -537,3 +538,13 @@ p.verse.highlighted {
     background-color: darkgreen;
 }
 
+#hand {
+    width: 158px;
+    height: 273px;
+    background: url(../images/Finger.png);
+    position: absolute;
+    left: 0px;
+    top: 0px;    
+    display: none;
+    z-index: 65535;
+}

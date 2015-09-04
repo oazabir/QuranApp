@@ -192,6 +192,9 @@ function loadPage(pageNo) {
         highlightSurahAyah();
         hideAllTooltips();
         pageDiv.attr("status", "loaded");
+
+        // For very first load, do a demo
+        if ($.cookie('demo')==null) demo();
     }
     // ensure the page div is there. if not, then create that page div and one before and after.
     var pageDiv = $(pageDivId);
@@ -499,7 +502,7 @@ $('#translationPopup').on("popupbeforeposition", function (event) {
 function loadTranslation() {
     var pageNo = getCurrentPageNo();
     var currentSource = $('#translationSource').val();
-    var url = "page/" + currentSource + (pageNo.pad(3)) + ".html";
+    var url = "translations/" + currentSource + "/" + (pageNo.pad(3)) + ".html";
     var contentArea = $('#translationContent');
 
     contentArea.load(url, function () {
@@ -526,6 +529,109 @@ function loadTranslation() {
         }, 3000);
 
     });
+}
+
+function demo() {
+    $.cookie('demo', 'true', { path: '/', expires: 30 });
+
+    var deltaX = 39, deltaY = 15;
+    var delay = 500;
+    var pageNo = getCurrentPageNo();
+
+    var hand = $('#hand');
+    hand.css({ left: $(window).width() / 2 + 'px', top: $(window).height() + 'px', opacity: 0 });
+    hand.show();
+    function moveTo(items) {
+        var item = items.pop();
+        var e = item.e;
+        if (typeof e == "string") e = $(e).first();
+
+        hand.animate({
+            left: e.offset().left + e.width()/2 - deltaX + 'px',
+            top: e.offset().top + deltaY + 'px',
+            opacity: 1
+        }, delay, function () {
+            e.css({ backgroundColor: 'red' });
+            item.f(e, function () {
+                e.css({ backgroundColor: '' });
+                if (items.length > 0)
+                    moveTo(items);
+                else
+                    hand.fadeOut('slow');
+            });
+        });
+    }
+
+    var firstWord = getPageDiv(pageNo).find('.word').first();
+    var firstAyahNumber = getPageDiv(pageNo).find('.ayah_number').first();
+    var surahTitle = getPageDiv(pageNo).find('.surah_title').first();
+
+    function bringHandOnTop() {
+        hand.detach();
+        hand.appendTo(document.body);
+    }
+
+    moveTo([
+        {
+            e: firstAyahNumber, f: function (e, resume) {
+                e.tooltipster('show');
+                (function () {
+                    e.tooltipster('hide');
+                    resume();
+                }).delay(delay);
+            }},
+        {
+            e: firstWord, f: function (e, resume) {
+                e.tooltipster('show');
+                bringHandOnTop();
+                (function () {                    
+                    resume();
+                }).delay(delay);                
+            }
+        },
+        {
+            e: '#meaningDetails', f: function(e, resume) {
+                (function () {
+                    e.click();
+                    resume();
+                }).delay(delay);
+            }
+        },
+        {
+            e: '#closeMeaningPopup', f: function (e, resume) {
+                (function () {
+                    e.click();
+                    resume();
+                }).delay(delay);
+            }
+        },        
+        {
+            e: surahTitle, f: function (e, resume) {
+                surahTitle.find('a').click();
+
+                resume.delay(delay);
+            }
+        },        
+        {
+            e: '#translation_link', f: function (e, resume) {
+                e.click();
+                resume.delay(delay);
+            }
+        },
+        {
+            e: '#translationSource', f: function (e, resume) {
+                e.trigger('click');
+                resume.delay(delay);
+            }
+        },
+        {
+            e: '#closeTranslationPopup', f: function (e, resume) {
+                e.click();
+                resume();
+            }
+        }        
+    ].reverse());
+    
 }
 
 $('#translationPopup').on("popupafteropen", function (event) {
