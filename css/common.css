@@ -296,7 +296,7 @@ body {
 
 #meaningPopup .arabic_word, .arabic_grammar, .similar {
     font-size: 200%;
-    font-family: 'Arabic Typesetting';
+    font-family: 'Arabic Typesetting', Georgia, 'Times New Roman', Arial;
     direction: rtl;
 }
 #meaningPopup a {
