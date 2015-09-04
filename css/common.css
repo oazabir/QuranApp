@@ -271,7 +271,7 @@ body {
 }
 
 .page_no {
-    font-family: 'Arabic typesetting';
+    font-family: 'Arabic Typesetting', Georgia, 'Times New Roman', Arial;
     direction: rtl;
     position: absolute;
     left: 260px;
@@ -323,7 +323,7 @@ body {
 
 #meaningPopup .lemma {
     font-size: 200%;
-    font-family: 'Arabic Typesetting';
+    font-family: 'Arabic Typesetting', Georgia, 'Times New Roman', Arial;
 }
 
 #meaningPopup .lemma_meaning {
@@ -340,7 +340,7 @@ body {
 
 #meaningPopup .root {
     font-size: 200%;
-    font-family: 'Arabic Typesetting';
+    font-family: 'Arabic Typesetting', Georgia, 'Times New Roman', Arial;
 }
 
 #meaningPopup .root_meanings {
