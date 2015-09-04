@@ -194,7 +194,7 @@ function loadPage(pageNo) {
         pageDiv.attr("status", "loaded");
 
         // For very first load, do a demo
-        if ($.cookie('demo')==null) demo();
+        demo();
     }
     // ensure the page div is there. if not, then create that page div and one before and after.
     var pageDiv = $(pageDivId);
@@ -532,6 +532,8 @@ function loadTranslation() {
 }
 
 function demo() {
+    //if ($.cookie('demo') != null) return;
+
     $.cookie('demo', 'true', { path: '/', expires: 30 });
 
     var deltaX = 39, deltaY = 15;
@@ -611,7 +613,13 @@ function demo() {
 
                 resume.delay(delay);
             }
-        },        
+        },
+        {
+            e: '#closeSurahPanel', f: function(e, resume) {
+                e.click();
+                resume();
+            }
+        },
         {
             e: '#translation_link', f: function (e, resume) {
                 e.click();
