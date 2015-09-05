@@ -191,6 +191,26 @@ body {
     color: lightblue;
 }
 
+.tooltipster-base .meanings_container {
+    float: left;
+    width: 50%;
+}
+
+    .tooltipster-base .meanings_container span {
+        clear: both;
+        display: block;
+        text-align: left;
+    }
+
+.tooltipster-base .grammar_container {
+    float: left;
+    width: 50%;
+}
+
+.tooltipster-base .lemma_container {
+    
+}
+
 .tooltipster-base { max-width: 400px; }
 
 .tooltipster-base .english_meaning {
@@ -485,6 +505,7 @@ body {
     text-decoration: none;
     float: right;
     margin-right: 10px;
+    line-height: 30px; 
 }
 
 .ui-bar {
