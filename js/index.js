@@ -201,7 +201,7 @@ function loadPage(pageNo, precache) {
             // If current the page is being shown gets pushed back
             // because a new slide has been added before it, then
             // we need to forward one slide.
-            if (getCurrentPageNo() > pageNo)
+            if (precache)
                 window.swiper.activeIndex++;
         } else if (after.length > 0) {
             swiperDiv.insertBefore(after.parent());            
