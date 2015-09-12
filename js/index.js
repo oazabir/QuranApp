@@ -97,11 +97,12 @@ function slideToPage(pageNo) {
     // ensure the page is created, loaded
     loadPage(pageNo);
 
-    // get the swiper slide index containing the page
-    var pageDiv = getPageDiv(pageNo);
-    var swiperDiv = pageDiv.parent();
-    window.swiper.slideTo(swiperDiv.index());
-
+    +function () {
+        // get the swiper slide index containing the page
+        var pageDiv = getPageDiv(pageNo);
+        var swiperDiv = pageDiv.parent();
+        window.swiper.slideTo(swiperDiv.index(),0);
+    }.delay(100);
 }
 
 function hideAllTooltips() {
@@ -114,9 +115,9 @@ function highlightSurahAyah(highlight) {
         var template = '.word[sura="{sura}"][ayah="{ayah}"]';
         var nodes = $(template.assign(h));
         nodes.css('background-color', 'lightgreen');
-        window.setTimeout(function () {
+        +function () {
             nodes.css('background-color', '');
-        }, 3000);
+        }.delay(3000);
         window.highlight = null;
     }
 }
@@ -134,8 +135,7 @@ function getSwiperDiv(pageNo) {
 }
 
 function getPageDiv(pageNo) {
-    var pageStr = "000" + pageNo;
-    pageStr = pageStr.substr(pageStr.length - 3);
+    var pageStr = pageNo.pad(3);
     return $('#page' + pageStr);
 }
 
@@ -178,25 +178,17 @@ function buildAyahNumberTooltip(ayahMark, sura, ayah, isBookmarked) {
     });
 }
 
-function loadPage(pageNo) {
-    pageNo = parseInt("" + pageNo);
-    var pageStr = "000" + pageNo;
-    pageStr = pageStr.substr(pageStr.length - 3);
+function loadPage(pageNo, precache) {
 
+    if (!precache)
+        $.mobile.loading('show');
+
+    pageNo = parseInt("" + pageNo);
+    var pageStr = pageNo.pad(3);
     var pageDivId = '#page' + pageStr;
 
-
-    function postContentLoad() {
-        $.cookie('page', pageNo, { path: '/', expires: 30 });
-        $.mobile.loading('hide');
-        highlightSurahAyah();
-        hideAllTooltips();
-        pageDiv.attr("status", "loaded");
-
-        // For very first load, do a demo
-        demo();
-    }
-    // ensure the page div is there. if not, then create that page div and one before and after.
+    // ensure the page div is there. if not, then create that page div 
+    // and one before and after for smoother swipe. 
     var pageDiv = $(pageDivId);
     if (pageDiv.length == 0) {
         swiperDiv = makeSwiperDiv(pageNo);
@@ -206,8 +198,13 @@ function loadPage(pageNo) {
 
         if (before.length > 0) {
             swiperDiv.insertAfter(before.parent());
+            // If current the page is being shown gets pushed back
+            // because a new slide has been added before it, then
+            // we need to forward one slide.
+            if (getCurrentPageNo() > pageNo)
+                window.swiper.activeIndex++;
         } else if (after.length > 0) {
-            swiperDiv.insertBefore(after.parent());
+            swiperDiv.insertBefore(after.parent());            
         } else {
             // before and after nothing exists. find the highest page div which is before this page and insert after that page
             var lastPageNo = 1;
@@ -224,8 +221,57 @@ function loadPage(pageNo) {
     }
 
     // get the newly created div or existing div
-    pageDiv = getPageDiv(pageNo);
+    pageDiv = getPageDiv(pageNo);   
 
+    // if page is already loading/loaded, nothing to do
+    if (pageDiv.attr("status") == "loading" || pageDiv.attr("status") == "loaded") {
+        postContentLoad(pageNo, precache);
+        return;
+    } else {
+        loadPageHtml(pageNo, precache);
+    }
+}
+
+function loadPageHtml(pageNo, precache) {
+    var pageDiv = getPageDiv(pageNo), pageStr = pageNo.pad(3);
+    var pageDivId = '#' + pageDiv.attr("id");
+
+    pageDiv.attr("status", "loading");    
+
+    $.get('page/page' + pageStr + '.html' + versionSuffix, function (response) {
+
+        var template = '<style type="text/css"> \
+					@font-face { \
+					 font-family: "page{pageStr}"; \
+					 src: url("./data/fonts/QCF_P{pageStr}.woff") format("woff"); \
+					 font-weight: normal; \
+					 font-style: normal; \
+					} \
+					.page{pageStr} { font-family: "page{pageStr}"; } \
+				</style>';
+        var output = template.assign({ pageStr: pageStr });
+        $(output).appendTo("head");
+
+        pageDiv.html(response);
+
+        var firstChar = $(pageDivId + ' .word').first().text(); //.charCodeAt(0).toString(16);
+        var fontName = "page" + pageStr;
+        fontSpy(fontName, {
+            timeOut: 30000,
+            delay: 100,
+            glyphs: firstChar,
+            success: function () {
+                postContentLoad(pageNo, precache);
+            },
+            failure: function () {
+                alert("Unable to download arabic font for this page. You may not be connected to the Internet, or your mobile is just too old.");
+            }
+        });
+
+    }, 'html');
+}
+
+function preCreateBeforeAfterSlide(pageNo) {
     // ensure a page slide exists before this page
     if (pageNo > 1) {
         var before = getPageDiv(pageNo - 1);
@@ -245,199 +291,104 @@ function loadPage(pageNo) {
             window.swiper.update(true);
         }
     }
+}
 
-    // if page is already loading/loaded, nothing to do
-    if (pageDiv.attr("status") == "loading" || pageDiv.attr("status") == "loaded") {
-        postContentLoad();
-        return;
-    }
-    pageDiv.attr("status", "loading");
+function loadPageJs(pageNo) {
+    var pageStr = pageNo.pad(3), pageDiv = getPageDiv(pageNo);
+    var pageDivId = '#' + $(pageDiv).attr("id");
 
-    $.mobile.loading('show');
-    $.ajaxSetup({ cache: true });
+    var promise = $.cachedScript('page/page' + pageStr + '.js');
+    promise.done(function () {
 
-    $.get('page/page' + pageStr + '.html' + versionSuffix, function (response) {
+        var wordBookmarks = BookmarkManager.getWordBookmarks();
 
-        var template = '<style type="text/css"> \
-					@font-face { \
-					 font-family: "page{pageStr}"; \
-					 src: url("./data/fonts/QCF_P{pageStr}.woff") format("woff"); \
-					 font-weight: normal; \
-					 font-style: normal; \
-					} \
-					.page{pageStr} { font-family: "page{pageStr}"; } \
-				</style>';
-        var output = template.assign({ pageStr: pageStr });
-        $(output).appendTo("head");
+        $(pageDivId + " .word").each(function (i, e) {
+            var sura = $(this).attr("sura");
+            var ayah = $(this).attr("ayah");
+            var word = $(this).attr("word");
+            var bookmark = wordBookmarks.find(function (b) { return b.sura == sura && b.ayah == ayah && b.word == word; })
+            var isBookmarked = bookmark != null;
+            if (isBookmarked) {
+                $(this).addClass('bookmarked_word');
+                $(this).attr('bookmarked', true);
+            }
 
-        pageDiv.html(response);
+            $(this).tooltipster({
+                contentAsHTML: true,
+                interactive: true,
+                delay: 200,
 
-        $.cachedScript('page/page' + pageStr + '.js').done(function () {
+                functionBefore: function (origin, continueTooltip) {
+                    var sura = $(this).attr("sura");
+                    var ayah = $(this).attr("ayah");
+                    var word = $(this).attr("word");
+                    var isBookmarked = $(this).attr('bookmarked');
 
-            var wordBookmarks = BookmarkManager.getWordBookmarks();
+                    var key = sura + ":" + ayah + ":" + word;
+                    var meaning = window.wordbyword[key];
 
-            $(pageDivId + " .word").each(function (i, e) {
-                var sura = $(this).attr("sura");
-                var ayah = $(this).attr("ayah");
-                var word = $(this).attr("word");
-                var bookmark = wordBookmarks.find(function (b) { return b.sura == sura && b.ayah == ayah && b.word == word; })
-                var isBookmarked = bookmark != null;
-                if (isBookmarked) {
-                    $(this).addClass('bookmarked_word');
-                    $(this).attr('bookmarked', true);
+                    if (meaning) {
+                        var template = $('#word_tooltip_template').html();
+                        var root = meaning.r ? meaning.r[0] + ' ' + meaning.r[1] + ' ' + meaning.r[2] + ' ' + (meaning.r[3] || "") : "";
+
+                        var output = template.assign(meaning, {
+                            root: root,
+                            sura: sura, ayah: ayah, word: word,
+                            pageDivId: pageDivId, key: key,
+                            isBookmarked: isBookmarked,
+                            bookmarkedClass: isBookmarked ? 'bookmarked_word' : ''
+                        });
+                        origin.tooltipster("content", $(output));
+                        continueTooltip();
+                    }
                 }
 
-                $(this).tooltipster({
-                    contentAsHTML: true,
-                    interactive: true,
-                    delay: 200,
-
-                    functionBefore: function (origin, continueTooltip) {
-                        var sura = $(this).attr("sura");
-                        var ayah = $(this).attr("ayah");
-                        var word = $(this).attr("word");
-                        var isBookmarked = $(this).attr('bookmarked');
-                        
-                        var key = sura + ":" + ayah + ":" + word;
-                        var meaning = window.wordbyword[key];
-
-                        if (meaning) {
-                            var template = $('#word_tooltip_template').html();
-                            var root = meaning.r ? meaning.r[0] + ' ' + meaning.r[1] + ' ' + meaning.r[2] + ' ' + (meaning.r[3] || "") : "";
-                            
-                            var output = template.assign(meaning, {
-                                root: root,
-                                sura: sura, ayah: ayah, word: word,
-                                pageDivId: pageDivId, key: key,
-                                isBookmarked: isBookmarked,
-                                bookmarkedClass: isBookmarked ? 'bookmarked_word' : ''
-                            });
-                            origin.tooltipster("content", $(output));
-                            continueTooltip();
-                        }
-                    }
-                
-                });
-                
             });
 
-            var bookmarkedAyat = BookmarkManager.getAyahBookmarks();
-            
-            $(pageDivId + " .ayah_number").each(function (i, e) {
-                var ayahMark = $(this);
-                var sura = ayahMark.attr("sura");
-                var ayah = ayahMark.attr("ayah");
-                var bookmark = bookmarkedAyat.find(function (b) { return b.sura == sura && b.ayah == ayah });
-
-                buildAyahNumberTooltip(ayahMark, sura, ayah, bookmark != null);
-            });
         });
+
+        var bookmarkedAyat = BookmarkManager.getAyahBookmarks();
+
+        $(pageDivId + " .ayah_number").each(function (i, e) {
+            var ayahMark = $(this);
+            var sura = ayahMark.attr("sura");
+            var ayah = ayahMark.attr("ayah");
+            var bookmark = bookmarkedAyat.find(function (b) { return b.sura == sura && b.ayah == ayah });
+
+            buildAyahNumberTooltip(ayahMark, sura, ayah, bookmark != null);
+        });
+    });
+    promise.fail(function () {
+        errorLoadingContent();
+    });
+}
+
+function postContentLoad(pageNo, precache) {
+    
+    if (precache) {
+
+    } else {
         
-        // When clicked on ayah bookmark:
-        // 1. Add the ayah in the bookmark, or remove it.        
-        // 3. Make the ayah number show (un)bookmarked color.
-        // 4. Change the tooltip to show (un)bookmarked bookmark icon.
-        // 5. Hide the tooltip
-        window.toggleAyahBookmark = function (event) {
-            var e = jQuery.event.fix(event || window.event);
-            var link = $(e.target);
+        var pageDiv = getPageDiv(pageNo);
+        if (pageDiv.attr("status") != "loaded")
+            loadPageJs(pageNo);
 
-            var sura = link.attr("sura");
-            var ayah = link.attr("ayah");
-            
-            var pageDiv = getPageDiv(getCurrentPageNo());
-            var ayahNumber = pageDiv.find(".ayah_number[sura='" + sura + "'][ayah='" + ayah + "']");
-            ayahNumber.tooltipster('hide');
-            
-            var bookmarkAdded = BookmarkManager.toggleAyahBookmark(sura, ayah);
-            if (bookmarkAdded) {
-                ayahNumber.addClass('bookmarked_ayah');
-                link.addClass('bookmarked_ayah');
-                ayahNumber.attr('bookmarked', true);
-            } else {
-                ayahNumber.removeClass('bookmarked_ayah');
-                link.removeClass('bookmarked_ayah');
-                ayahNumber.attr('bookmarked', false);
-            }
+        pageDiv.attr("status", "loaded");
+        $.mobile.loading('hide');
 
-            buildAyahNumberTooltip(ayahNumber, sura, ayah, bookmarkAdded);
-            jQueryMobileHack();
-        }
+        // For very first load, do a demo
+        demo();
 
-        window.showTranslationAyah = function () {
-            var e = jQuery.event.fix(event || window.event);
-            var link = $(e.target);
+        hideAllTooltips();
+        highlightSurahAyah();
 
-            var sura = link.attr("sura");
-            var ayah = link.attr("ayah");
-            window.translationJump = { sura: sura, ayah: ayah };
+        $.cookie('page', pageNo, { path: '/', expires: 30 });
 
-            $('#translationPopup').popup('open', { positionTo: '#pagejumpbutton' });
-            return true;
-        }
+        //preCreateBeforeAfterSlide();
 
-        // When clicked on ayah bookmark:
-        // 1. Add the word in the bookmark, or remove it.        
-        // 3. Make the word show (un)bookmarked color.
-        // 5. Hide the tooltip
-        window.toggleWordBookmark = function (event) {
-            var e = jQuery.event.fix(event || window.event);
-            var link = $(e.target);
-
-            var sura = link.attr("sura");
-            var ayah = link.attr("ayah");
-            var wordNo = link.attr("word");
-
-            var pageDiv = getPageDiv(getCurrentPageNo());
-            var word = pageDiv.find(".word[sura='" + sura + "'][ayah='" + ayah + "'][word='" + wordNo + "']");
-            word.tooltipster('hide');
-
-            var bookmarkAdded = BookmarkManager.toggleWordBookmark(sura, ayah, wordNo);
-            if (bookmarkAdded) {
-                word.addClass('bookmarked_word');
-                link.addClass('bookmarked_word');
-                word.attr('bookmarked', true);
-            } else {
-                word.removeClass('bookmarked_word');
-                link.removeClass('bookmarked_word');
-                word.attr('bookmarked', false);
-            }
-            jQueryMobileHack();
-        }
-
-        var firstChar = $(pageDivId + ' .word').first().text(); //.charCodeAt(0).toString(16);
-        var fontName = "page" + pageStr;
-        fontSpy(fontName, {
-            timeOut: 30000,
-            delay: 100,
-            glyphs: firstChar,
-            success: function () {
-
-                // After the font is loaded, calculate size of all word. if some word are
-                // smaller than 5px width, then those are tajweed symbol, which aren't really
-                // actual word in an ayah. So, we need to reset the word number ignoring those
-                // symbols.
-                //var wordNo; var lastAyah;
-                //$(pageDivId + ' .line').each(function (i, line) {
-                //    $(line).find('span.word').each(function (i, word) {
-                //        if (lastAyah != $(word).attr("ayah")) {
-                //            wordNo = 1;
-                //        }
-                //        lastAyah = $(word).attr("ayah");
-                //        if ($(word).width() > 5) {
-                //            $(word).attr("word", wordNo++);
-                //        }
-                //    })
-                //});
-
-                postContentLoad();
-            },
-            failure: function () {
-                alert("Unable to download arabic font for this page. You may not be connected to the Internet, or your mobile is just too old.");
-            }
-        });
-
-    }, 'html');
+        pageNo > 1 ? loadPage(pageNo - 1, true) : {};
+        pageNo < 604 ? loadPage(pageNo + 1, true) : {};
+    } 
 }
 
 function getCurrentPageNo() {
@@ -465,13 +416,13 @@ $(document).ready(function () {
             loadPage(pageNo);
         },
         onInit: function (swiper) {
-            window.setTimeout(function () {
+            +function () {
                 var page = parseInt($.cookie('page'));
                 if (isNaN(page)) {
                     page = 1;
                 }
                 slideToPage(page);
-            }, 500)
+            }.delay(500);
         }
     });
 });
@@ -903,5 +854,84 @@ $('#home').on("pagecreate", function (event) {
     jQueryMobileHack();
 });
 
++function() {
+    // When clicked on ayah bookmark:
+    // 1. Add the ayah in the bookmark, or remove it.        
+    // 3. Make the ayah number show (un)bookmarked color.
+    // 4. Change the tooltip to show (un)bookmarked bookmark icon.
+    // 5. Hide the tooltip
+    window.toggleAyahBookmark = function (event) {
+        var e = jQuery.event.fix(event || window.event);
+        var link = $(e.target);
+
+        var sura = link.attr("sura");
+        var ayah = link.attr("ayah");
+
+        var pageDiv = getPageDiv(getCurrentPageNo());
+        var ayahNumber = pageDiv.find(".ayah_number[sura='" + sura + "'][ayah='" + ayah + "']");
+        ayahNumber.tooltipster('hide');
+
+        var bookmarkAdded = BookmarkManager.toggleAyahBookmark(sura, ayah);
+        if (bookmarkAdded) {
+            ayahNumber.addClass('bookmarked_ayah');
+            link.addClass('bookmarked_ayah');
+            ayahNumber.attr('bookmarked', true);
+        } else {
+            ayahNumber.removeClass('bookmarked_ayah');
+            link.removeClass('bookmarked_ayah');
+            ayahNumber.attr('bookmarked', false);
+        }
+
+        buildAyahNumberTooltip(ayahNumber, sura, ayah, bookmarkAdded);
+        jQueryMobileHack();
+    }
+
+    window.showTranslationAyah = function () {
+        var e = jQuery.event.fix(event || window.event);
+        var link = $(e.target);
+
+        var sura = link.attr("sura");
+        var ayah = link.attr("ayah");
+        window.translationJump = { sura: sura, ayah: ayah };
+
+        $('#translationPopup').popup('open', { positionTo: '#pagejumpbutton' });
+        return true;
+    }
+
+    // When clicked on ayah bookmark:
+    // 1. Add the word in the bookmark, or remove it.        
+    // 3. Make the word show (un)bookmarked color.
+    // 5. Hide the tooltip
+    window.toggleWordBookmark = function (event) {
+        var e = jQuery.event.fix(event || window.event);
+        var link = $(e.target);
+
+        var sura = link.attr("sura");
+        var ayah = link.attr("ayah");
+        var wordNo = link.attr("word");
+
+        var pageDiv = getPageDiv(getCurrentPageNo());
+        var word = pageDiv.find(".word[sura='" + sura + "'][ayah='" + ayah + "'][word='" + wordNo + "']");
+        word.tooltipster('hide');
+
+        var bookmarkAdded = BookmarkManager.toggleWordBookmark(sura, ayah, wordNo);
+        if (bookmarkAdded) {
+            word.addClass('bookmarked_word');
+            link.addClass('bookmarked_word');
+            word.attr('bookmarked', true);
+        } else {
+            word.removeClass('bookmarked_word');
+            link.removeClass('bookmarked_word');
+            word.attr('bookmarked', false);
+        }
+        jQueryMobileHack();
+    }
+}();
+
+function errorLoadingContent() {
+    alert("Unable to load. You may not be connected to the Internet.");
+}
+
 $.mobile.popup.prototype.options.history = false;
+$.ajaxSetup({ cache: true });
 
