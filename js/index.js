@@ -197,14 +197,11 @@ function loadPage(pageNo, precache) {
         var after = getPageDiv(pageNo + 1);
 
         if (before.length > 0) {
-            swiperDiv.insertAfter(before.parent());
-            // If current the page is being shown gets pushed back
-            // because a new slide has been added before it, then
-            // we need to forward one slide.
-            if (precache)
-                window.swiper.activeIndex++;
+            swiperDiv.insertAfter(before.parent());            
         } else if (after.length > 0) {
-            swiperDiv.insertBefore(after.parent());            
+            swiperDiv.insertBefore(after.parent());
+            if (precache && getCurrentPageNo() > pageNo)
+                window.swiper.activeIndex++;
         } else {
             // before and after nothing exists. find the highest page div which is before this page and insert after that page
             var lastPageNo = 1;
@@ -214,7 +211,7 @@ function loadPage(pageNo, precache) {
                     lastPageNo = thisPageNo;
             })
             var lastPageDiv = getPageDiv(lastPageNo);
-            swiperDiv.insertAfter(lastPageDiv.parent());
+            swiperDiv.insertAfter(lastPageDiv.parent());           
         }
 
         window.swiper.update(true);
@@ -272,6 +269,7 @@ function loadPageHtml(pageNo, precache) {
 }
 
 function preCreateBeforeAfterSlide(pageNo) {
+    var pageDiv = getPageDiv(pageNo);
     // ensure a page slide exists before this page
     if (pageNo > 1) {
         var before = getPageDiv(pageNo - 1);
@@ -384,10 +382,10 @@ function postContentLoad(pageNo, precache) {
 
         $.cookie('page', pageNo, { path: '/', expires: 30 });
 
-        //preCreateBeforeAfterSlide();
+        preCreateBeforeAfterSlide(pageNo);
 
-        pageNo > 1 ? loadPage(pageNo - 1, true) : {};
-        pageNo < 604 ? loadPage(pageNo + 1, true) : {};
+        pageNo > 1 ? +function () { loadPage(pageNo - 1, true) }.delay(1000) : {};
+        pageNo < 604 ? +function () { loadPage(pageNo + 1, true) }.delay(1000) : {};
     } 
 }
 
