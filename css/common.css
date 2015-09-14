@@ -116,7 +116,7 @@
 .page {
     width: 550px;
     height: 822px;
-    background: url('../images/QuranBackground.png?v=1') no-repeat 0px 0px;
+    background: url('../images/QuranBackground.png') no-repeat 0px 0px;
     float: left;
     -webkit-user-select: none;
 }
