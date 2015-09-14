@@ -239,7 +239,7 @@
 	    pageDiv.attr("status", "loading");    
 	
 	    $.get('page/page' + pageStr + '.html' + versionSuffix, function (response) {
-	
+			
 	        var template = '<style type="text/css"> \
 						@font-face { \
 						 font-family: "page{pageStr}"; \
@@ -261,12 +261,14 @@
 	            delay: 100,
 	            glyphs: firstChar,
 	            success: function () {
-	                postContentLoad(pageNo, precache);
+	                
 	            },
 	            failure: function () {
 	                alert("Unable to download arabic font for this page. You may not be connected to the Internet, or your mobile is just too old.");
 	            }
 	        });
+	        
+	        postContentLoad(pageNo, precache);
 	
 	    }, 'html');
 	}
