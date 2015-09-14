@@ -17,6 +17,7 @@ http://quranapp.omaralzabir.com
  - Detail meaning of each word with examples. 
  - Bookmark page, ayah or even a word.
  - Save words in a notebook for later review. Good for leaning Quranic vocabulary.
+ - Offline support. You do not need to be online to read the pages you have already loaded. 
  
 ## Future plan
 
