@@ -7,7 +7,7 @@
 
 +function() {
 	
-	var version = 15;
+	var version = 1509142339;
 	var versionSuffix = "?v=" + version;
 	
 	jQuery.cachedScript = function (url, options) {
@@ -24,14 +24,13 @@
 	    return jQuery.ajax(options);
 	};
 	
-	function showDetails(key) {
-	
+	window.showWordDetails = function(key) {
+		hideAllTooltips();
 	    var meaning = window.wordbyword[key];
 	    if (meaning) {
 	        var popup = $('#meaningPopup');
 	        // pickup the template from saved location, if the html has been modified during last popup show
-	        var template = popup.data('template') || popup.html();
-	        popup.data('template', template);
+	        var template = $('#meaning_popup_template').html();
 	
 	        var output = template.assign(meaning, {
 	            textlink: 'http://www.almaany.com/en/dict/ar-en/' + meaning.t,

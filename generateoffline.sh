@@ -1,7 +1,6 @@
 version=`date +%y%m%d%H%M`
 pattern=00?.*
-jsVersion=`grep version js/index.js | grep -oE "\d+"`
-versionSuffix="?v=$jsVersion"
+versionSuffix="?v=$version"
 
 function header() {
 	echo "CACHE MANIFEST"	
@@ -28,11 +27,6 @@ function common() {
 	find data/fonts/QCF_BSML.woff -print	
 }
 
-function setVersion() {
-	sed -i.tmp 's/index.js?v=[0-9]*/index.js$versionSuffix/' $filename
-	sed -i.tmp 's/common.css?v=[0-9]*/common.css$versionSuffix/' $filename
-}
-
 function pageData() {
 	find page/page$pattern -type f -exec echo {}$versionSuffix \;
 	find translations/bangla/$pattern -type f -exec echo {}$versionSuffix \;
@@ -40,24 +34,38 @@ function pageData() {
 	find data/fonts/QCF_P$pattern -type f -print
 }
 
+function setVersion() {
+	local versionMatch="\(?v=[0-9]*\)\{0,1\}"
+	sed -i.tmp "s/index.js$versionMatch/index.js$versionSuffix/" $filename
+	sed -i.tmp "s/common.css$versionMatch/common.css$versionSuffix/" $filename
+	sed -i.tmp "s/index.appcache$versionMatch/index.appcache$versionSuffix/" $filename
+	rm $filename.tmp
+}
 
 # set the version number of js/css files in index.html
+sed -i.tmp "s/var version = [0-9]*;/var version = $version;/" js/index.js
+rm js/index.js.tmp
+
 filename=index.html
 setVersion
 
-
 # generate appcache
+filename=index.appcache
+
 header > $filename
 common >> $filename
 
-# generate first 10 pages
+# generate first couple of pages
 pattern=00?.*
 pageData >> $filename
-
+# generate last couple of pages
 pattern=60?.*
 pageData >> $filename
 
 footer >> $filename
+
+# put js css with version name
 setVersion
 
 
+# update index.html with latest appcache link

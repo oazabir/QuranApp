@@ -578,7 +578,7 @@ p.verse.highlighted {
     z-index: 65535;
 }
 
-#word_tooltip_template {
+#word_tooltip_template, #meaning_popup_template {
     display:none;
     position:absolute;
 }
