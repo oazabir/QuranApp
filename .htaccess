@@ -203,7 +203,7 @@ AddOutputFilterByType DEFLATE application/atom+xml \
                         ExpiresByType text/cache-manifest       "access plus 0 seconds"
 
 # Your document html
-                        ExpiresByType text/html                 "access plus 0 seconds"
+#                        ExpiresByType text/html                 "access plus 0 seconds"
 
 # Data
                         ExpiresByType application/json          "access plus 0 seconds"
@@ -521,5 +521,4 @@ AddOutputFilterByType DEFLATE application/atom+xml \
                         php_value session.cookie_httponly true
                         </IfModule>
 
-AddType text/cache-manifest .appcache
 
