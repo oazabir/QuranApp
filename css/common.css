@@ -145,6 +145,10 @@ body {
     color: red; /*background-color: #ccffcc; -moz-border-radius: 10px; -webkit-border-radius: 10px; */
 }
 
+.tooltipster-base div {
+	position: relative;
+}
+
 .tooltipster-base .arabic_word {
     color: lightgreen;
     font-size: 200%;
@@ -497,6 +501,7 @@ body {
 
 .tooltip_actions {
     margin: 5px;
+    position: relative;
 }
 
 .tooltip_actions a {
@@ -506,6 +511,7 @@ body {
     float: right;
     margin-right: 10px;
     line-height: 30px; 
+    position: relative;
 }
 
 .ui-bar {

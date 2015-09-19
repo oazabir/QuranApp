@@ -5,9 +5,9 @@
 /// <reference path="fontspy.js" />
 /// <reference path="jquery.cookie.js" />
 
-+function() {
-	
-	var version = 1509142347;
+QuranApp = (function() {
+	var $this = this;
+	var version = 1509192343;
 	var versionSuffix = "?v=" + version;
 	
 	jQuery.cachedScript = function (url, options) {
@@ -24,13 +24,20 @@
 	    return jQuery.ajax(options);
 	};
 	
-	window.showWordDetails = function(key) {
+	function showWordDetails(key) {
 		hideAllTooltips();
 	    var meaning = window.wordbyword[key];
 	    if (meaning) {
 	        var popup = $('#meaningPopup');
 	        // pickup the template from saved location, if the html has been modified during last popup show
 	        var template = $('#meaning_popup_template').html();
+	        var templateDiv = $('#meaning_popup_template');
+	        var template = templateDiv.data("html") || (function() {
+	            var html = templateDiv.html();
+	            templateDiv.html("");
+	            templateDiv.data("html", html);
+	            return html;
+	        })();
 	
 	        var output = template.assign(meaning, {
 	            textlink: 'http://www.almaany.com/en/dict/ar-en/' + meaning.t,
@@ -82,7 +89,7 @@
 	        var pageMatch = searchReg.exec(window.suraayahmap);
 	        if (pageMatch) {
 	            var pageNo = pageMatch[1];
-	            window.highlight = { sura: sura, ayah: ayah };
+	            $this.highlight = { sura: sura, ayah: ayah };
 	            $('#searchPopup').popup('close');
 	            slideToPage(pageNo);
 	        } else {
@@ -104,7 +111,7 @@
 	        // get the swiper slide index containing the page
 	        var pageDiv = getPageDiv(pageNo);
 	        var swiperDiv = pageDiv.parent();
-	        window.swiper.slideTo(swiperDiv.index(),0);
+	        $this.swiper.slideTo(swiperDiv.index(),0);
 	    }.delay(100);
 	}
 	
@@ -113,7 +120,7 @@
 	}
 	
 	function highlightSurahAyah(highlight) {
-	    var h = highlight || window.highlight;
+	    var h = highlight || $this.highlight;
 	    if (h) {
 	        var template = '.word[sura="{sura}"][ayah="{ayah}"]';
 	        var nodes = $(template.assign(h));
@@ -121,7 +128,7 @@
 	        +function () {
 	            nodes.css('background-color', '');
 	        }.delay(3000);
-	        window.highlight = null;
+	        $this.highlight = null;
 	    }
 	}
 	
@@ -167,8 +174,8 @@
 	    }
 	
 	    var actionsTemplate = '<div id="ayah_actions"> \
-	                    <a href="#bookmarkPopup" class="{bookmarked}" id="bookmark_ayah" sura="{sura}" ayah="{ayah}" onclick="toggleAyahBookmark()">&#x1f516;</a> \
-	                    <a href="#" id="translation_ayah" sura="{sura}" ayah="{ayah}" onclick="showTranslationAyah()">&#x1f4d6;</a> \
+	                    <a href="#bookmarkPopup" class="{bookmarked}" id="bookmark_ayah" sura="{sura}" ayah="{ayah}" onclick="QuranApp.toggleAyahBookmark()">&#x1f516;</a> \
+	                    <a href="#" id="translation_ayah" sura="{sura}" ayah="{ayah}" onclick="QuranApp.showTranslationAyah()">&#x1f4d6;</a> \
 	                    </div>';
 	    var actionContent = actionsTemplate.assign({ sura: sura, ayah: ayah, bookmarked: isBookmarked ? 'bookmarked_ayah' : '' });
 	    ayahMark.tooltipster({
@@ -331,7 +338,14 @@
 	                    var meaning = window.wordbyword[key];
 	
 	                    if (meaning) {
-	                        var template = $('#word_tooltip_template').html();
+		                    var templateDiv = $('#word_tooltip_template');
+	                        var template = templateDiv.data("html") || (function() {
+		                        var html = templateDiv.html();
+		                        templateDiv.html("");
+		                        templateDiv.data("html", html);
+		                        return html;
+		                    })();
+		                        
 	                        var root = meaning.r ? meaning.r[0] + ' ' + meaning.r[1] + ' ' + meaning.r[2] + ' ' + (meaning.r[3] || "") : "";
 	
 	                        var output = template.assign(meaning, {
@@ -451,10 +465,10 @@
 	        var suraNo = firstWord.attr('sura');
 	        var ayahNo = firstWord.attr('ayah');
 	
-	        if (window.translationJump) {
-	            suraNo = window.translationJump.sura;
-	            ayahNo = window.translationJump.ayah;
-	            window.translationJump = null;
+	        if ($this.translationJump) {
+	            suraNo = $this.translationJump.sura;
+	            ayahNo = $this.translationJump.ayah;
+	            $this.translationJump = null;
 	        }
 	
 	        var ayahBookmark = $('#translationContent a[name="' + suraNo + ':' + ayahNo + '"]');
@@ -465,9 +479,7 @@
 	        contentArea.scrollTop(scrollY);
 	
 	        verseP.addClass('highlighted');
-	        window.setTimeout(function () {
-	            verseP.removeClass('highlighted');
-	        }, 3000);
+	        +function() { verseP.removeClass('highlighted'); }.delay(3000);        
 	
 	    });
 	}
@@ -863,7 +875,7 @@
 	    // 3. Make the ayah number show (un)bookmarked color.
 	    // 4. Change the tooltip to show (un)bookmarked bookmark icon.
 	    // 5. Hide the tooltip
-	    window.toggleAyahBookmark = function (event) {
+	    function toggleAyahBookmark(event) {
 	        var e = jQuery.event.fix(event || window.event);
 	        var link = $(e.target);
 	
@@ -889,13 +901,13 @@
 	        jQueryMobileHack();
 	    }
 	
-	    window.showTranslationAyah = function () {
+	    function showTranslationAyah() {
 	        var e = jQuery.event.fix(event || window.event);
 	        var link = $(e.target);
 	
 	        var sura = link.attr("sura");
 	        var ayah = link.attr("ayah");
-	        window.translationJump = { sura: sura, ayah: ayah };
+	        $this.translationJump = { sura: sura, ayah: ayah };
 	
 	        $('#translationPopup').popup('open', { positionTo: '#pagejumpbutton' });
 	        return true;
@@ -905,7 +917,7 @@
 	    // 1. Add the word in the bookmark, or remove it.        
 	    // 3. Make the word show (un)bookmarked color.
 	    // 5. Hide the tooltip
-	    window.toggleWordBookmark = function (event) {
+	    function toggleWordBookmark(event) {
 	        var e = jQuery.event.fix(event || window.event);
 	        var link = $(e.target);
 	
@@ -937,5 +949,11 @@
 	$.mobile.popup.prototype.options.history = false;
 	$.ajaxSetup({ cache: true });
 
-}();
+	return {
+		toggleAyahBookmark: toggleAyahBookmark,
+		showTranslationAyah: showTranslationAyah,
+		showWordDetails: showWordDetails,
+		slideToPage: slideToPage
+	}
+})();
 
