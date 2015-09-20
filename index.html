@@ -2,6 +2,7 @@
 <html manifest="index.appcache?v=1509201323">
 <head>
     <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"> 
     <meta name="viewport" content="width=550,user-scalable=0">
     
     <title>Mobile Quran Reading বাংলা অর্থ সহ কুরআন</title>
@@ -306,15 +307,5 @@
     <script defer="defer" type="text/javascript" src="page/surahs.js"></script>
     <script defer="defer" type="text/javascript" src="js/sugar.js"></script>
     <script defer="defer" type="text/javascript" src="page/sura_ayah_map.js"></script>
-
-	<script type="text/javascript">
-	if (window.applicationCache) {
-	    window.applicationCache.addEventListener('updateready', function() {
-	        if (confirm('An update is available. Reload now?')) {
-	            window.location.reload();
-	        }
-	    });
-	}	
-	</script>
 </body>
 </html>
