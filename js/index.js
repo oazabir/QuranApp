@@ -911,7 +911,7 @@ QuranApp = (function() {
 	        // get the swiper slide index containing the page
 	        var pageDiv = getPageDiv(pageNo);
 	        var swiperDiv = pageDiv.parent();
-	        $this.swiper.slideTo(swiperDiv.index(),0);
+	        window.swiper.slideTo(swiperDiv.index(),0);
 	    }.delay(100);
 	}
 	
@@ -983,6 +983,14 @@ QuranApp = (function() {
 	    });
 	    
 	    jQueryMobileHack();
+	});
+	
+	$('form').on('keyup keypress', function(e) {
+	  var code = e.keyCode || e.which;
+	  if (code == 13) { 
+	    e.preventDefault();
+	    return false;
+	  }
 	});
 
 	$(document).ready(function () {
