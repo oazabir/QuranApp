@@ -1022,6 +1022,15 @@ QuranApp = (function() {
 	    });
 	});
 	
+	if (window.applicationCache) {
+	    window.applicationCache.addEventListener('updateready', function() {
+	        if (confirm('An update is available. Update now?')) {
+	            window.location.reload();
+	        }
+	    });
+	}	
+
+	
 	$.mobile.popup.prototype.options.history = false;
 	$.ajaxSetup({ cache: true });
 
