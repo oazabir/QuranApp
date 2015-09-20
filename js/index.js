@@ -1029,7 +1029,8 @@ QuranApp = (function() {
 		toggleAyahBookmark: toggleAyahBookmark,
 		showTranslationAyah: showTranslationAyah,
 		showWordDetails: showWordDetails,
-		slideToPage: slideToPage
+		slideToPage: slideToPage,
+		toggleWordBookmark: toggleWordBookmark
 	}
 })();
 
