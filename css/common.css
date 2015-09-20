@@ -454,9 +454,8 @@ body {
         }
 
 #listDiv span.arabic {
-    font-size: 140%;
-
-    font-stretch: extra-condensed;
+    font-size: 200%;
+	float: left;
 }
 
 
