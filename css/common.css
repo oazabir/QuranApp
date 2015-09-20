@@ -145,9 +145,6 @@ body {
     color: red; /*background-color: #ccffcc; -moz-border-radius: 10px; -webkit-border-radius: 10px; */
 }
 
-.tooltipster-base div {
-	position: relative;
-}
 
 .tooltipster-base .arabic_word {
     color: lightgreen;
