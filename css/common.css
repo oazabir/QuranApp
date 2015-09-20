@@ -197,9 +197,19 @@ body {
 
 .tooltipster-base .meanings_container {
     float: left;
-    width: 50%;
+    width: 49%;
+    clear: right;
+    padding-right: 5px;
 }
 
+.tooltipster-base .meanings_container ul {
+	padding: 0;
+	margin: 0;	
+}
+
+.tooltipster-base .meanings_container ul li {
+	text-align: left;
+}
     .tooltipster-base .meanings_container span {
         clear: both;
         display: block;
@@ -208,11 +218,13 @@ body {
 
 .tooltipster-base .grammar_container {
     float: left;
-    width: 50%;
+    width: 49%;
 }
 
 .tooltipster-base .lemma_container {
-    
+    clear: right;
+    float: right; 
+    width: 49%;
 }
 
 .tooltipster-base { max-width: 400px; }
@@ -500,8 +512,7 @@ body {
 }
 
 .tooltip_actions {
-    margin: 5px;
-    position: relative;
+    margin: 5px;    
 }
 
 .tooltip_actions a {
