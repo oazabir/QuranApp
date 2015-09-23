@@ -7,7 +7,7 @@
 
 QuranApp = (function() {
 	var $this = this;
-	var version = 1509201334;
+	var version = 1509231548;
 	var versionSuffix = "?v=" + version;
 		
 	/**************************************
@@ -202,6 +202,9 @@ QuranApp = (function() {
 	
 	            buildAyahNumberTooltip(ayahMark, sura, ayah, bookmark != null);
 	        });
+	        
+	        demo();
+	
 	    });
 	    promise.fail(function () {
 	        errorLoadingContent();
@@ -220,9 +223,6 @@ QuranApp = (function() {
 	
 	        pageDiv.attr("status", "loaded");
 	        $.mobile.loading('hide');
-	
-	        // For very first load, do a demo
-	        demo();
 	
 	        hideAllTooltips();
 	        highlightSurahAyah();
@@ -1043,3 +1043,34 @@ QuranApp = (function() {
 	}
 })();
 
+AppCache = (function(){
+	function load(url, success, failed) {
+		var iframe = document.createElement('IFRAME');
+		iframe.setAttribute('style', 'width:0px; height:0px; visibility:hidden; position:absolute; border:none');
+		iframe.src = url;
+		iframe.id = 'appcacheloader';
+		document.body.appendChild(iframe);
+		
+		$(iframe.contentWindow.document).ready(function($) {
+		  	$(iframe.contentWindow.applicationCache).on('cached error noupdate', function(e) {
+				var message = '';
+				switch (e.type) { 
+					case 'error':
+						failed(e);
+						break;
+					case 'cached': 
+						success(e);
+					 break;
+					case 'noupdate':
+						success(e);
+					break;    
+				}
+				alert(message);
+		  	});
+		});
+	}
+	
+	return {
+		load: load
+	}
+});
