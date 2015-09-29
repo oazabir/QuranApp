@@ -148,7 +148,7 @@ body {
 
 .tooltipster-base .arabic_word {
     color: lightgreen;
-    font-size: 200%;
+    font-size: 140%;
     margin-right: 0.5em;
     direction: rtl;
 }
@@ -170,14 +170,13 @@ body {
 .tooltipster-base .root {
     color: #f99;
     font-weight: bold;
-    font-size: 150%;
+    font-size: 140%;
     word-break: keep-all;
     direction: rtl;
 }
 
-.tooltipster-base .bangla_meaning {
-    text-align: center;
-    font-size: 12pt;
+.tooltipster-base .bangla_meaning {    
+    font-size: 10pt;
     font-family: SolaimanLipiNormal, Nikosh2, SolaimanLipi, Nikosh, NikoshBAN, Georgia, sans-serif !important;
     font-weight: normal;
     line-height: 1.6em;
@@ -185,8 +184,7 @@ body {
 }
 
 .tooltipster-base .indonesia_meaning {
-    text-align: center;
-    font-size: 12pt;
+    font-size: 10pt;
     font-weigth: bold;
     line-height: 1.6em;
     color: lightblue;
@@ -198,6 +196,14 @@ body {
     clear: right;
     padding-right: 5px;
 }
+
+.tooltipster-base .english_meaning {
+    font-size: 10pt;
+    font-weigth: bold;
+    line-height: 1.6em;
+    color: lightgreen;
+}
+
 
 .tooltipster-base .meanings_container ul {
 	padding: 0;
@@ -226,13 +232,6 @@ body {
 
 .tooltipster-base { max-width: 400px; }
 
-.tooltipster-base .english_meaning {
-    text-align: center;
-    font-size: 12pt;
-    font-weigth: bold;
-    line-height: 1.6em;
-    color: lightgreen;
-}
 
 .tooltipster-base .lemma {
     text-align: justify;
@@ -243,13 +242,13 @@ body {
 
     .tooltipster-base .lemma span {
         color: lightgreen;
-         font-size: 200%;
+         font-size: 140%;
     
     }
 
 .tooltipster-base .lemma_meaning {
     text-align: justify;
-    font-size: 12pt;
+    font-size: 10pt;
     line-height: 1.6em;
     font-family: SolaimanLipiNormal, Nikosh2, SolaimanLipi, Nikosh, NikoshBAN, Georgia, sans-serif !important;
     font-weight: normal;
@@ -304,7 +303,7 @@ body {
 }
 
 .page_no {
-    font-family: 'Arabic Typesetting', Georgia, 'Times New Roman', Arial;
+    font-family: /*'Arabic Typesetting',*/ Georgia, 'Times New Roman', Arial;
     direction: rtl;
     position: absolute;
     left: 260px;
@@ -328,8 +327,8 @@ body {
 }
 
 #meaningPopup .arabic_word, .arabic_grammar, .similar {
-    font-size: 200%;
-    font-family: 'Arabic Typesetting', Georgia, 'Times New Roman', Arial;
+    font-size: 140%;
+    font-family: /*'Arabic Typesetting',*/ Georgia, 'Times New Roman', Arial;
     direction: rtl;
 }
 #meaningPopup a {
@@ -355,8 +354,8 @@ body {
 }
 
 #meaningPopup .lemma {
-    font-size: 200%;
-    font-family: 'Arabic Typesetting', Georgia, 'Times New Roman', Arial;
+    font-size: 140%;
+    font-family: /*'Arabic Typesetting',*/ Georgia, 'Times New Roman', Arial;
 }
 
 #meaningPopup .lemma_meaning {
@@ -372,8 +371,8 @@ body {
 }
 
 #meaningPopup .root {
-    font-size: 200%;
-    font-family: 'Arabic Typesetting', Georgia, 'Times New Roman', Arial;
+    font-size: 140%;
+    font-family: /*'Arabic Typesetting',*/ Georgia, 'Times New Roman', Arial;
 }
 
 #meaningPopup .root_meanings {
@@ -451,7 +450,7 @@ body {
         }
 
 #listDiv span.arabic {
-    font-size: 200%;
+    font-size: 140%;
 	float: left;
 }
 
