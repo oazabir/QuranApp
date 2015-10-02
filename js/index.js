@@ -341,8 +341,12 @@ QuranApp = (function() {
 		
 	$('#translationPopup').on("popupbeforeposition", function (event) {
 	    var maxHeight = $(window).height() - 30;
-	    //$(this).css('height', (maxHeight * 0.4) + "px");
 	    $('#translationContent').height(maxHeight * 0.3);
+		$('#swiper').css("margin-bottom", $(this).outerHeight()+"px");
+	});
+
+	$('#translationPopup').on("popupafterclose", function (event) {
+		$('#swiper').css("margin-bottom", "0px");
 	});
 	
 	function loadTranslation() {
