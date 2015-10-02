@@ -7,7 +7,7 @@
 
 QuranApp = (function() {
 	var $this = this;
-	var version = 1510022352;
+	var version = 1510030003;
 	var versionSuffix = "?v=" + version;
 		
 	/**************************************
@@ -154,7 +154,7 @@ QuranApp = (function() {
 	            $(this).tooltipster({
 	                contentAsHTML: true,
 	                interactive: true,
-	                delay: 200,
+	                delay: 1000,
 	
 	                functionBefore: function (origin, continueTooltip) {
 	                    var sura = $(this).attr("sura");
@@ -308,7 +308,7 @@ QuranApp = (function() {
 	    ayahMark.tooltipster({
 	        contentAsHTML: true,
 	        content: output,
-	        delay: 200
+	        delay: 1000
 	    });
 	
 	    if (isBookmarked) {
@@ -328,7 +328,7 @@ QuranApp = (function() {
 	        content: actionContent,
 	        multiple: true,
 	        position: 'right',
-	        delay: 200
+	        delay: 1000
 	    });
 	}
 
