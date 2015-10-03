@@ -1,5 +1,8 @@
 //The directory to store data
 var store;
+//media player
+var media;
+
 var reciter;
 var sura;
 var aya;
@@ -34,7 +37,10 @@ function getDownloadURI() {
 function playLocalFile(fileName) {
 	console.log('Playing local file...');
 	console.log(fileName.nativeURL);
-	var media = new Media(fileName.nativeURL, onMediaComplete, onMediaError, onMediaStatus);
+	if(media != null)
+		media.release();
+
+	media = new Media(fileName.nativeURL, onMediaComplete, onMediaError, onMediaStatus);
 	media.play();
 }
 
@@ -52,7 +58,8 @@ function onMediaStatus(entry) {
     console.log(JSON.stringify(entry));
 }
 
-function downloadFile() {
+function downloadFile(entry) {
+	console.log(entry)
 	var fileTransfer = new FileTransfer();
 	var localTargetFile = getLocalFile();
 
