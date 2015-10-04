@@ -240,7 +240,7 @@ body {
     clear: both;
 }
 
-    .tooltipster-base .lemma_arabic {
+    .tooltipster-base span.lemma_arabic {
         color: lightgreen;
          font-size: 140%;
     
