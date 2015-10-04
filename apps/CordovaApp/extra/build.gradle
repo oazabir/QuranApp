@@ -1,0 +1,51 @@
+task assetCopyTask << {
+
+	copy {
+		from "../../../css"
+		into "../../../apps/CordovaApp/www/css"
+		println 'Copied: css'
+	}
+
+	copy {
+		from "../../../data"
+		into "../../../apps/CordovaApp/www/data"
+		println 'Copied: data'
+	}
+
+	
+	copy {
+		from "../../../images"
+		into "../../../apps/CordovaApp/www/images"
+		println 'Copied: images'
+	}
+
+	copy {
+		from "../../../js"
+		into "../../../apps/CordovaApp/www/js"
+		println 'Copied: js'
+	}
+
+	copy {
+		from "../../../page"
+		into "../../../apps/CordovaApp/www/page/"
+		println 'Copied: page'
+	}
+
+	copy {
+		from "../../../translations"
+		into "../../../apps/CordovaApp/www/translations"
+		println 'Copied: translation'
+	}
+
+	copy {
+		from "../../../favicon.ico"
+		into "../../../apps/CordovaApp/www"
+		println 'Copied: favicon.ico'
+	}
+	
+	copy {
+		from "../../../index.html"
+		into "../../../apps/CordovaApp/www"
+		println 'Copied: index.html'
+	}
+}
