@@ -1,9 +1,9 @@
 .page_content { 
-	max-height: 690px; 
-	overflow: auto; 
+	height: 690px; 
+    overflow-y: scroll;
 } 
 .line { 
 	font-size: 62px; 
-	max-width: 500px; 
+	max-width: 550px; 
 	word-wrap: break-word; 
 } 
