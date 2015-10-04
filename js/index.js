@@ -7,7 +7,7 @@
 
 QuranApp = (function() {
 	var $this = this;
-	var version = 1510030003;
+	var version = 1510041144;
 	var versionSuffix = "?v=" + version;
 		
 	/**************************************
@@ -183,7 +183,9 @@ QuranApp = (function() {
 	                            isBookmarked: isBookmarked,
 	                            bookmarkedClass: isBookmarked ? 'bookmarked_word' : ''
 	                        });
-	                        origin.tooltipster("content", $(output));
+							var tooltipHtml = $(output);
+							Options.applyLanguage(tooltipHtml);
+	                        origin.tooltipster("content", tooltipHtml);
 	                        continueTooltip();
 	                    }
 	                }
@@ -300,14 +302,17 @@ QuranApp = (function() {
 	    ayahMark.tooltipster().tooltipster('destroy');
 	
 	    var template = '<div> \
-	                        <div class="bangla_meaning">{b}</div> \
-	                        <div class="english_meaning">({key}) {e}</div> \
+	                        <div class="bangla_meaning" language="bangla">{b}</div> \
+	                        <div class="english_meaning" language="english">({key}) {e}</div> \
 	                        </div>';
 	    var output = template.assign(translation, { key: key });
+		var tooltipHtml = $(output);
+		Options.applyLanguage(tooltipHtml);
+        
 	    
 	    ayahMark.tooltipster({
 	        contentAsHTML: true,
-	        content: output,
+	        content: $(tooltipHtml).html(),
 	        delay: 1000
 	    });
 	
@@ -824,6 +829,8 @@ QuranApp = (function() {
 	            templateDiv.data("html", html);
 	            return html;
 	        })();
+			
+		
 	
 	        var output = template.assign(meaning, {
 	            textlink: 'http://www.almaany.com/en/dict/ar-en/' + meaning.t,
@@ -831,8 +838,8 @@ QuranApp = (function() {
 	            rootsplit: meaning.r == "" ? "" : meaning.r[0] + ' ' + meaning.r[1] + ' ' + meaning.r[2] + ' ' + (meaning.r[3] || ""),
 	            rootlink: 'http://ejtaal.net/m/aa/#q=' + meaning.r + ',dhq=,mgf=,hw4=,pr=,ll=,ls=,mis=h,la=h,amr=h,auh=h,umr=h,ulq=h,uqa=h,uqq=h,sg=h,ha=h,mr=h,mn=h,kz=h,uqw=h,ums=h,umj=h,bdw=h,asb=h,mht=h,msb=h,tla=h,amj=h,ens=h,aan=h,vi=h'
 	        });
-	
 	        popup.html(output).popup('open');
+			Options.applyLanguage(popup);
 	    }
 	}
 
@@ -967,6 +974,80 @@ QuranApp = (function() {
 	    return jQuery.ajax(options);
 	};
 	
+	/**************************************
+	*
+	*	Options
+	*
+	***************************************/
+	var Options = {
+		settings: {
+			fontSize: 0,	// 0 - Normal, 1 - Large
+			languages: {
+				bangla: true,
+				english: true,
+				indonesia: false
+			}
+		},
+		load: function() {
+			var savedData = localStorage.getItem("options");
+			if (savedData) {
+				Options.settings = JSON.parse(savedData);
+				Options.applyFontSize();
+			}
+		},
+		save: function() {
+	        var json = JSON.stringify(Options.settings);
+	        localStorage.setItem("options", json);			
+		},
+		onshow: function() {
+			$("#LanguageCheckboxList input").each(function(i, e){
+				$(e)
+					.prop( "checked", Options.settings.languages[$(e).val()] )
+					.checkboxradio( "refresh" )
+					.off('click')
+					.on('click', function() {
+						Options.settings.languages[$(this).val()] = $(this).prop("checked");
+						Options.save();
+					});
+			});
+			$('#FontSizeCheckboxList input').each(function(i, e){
+				$(e)
+					.prop( "checked", Options.settings.fontSize == $(e).val() )
+					.checkboxradio( "refresh" )
+					.off('click')
+					.on('click', function(){
+						Options.settings.fontSize = $(this).val();
+						Options.save();
+						
+						Options.applyFontSize();
+					});
+			});
+		},
+		applyLanguage: function(container){
+			container = $(container);
+			container.find('[language]').each(function(i, e){
+				e = $(e);
+				if (Options.settings.languages[e.attr('language')]){
+					e.show();
+				} else {
+					e.hide();
+				}
+			});
+		},
+		applyFontSize: function() {
+			if (Options.settings.fontSize == 0) {
+				$('#style_large_font').remove();
+			} else {
+				if ($('#style_large_font').length == 0) {
+					var style = '<link id="style_large_font" rel="stylesheet" type="text/css" href="css/large.css" />';
+					$(style).appendTo("head");
+				}
+			}
+		}
+	};
+	
+	Options.load();
+
 	
 	/**************************************
 	*	
@@ -984,6 +1065,7 @@ QuranApp = (function() {
 	
 	    $("#surahpanel").on("panelbeforeopen", function () {
 	        updateSurahPanel();       
+			Options.onshow();
 	    });
 	    
 	    jQueryMobileHack();

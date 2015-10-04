@@ -42,6 +42,7 @@ function setVersion() {
 	rm $filename.tmp
 }
 
+cd ~/QuranApp
 # set the version number of js/css files in index.html
 sed -i.tmp "s/var version = [0-9]*;/var version = $version;/" js/index.js
 rm js/index.js.tmp

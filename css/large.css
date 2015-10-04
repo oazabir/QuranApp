@@ -1,0 +1,9 @@
+.page_content { 
+	max-height: 690px; 
+	overflow: auto; 
+} 
+.line { 
+	font-size: 62px; 
+	max-width: 500px; 
+	word-wrap: break-word; 
+} 
