@@ -73,14 +73,22 @@
     color:#040;
 }
 
-.feature_bar {
-    position: absolute;
+#headerbar {
+    position: fixed;
+    top: 0px;
     left: 50%;
-    top: 4px;
+    right: 0px;
+    height: 45px;
+    background-color: #333;
     z-index: 10000;
+    margin-left: 220px;    
+}
+
+.feature_bar {
+    margin: 5px;
     word-spacing: 8px;
-    margin-left: 120px;
     font-family: Arial;
+    color: white;    
 }
 
 .feature_bar a {
@@ -116,7 +124,7 @@
 .page {
     width: 550px;
     height: 822px;
-    background: url('../images/QuranBackground.png') no-repeat 0px 0px;
+    /*background: url('../images/QuranBackground.png') no-repeat 0px 0px;*/
     float: left;
     -webkit-user-select: none;
 }
@@ -273,14 +281,17 @@ body {
 }*/
 
 .surah_title {
-    position: absolute;
-    left: 40px;
-    top: 5px;
+    position: fixed;
+    left: 0px;
+    right: 0px;
+    background-color: #333;
+    top: 0px;
+    height: 45px; 
     text-align: center;
-    width: 130px;
+    width: 100%;
     vertical-align: middle;
-    line-height: 38px;
-    font-size: 16pt;
+    line-height: 45px;
+    font-size: 34px;
     font-weight: normal;
     font-family: 'basmalah';
     direction: rtl;
@@ -288,7 +299,7 @@ body {
 
 .surah_title a {
     text-decoration: none;
-    color: black;
+    color: antiquewhite;
     font-weight: normal;
 }
 
