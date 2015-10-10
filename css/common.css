@@ -76,12 +76,11 @@
 #headerbar {
     position: fixed;
     top: 0px;
-    left: 50%;
     right: 0px;
-    height: 45px;
+    height: 44px;
     background-color: #333;
     z-index: 10000;
-    margin-left: 220px;    
+    width: 150px;    
 }
 
 .feature_bar {
@@ -89,7 +88,7 @@
     word-spacing: 8px;
     font-family: Arial;
     color: white;    
-    width: 150px;
+    
 }
 
 .feature_bar a {
@@ -410,11 +409,11 @@ body {
 
  .swiper-container {
             height: 822px;
-            width: 550px;
+            width: 520px;
         }
 
         .swiper-slide {
-            width: 550px;
+            width: 520px;
             height: 822px;
             /* Center slide text vertically */
             display: -webkit-box;
