@@ -135,7 +135,7 @@ html {
     -webkit-font-smoothing: antialiased;
     /*-webkit-text-stroke: 0.2px;*/
     text-shadow: 1px 1px 1px rgba(0,0,0,0.004);
-    font-smooth: always;
+    
 }
 
 .word:hover {
