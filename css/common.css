@@ -405,8 +405,6 @@ body {
     width: 20em;
 }
 
-
-#home { -webkit-user-select: none; }
 #home>.ui-content { padding: 0; }
 
  .swiper-container {
