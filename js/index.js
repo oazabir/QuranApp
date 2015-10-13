@@ -5,9 +5,9 @@
 /// <reference path="fontspy.js" />
 /// <reference path="jquery.cookie.js" />
 
-QuranApp = (function() {
+QuranApp = (function($) {
 	var $this = this;
-	var version = 1510130856;
+	var version = 1510131119;
 	var versionSuffix = "?v=" + version;
 		
 	/**************************************
@@ -1127,7 +1127,7 @@ QuranApp = (function() {
 		slideToPage: slideToPage,
 		toggleWordBookmark: toggleWordBookmark
 	}
-})();
+})(jQuery);
 
 AppCache = (function(){
 	function load(url, success, failed) {
