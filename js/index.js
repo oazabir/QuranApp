@@ -7,7 +7,7 @@
 
 QuranApp = (function() {
 	var $this = this;
-	var version = 1510101800;
+	var version = 1510101619;
 	var versionSuffix = "?v=" + version;
 		
 	/**************************************
@@ -186,7 +186,7 @@ QuranApp = (function() {
 							var tooltipHtml = $(output);
 							Options.applyLanguage(tooltipHtml);
 	                        origin.tooltipster("content", tooltipHtml);
-	                        continueTooltip(); //.lazy(1000, false, 1);
+	                        continueTooltip();
 	                    }
 	                }
 	
