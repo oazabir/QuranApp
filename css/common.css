@@ -131,10 +131,19 @@ body {
     padding: 0;
 }
 
-* {
-    -webkit-font-smoothing: antialiased !important;
+html {
+    -webkit-font-smoothing: antialiased;
     /*-webkit-text-stroke: 0.2px;*/
     text-shadow: 1px 1px 1px rgba(0,0,0,0.004);
+}
+
+@media
+only screen and (-webkit-min-device-pixel-ratio: 1.25),
+only screen and ( min-device-pixel-ratio: 1.25),
+only screen and ( min-resolution: 200dpi),
+only screen and ( min-resolution: 1.25dppx)
+{
+    -webkit-font-smoothing: subpixel-antialiased;
 }
 
 .word:hover {

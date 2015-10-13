@@ -7,7 +7,7 @@
 
 QuranApp = (function($) {
 	var $this = this;
-	var version = 1510131119;
+	var version = 1510131121;
 	var versionSuffix = "?v=" + version;
 		
 	/**************************************
