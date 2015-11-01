@@ -1,0 +1,9 @@
+CACHE MANIFEST
+# version 1509142347
+CACHE:
+
+# Resources that require the user to be online.
+NETWORK:
+*
+ 
+FALLBACK:
