@@ -4,21 +4,39 @@ var store;
 var media;
 
 var reciter;
-var sura;
-var aya;
+var sura = -1;
+var aya = -1;
 var defaultReciter = 'Husary_128kbps';
 
-function play(s, a) {
+function playDefault(s, a) {
 	play(defaultReciter, s, a);
 }
 
 function play(r, s, a) {
 	reciter = r;
-	sura = threeDigits(s);
-	aya = threeDigits(a);
+	sura = s;
+	aya = a;
 	
-	store = cordova.file.dataDirectory + 'mp3/';
+	initStoreLocation();
 	window.resolveLocalFileSystemURL(getLocalFile(), playLocalFile, downloadFile);
+}
+
+
+function playFromCurrentPosition() {
+	if(sura == -1 || aya == -1) {
+		console.log("Current positino unknown");
+		return;
+	}
+
+	if(store == null) {
+		initStoreLocation();
+	}
+
+	window.resolveLocalFileSystemURL(getLocalFile(), playLocalFile, downloadFile);	
+}
+
+function initStoreLocation() {
+	store = cordova.file.dataDirectory + 'mp3';
 }
 
 function threeDigits(num) {
@@ -27,20 +45,22 @@ function threeDigits(num) {
 }
 
 function getLocalFile() {
-	return store + '/' + reciter + '/' + sura + '/' + aya + '.mp3';
+	var localFile = store + '/' + reciter + '/' + threeDigits(sura) + '/' + threeDigits(aya) + '.mp3';
+	console.log("Local file: " + localFile);
+	return localFile;
 }
 
 function getDownloadURI() {
-	return 'http://www.everyayah.com/data/'+ reciter+ '/'+ sura+ aya+ '.mp3';
+	return 'http://www.everyayah.com/data/' + reciter + '/' + threeDigits(sura) + threeDigits(aya) + '.mp3';
 }
 
 function playLocalFile(fileName) {
-	console.log('Playing local file...');
-	console.log(fileName.nativeURL);
+	console.log('Playing from local file system');
+	console.log('file: ' + fileName.toInternalURL());
 	if(media != null)
 		media.release();
 
-	media = new Media(fileName.nativeURL, onMediaComplete, onMediaError, onMediaStatus);
+	media = new Media(fileName.toInternalURL(), onMediaComplete, onMediaError, onMediaStatus);
 	media.play();
 }
 
@@ -50,7 +70,9 @@ function onMediaError(e) {
 }
 
 function onMediaComplete() {
-    console.log('Media completed');
+    console.log('Play completed for sura: ' + sura + ' aya: ' + aya);
+    aya += 1;
+    playFromCurrentPosition();
 }
 
 function onMediaStatus(entry) {
@@ -70,7 +92,8 @@ function downloadFile(entry) {
 		getDownloadURI(),
 		localTargetFile,
 		function(entry) {
-			console.log("Successfully file downloaded")
+			console.log("Successfully file downloaded");
+			playFromCurrentPosition();
 		},
 		function(error) {
 			console.log("download error source " + error.source);
@@ -80,6 +103,6 @@ function downloadFile(entry) {
 	);
 }
 
-function file_test() {
+function cordova_file_test() {
 	console.log(cordova.file.dataDirectory + 'mp3/');
 }
