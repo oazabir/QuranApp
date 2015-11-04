@@ -142,17 +142,18 @@ var QuranApp = (function($) {
 	        var wordBookmarks = BookmarkManager.getWordBookmarks();
 	
 	        $(pageDivId + " .word").each(function (i, e) {
-	            var sura = $(this).attr("sura");
-	            var ayah = $(this).attr("ayah");
-	            var word = $(this).attr("word");
+				e = $(e);
+	            var sura = e.attr("sura");
+	            var ayah = e.attr("ayah");
+	            var word = e.attr("word");
 	            var bookmark = wordBookmarks.find(function (b) { return b.sura == sura && b.ayah == ayah && b.word == word; })
 	            var isBookmarked = bookmark != null;
 	            if (isBookmarked) {
-	                $(this).addClass('bookmarked_word');
-	                $(this).attr('bookmarked', true);
+	                e.addClass('bookmarked_word');
+	                e.attr('bookmarked', true);
 	            }
 	
-	            $(this).tooltipster({
+	            e.tooltipster({
 	                contentAsHTML: true,
 	                interactive: true,
 	                delay: 1000,
@@ -196,14 +197,53 @@ var QuranApp = (function($) {
 	        });
 	
 	        var bookmarkedAyat = BookmarkManager.getAyahBookmarks();
-	
+			
 	        $(pageDivId + " .ayah_number").each(function (i, e) {
-	            var ayahMark = $(this);
-	            var sura = ayahMark.attr("sura");
-	            var ayah = ayahMark.attr("ayah");
+				e = $(e);
+	            var sura = e.attr("sura");
+	            var ayah = e.attr("ayah");
+				
 	            var bookmark = bookmarkedAyat.find(function (b) { return b.sura == sura && b.ayah == ayah });
+				var isBookmarked = bookmark != null;
+	            if (isBookmarked) {
+	                $(this).addClass('bookmarked_ayah');
+	                $(this).attr('bookmarked', true);
+	            }
+				
+	            e.tooltipster({
+	                contentAsHTML: true,
+	                interactive: true,
+	                delay: 1000,
 	
-	            buildAyahNumberTooltip(ayahMark, sura, ayah, bookmark != null);
+	                functionBefore: function (origin, continueTooltip) {
+	                    var sura = $(this).attr("sura");
+	                    var ayah = $(this).attr("ayah");
+	                    var isBookmarked = $(this).attr('bookmarked');
+	
+	                    var key = sura + ":" + ayah;
+						
+						var template = '<div> \
+											<div class="bangla_meaning" language="bangla">{b}</div> \
+											<div class="english_meaning" language="english">({key}) {e}</div> \
+											<div id="ayah_actions"> \
+											<a href="#bookmarkPopup" class="{bookmarked}" id="bookmark_ayah" sura="{sura}" ayah="{ayah}" onclick="QuranApp.toggleAyahBookmark()">&#x1f516;</a> \
+											<a href="#" id="translation_ayah" sura="{sura}" ayah="{ayah}" onclick="QuranApp.showTranslationAyah()">&#x1f4d6;</a> \
+											</div> \
+										</div>';
+	
+						var translation = window.translation[key];						
+						var output = template.assign(translation, {
+	                            sura: sura, ayah: ayah, 
+	                            pageDivId: pageDivId, key: key,
+	                            isBookmarked: isBookmarked,
+	                            bookmarkedClass: isBookmarked ? 'bookmarked_ayah' : ''
+	                    });
+						var tooltipHtml = $(output);
+						Options.applyLanguage(tooltipHtml);
+						origin.tooltipster("content", tooltipHtml);
+	                    continueTooltip();
+	                }	
+	            });
 	        });
 	        
 	        demo();
@@ -310,7 +350,6 @@ var QuranApp = (function($) {
 		var tooltipHtml = $(output);
 		Options.applyLanguage(tooltipHtml);
         
-	    
 	    ayahMark.tooltipster({
 	        contentAsHTML: true,
 	        content: $(tooltipHtml).html(),
@@ -824,6 +863,7 @@ var QuranApp = (function($) {
 
 	function showWordDetails(key) {
 		hideAllTooltips();
+		
 	    var meaning = window.wordbyword[key];
 	    if (meaning) {
 	        var popup = $('#meaningPopup');
@@ -856,6 +896,8 @@ var QuranApp = (function($) {
     // 3. Make the word show (un)bookmarked color.
     // 5. Hide the tooltip
     function toggleWordBookmark(event) {
+		hideAllTooltips();
+		
         var e = $.event.fix(event || window.event);
         var link = $(e.target);
 
@@ -934,7 +976,8 @@ var QuranApp = (function($) {
 	}
 	
 	function hideAllTooltips() {
-	    $('.tooltipstered').tooltipster('hide');
+	    $('.ayah_number').tooltipster('hide');
+		$('.word').tooltipster('hide');
 	}
 	
 	function highlightSurahAyah(highlight) {

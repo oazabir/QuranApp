@@ -494,8 +494,10 @@ html {
     color: ivory;
     font-size: 30px;
     text-decoration: none;
-    word-spacing: 5px;
+    float: right;
     margin-right: 10px;
+    line-height: 30px; 
+    position: relative;
 }
 
 
