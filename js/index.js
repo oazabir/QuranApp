@@ -5,7 +5,7 @@
 /// <reference path="fontspy.js" />
 /// <reference path="jquery.cookie.js" />
 
-QuranApp = (function($) {
+var QuranApp = (function($) {
 	var $this = this;
 	var version = 1510131128;
 	var versionSuffix = "?v=" + version;
@@ -26,7 +26,8 @@ QuranApp = (function($) {
 	    var pageDivId = '#page' + pageStr;
 	
 	    // ensure the page div is there. if not, then create that page div 
-	    // and one before and after for smoother swipe. 
+	    // and one before and after for smoother swipe.
+		var swiperDiv; 
 	    var pageDiv = $(pageDivId);
 	    if (pageDiv.length == 0) {
 	        swiperDiv = makeSwiperDiv(pageNo);
@@ -333,7 +334,8 @@ QuranApp = (function($) {
 	        content: actionContent,
 	        multiple: true,
 	        position: 'right',
-	        delay: 1000
+	        delay: 1000,
+			hideOnClick: true
 	    });
 	}
 
@@ -543,9 +545,9 @@ QuranApp = (function($) {
 	    },
 	
 	    clearBookmarks: function () {
-	        BookmarkManager.saveLocalStorageObject(pageBoomarksName, null);
-	        BookmarkManager.saveLocalStorageObject(ayahBookmarksName, null);
-	        BookmarkManager.saveLocalStorageObject(wordBookmarksName, null);
+	        BookmarkManager.saveLocalStorageObject(BookmarkManager.pageBoomarksName, null);
+	        BookmarkManager.saveLocalStorageObject(BookmarkManager.ayahBookmarksName, null);
+	        BookmarkManager.saveLocalStorageObject(BookmarkManager.wordBookmarksName, null);
 	
 	        BookmarkManager.refreshListViews();
 	    },
@@ -778,7 +780,9 @@ QuranApp = (function($) {
     // 4. Change the tooltip to show (un)bookmarked bookmark icon.
     // 5. Hide the tooltip
     function toggleAyahBookmark(event) {
-        var e = jQuery.event.fix(event || window.event);
+		hideAllTooltips();
+		
+        var e = $.event.fix(event || window.event);
         var link = $(e.target);
 
         var sura = link.attr("sura");
@@ -801,10 +805,13 @@ QuranApp = (function($) {
 
         buildAyahNumberTooltip(ayahNumber, sura, ayah, bookmarkAdded);
         jQueryMobileHack();
+		
     }
 
     function showTranslationAyah() {
-        var e = jQuery.event.fix(event || window.event);
+		hideAllTooltips();
+		
+        var e = $.event.fix(event || window.event);
         var link = $(e.target);
 
         var sura = link.attr("sura");
@@ -823,7 +830,7 @@ QuranApp = (function($) {
 	        // pickup the template from saved location, if the html has been modified during last popup show
 	        var template = $('#meaning_popup_template').html();
 	        var templateDiv = $('#meaning_popup_template');
-	        var template = templateDiv.data("html") || (function() {
+	        template = templateDiv.data("html") || (function() {
 	            var html = templateDiv.html();
 	            templateDiv.html("");
 	            templateDiv.data("html", html);
@@ -849,7 +856,7 @@ QuranApp = (function($) {
     // 3. Make the word show (un)bookmarked color.
     // 5. Hide the tooltip
     function toggleWordBookmark(event) {
-        var e = jQuery.event.fix(event || window.event);
+        var e = $.event.fix(event || window.event);
         var link = $(e.target);
 
         var sura = link.attr("sura");
@@ -880,7 +887,7 @@ QuranApp = (function($) {
 	***************************************/
 	
 	function getCurrentPageNo() {
-	    var swiperDiv = swiper.slides[swiper.activeIndex];
+	    var swiperDiv = window.swiper.slides[window.swiper.activeIndex];
 	    var pageNo = parseInt($(swiperDiv).find('div.page').attr('pageno'));
 	    return pageNo;
 	}
@@ -960,7 +967,7 @@ QuranApp = (function($) {
 	    return $('#page' + pageStr);
 	}
 
-	jQuery.cachedScript = function (url, options) {
+	$.cachedScript = function (url, options) {
 	
 	    // Allow user to set any option except for dataType, cache, and url
 	    options = $.extend(options || {}, {
@@ -971,7 +978,7 @@ QuranApp = (function($) {
 	
 	    // Use $.ajax() since it is more flexible than $.getScript
 	    // Return the jqXHR object so we can chain callbacks
-	    return jQuery.ajax(options);
+	    return $.ajax(options);
 	};
 	
 	/**************************************
@@ -1093,7 +1100,7 @@ QuranApp = (function($) {
 	            hideAllTooltips();
 	        },
 	        onSlideChangeEnd: function (swiper) {
-	            pageNo = getCurrentPageNo();
+	            var pageNo = getCurrentPageNo();
 	            loadPage(pageNo);
 	        },
 	        onInit: function (swiper) {
@@ -1129,7 +1136,7 @@ QuranApp = (function($) {
 	}
 })(jQuery);
 
-AppCache = (function(){
+var AppCache = (function($){
 	function load(url, success, failed) {
 		var iframe = document.createElement('IFRAME');
 		iframe.setAttribute('style', 'width:0px; height:0px; visibility:hidden; position:absolute; border:none');
@@ -1159,4 +1166,4 @@ AppCache = (function(){
 	return {
 		load: load
 	}
-});
+})(jQuery);
