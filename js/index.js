@@ -976,8 +976,8 @@ var QuranApp = (function($) {
 	}
 	
 	function hideAllTooltips() {
-	    $('.ayah_number').tooltipster('hide');
-		$('.word').tooltipster('hide');
+	    //$('.ayah_number').tooltipster('hide');
+		//$('.word').tooltipster('hide');
 	}
 	
 	function highlightSurahAyah(highlight) {
