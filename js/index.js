@@ -7,7 +7,7 @@
 
 var QuranApp = (function($) {
 	var $this = this;
-	var version = 1510131128;
+	var version = 1511060816;
 	var versionSuffix = "?v=" + version;
 		
 	/**************************************
@@ -156,44 +156,51 @@ var QuranApp = (function($) {
 	            e.tooltipster({
 	                contentAsHTML: true,
 	                interactive: true,
-	                delay: 1000,
-	
+	                
 	                functionBefore: function (origin, continueTooltip) {
-	                    var sura = $(this).attr("sura");
-	                    var ayah = $(this).attr("ayah");
-	                    var word = $(this).attr("word");
-	                    var isBookmarked = $(this).attr('bookmarked');
+						var sura = $(this).attr("sura");
+						var ayah = $(this).attr("ayah");
+						var word = $(this).attr("word");
+						var isBookmarked = $(this).attr('bookmarked');
 	
-	                    var key = sura + ":" + ayah + ":" + word;
-	                    var meaning = window.wordbyword[key];
+						var key = sura + ":" + ayah + ":" + word;
+						var meaning = window.wordbyword[key];
 	
-	                    if (meaning) {
-		                    var templateDiv = $('#word_tooltip_template');
-	                        var template = templateDiv.data("html") || (function() {
-		                        var html = templateDiv.html();
-		                        templateDiv.html("");
-		                        templateDiv.data("html", html);
-		                        return html;
-		                    })();
-		                        
-	                        var root = meaning.r ? meaning.r[0] + ' ' + meaning.r[1] + ' ' + meaning.r[2] + ' ' + (meaning.r[3] || "") : "";
+						if (meaning) {
+							var templateDiv = $('#word_tooltip_template');
+							var template = templateDiv.data("html") || (function() {
+								var html = templateDiv.html();
+								templateDiv.html("");
+								templateDiv.data("html", html);
+								return html;
+							})();
+								
+							var root = meaning.r ? meaning.r[0] + ' ' + meaning.r[1] + ' ' + meaning.r[2] + ' ' + (meaning.r[3] || "") : "";
 	
-	                        var output = template.assign(meaning, {
-	                            root: root,
-	                            sura: sura, ayah: ayah, word: word,
-	                            pageDivId: pageDivId, key: key,
-	                            isBookmarked: isBookmarked,
-	                            bookmarkedClass: isBookmarked ? 'bookmarked_word' : ''
-	                        });
+							var output = template.assign(meaning, {
+								root: root,
+								sura: sura, ayah: ayah, word: word,
+								pageDivId: pageDivId, key: key,
+								isBookmarked: isBookmarked,
+								bookmarkedClass: isBookmarked ? 'bookmarked_word' : ''
+							});
 							var tooltipHtml = $(output);
 							Options.applyLanguage(tooltipHtml);
-	                        origin.tooltipster("content", tooltipHtml);
-	                        continueTooltip();
-	                    }
+							origin.tooltipster("content", tooltipHtml);
+							
+							if(window.showTooltip)
+								window.showTooltip.cancel();
+								
+							window.showTooltip = (function(){
+								if (window.swiper.sliding == true)
+									return;
+								continueTooltip();
+							}).delay(1000);
+							
+							window.showTooltip();							
+						}						
 	                }
-	
 	            });
-	
 	        });
 	
 	        var bookmarkedAyat = BookmarkManager.getAyahBookmarks();
@@ -502,7 +509,8 @@ var QuranApp = (function($) {
 	            e: firstWord, f: function (e, resume) {
 	                e.tooltipster('show');
 	                bringHandOnTop();
-	                (function () {                    
+	                (function () {
+						e.tooltipster('hide');                    
 	                    resume();
 	                }).delay(delay);                
 	            }
@@ -1129,6 +1137,8 @@ var QuranApp = (function($) {
 	  }
 	});
 
+	// ************ TODO: Detect when swiper begins and ends so that tooltip is not shown during slide ***********
+	
 	$(document).ready(function () {
 	    window.swiper = new Swiper('.swiper-container', {
 	        nextButton: '.swiper-button-next',
@@ -1139,11 +1149,24 @@ var QuranApp = (function($) {
 	        scrollbarHide: false,
 	        spaceBetween: 0,
 	        //loop: true ,
+			onTouchStart: function(swiper) {
+				
+			},
+			onTouchMove: function(swiper) {
+				
+			},
+			onTransitionStart: function(swiper) {
+				window.swiper.sliding = true;
+				
+			},
+			onTransitionEnd: function(swiper) {
+				window.swiper.sliding = false;					            	
+			},
 	        onSlideChangeStart: function(swiper) {
-	            hideAllTooltips();
+	            
 	        },
 	        onSlideChangeEnd: function (swiper) {
-	            var pageNo = getCurrentPageNo();
+				var pageNo = getCurrentPageNo();
 	            loadPage(pageNo);
 	        },
 	        onInit: function (swiper) {
