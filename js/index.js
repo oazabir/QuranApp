@@ -7,7 +7,7 @@
 
 var QuranApp = (function($) {
 	var $this = this;
-	var version = 1511060830;
+	var version = 1511060834;
 	var versionSuffix = "?v=" + version;
 		
 	/**************************************
@@ -195,7 +195,7 @@ var QuranApp = (function($) {
 								if (window.swiper.sliding == true)
 									return;
 								continueTooltip();
-							}.delay(1000);
+							}.delay(500);
 							
 							//window.showTooltip();							
 						}						
@@ -984,8 +984,14 @@ var QuranApp = (function($) {
 	}
 	
 	function hideAllTooltips() {
-	    $('.ayah_number').tooltipster('hide');
-		$('.word').tooltipster('hide');
+		if(window.showTooltip)
+			window.showTooltip.cancel();							            	
+		try {
+	    	$('.ayah_number').tooltipster('hide');
+			$('.word').tooltipster('hide');
+		} catch(e) {
+			
+		}
 	}
 	
 	function highlightSurahAyah(highlight) {
@@ -1154,17 +1160,17 @@ var QuranApp = (function($) {
 	        spaceBetween: 0,
 	        
 			onTransitionStart: function(swiper) {
-				window.swiper.sliding = true;
+				hideAllTooltips();
 			},
 			onTransitionEnd: function(swiper) {
-				window.swiper.sliding = false;					            	
+				hideAllTooltips();					            	
 			},
 	        onSlideChangeStart: function(swiper) {
-				window.swiper.sliding = true;
+				hideAllTooltips();
 	        },
 	        onSlideChangeEnd: function (swiper) {
-				window.swiper.sliding = false;	
-				hideAllTooltips();				            	
+				hideAllTooltips();
+				window.swiper.sliding = false;
 				var pageNo = getCurrentPageNo();
 	            loadPage(pageNo);
 	        },
