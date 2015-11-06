@@ -7,7 +7,7 @@
 
 var QuranApp = (function($) {
 	var $this = this;
-	var version = 1511060816;
+	var version = 1511060824;
 	var versionSuffix = "?v=" + version;
 		
 	/**************************************
@@ -1137,7 +1137,11 @@ var QuranApp = (function($) {
 	  }
 	});
 
-	// ************ TODO: Detect when swiper begins and ends so that tooltip is not shown during slide ***********
+	/************************************
+	 * 
+	 * 	Swiper
+	 * 
+	 ************************************/
 	
 	$(document).ready(function () {
 	    window.swiper = new Swiper('.swiper-container', {
@@ -1148,24 +1152,18 @@ var QuranApp = (function($) {
 	        scrollbar: '.swiper-scrollbar',
 	        scrollbarHide: false,
 	        spaceBetween: 0,
-	        //loop: true ,
-			onTouchStart: function(swiper) {
-				
-			},
-			onTouchMove: function(swiper) {
-				
-			},
+	        
 			onTransitionStart: function(swiper) {
 				window.swiper.sliding = true;
-				
 			},
 			onTransitionEnd: function(swiper) {
 				window.swiper.sliding = false;					            	
 			},
 	        onSlideChangeStart: function(swiper) {
-	            
+				window.swiper.sliding = true;
 	        },
 	        onSlideChangeEnd: function (swiper) {
+				window.swiper.sliding = false;					            	
 				var pageNo = getCurrentPageNo();
 	            loadPage(pageNo);
 	        },
@@ -1180,6 +1178,24 @@ var QuranApp = (function($) {
 	        }
 	    });
 	});
+	
+	window.touched = false;
+	$(document).on('touchstart', function(){
+		window.touched = true;
+	});
+	$(document).on('touchend', function(){
+		window.touched = false;		
+	});
+	$(document).on('touchcancel', function(){
+		window.touched = false;		
+	});
+	
+	$(document).on('touchmove', function(){
+		if (window.touched)
+			window.swiper.sliding = true;
+		else 
+			window.swiper.sliding = false;
+	});	
 	
 	if (window.applicationCache) {
 	    window.applicationCache.addEventListener('updateready', function() {
