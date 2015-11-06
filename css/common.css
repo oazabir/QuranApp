@@ -114,7 +114,7 @@
     display: none;
 }
 .page {
-    width: 498px;
+    width: 514px;
     height: 820px;
     background: url('../images/Background.png') no-repeat 0px 0px;
     float: left;
@@ -398,13 +398,13 @@ html {
 #home>.ui-content { padding: 0; }
 
  .swiper-container {
-            height: 822px;
-            width: 498px;
+            height: 820px;
+            width: 514px;
         }
 
         .swiper-slide {
-            width: 498px;
-            height: 822px;
+            width: 514px;
+            height: 820px;
             /* Center slide text vertically */
             display: -webkit-box;
             display: -ms-flexbox;
