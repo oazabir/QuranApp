@@ -7,7 +7,7 @@
 
 var QuranApp = (function($) {
 	var $this = this;
-	var version = 1511060824;
+	var version = 1511060830;
 	var versionSuffix = "?v=" + version;
 		
 	/**************************************
@@ -191,13 +191,13 @@ var QuranApp = (function($) {
 							if(window.showTooltip)
 								window.showTooltip.cancel();
 								
-							window.showTooltip = (function(){
+							window.showTooltip = function(){
 								if (window.swiper.sliding == true)
 									return;
 								continueTooltip();
-							}).delay(1000);
+							}.delay(1000);
 							
-							window.showTooltip();							
+							//window.showTooltip();							
 						}						
 	                }
 	            });
@@ -984,8 +984,8 @@ var QuranApp = (function($) {
 	}
 	
 	function hideAllTooltips() {
-	    //$('.ayah_number').tooltipster('hide');
-		//$('.word').tooltipster('hide');
+	    $('.ayah_number').tooltipster('hide');
+		$('.word').tooltipster('hide');
 	}
 	
 	function highlightSurahAyah(highlight) {
@@ -1163,7 +1163,8 @@ var QuranApp = (function($) {
 				window.swiper.sliding = true;
 	        },
 	        onSlideChangeEnd: function (swiper) {
-				window.swiper.sliding = false;					            	
+				window.swiper.sliding = false;	
+				hideAllTooltips();				            	
 				var pageNo = getCurrentPageNo();
 	            loadPage(pageNo);
 	        },
