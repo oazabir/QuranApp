@@ -114,9 +114,9 @@
     display: none;
 }
 .page {
-    width: 550px;
-    height: 822px;
-    background: url('../images/QuranBackground.png') no-repeat 0px 0px;
+    width: 498px;
+    height: 820px;
+    background: url('../images/Background.png') no-repeat 0px 0px;
     float: left;
     -webkit-user-select: none;
 }
@@ -275,7 +275,7 @@ html {
 
 .surah_title {
     position: absolute;
-    left: 40px;
+    left: 15px;
     top: 5px;
     text-align: center;
     width: 130px;
@@ -399,11 +399,11 @@ html {
 
  .swiper-container {
             height: 822px;
-            width: 550px;
+            width: 498px;
         }
 
         .swiper-slide {
-            width: 550px;
+            width: 498px;
             height: 822px;
             /* Center slide text vertically */
             display: -webkit-box;
