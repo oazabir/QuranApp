@@ -7,7 +7,7 @@
 
 var QuranApp = (function($) {
 	var $this = this;
-	var version = 1511060834;
+	var version = 1511060836;
 	var versionSuffix = "?v=" + version;
 		
 	/**************************************
@@ -1186,23 +1186,7 @@ var QuranApp = (function($) {
 	    });
 	});
 	
-	window.touched = false;
-	$(document).on('touchstart', function(){
-		window.touched = true;
-	});
-	$(document).on('touchend', function(){
-		window.touched = false;		
-	});
-	$(document).on('touchcancel', function(){
-		window.touched = false;		
-	});
 	
-	$(document).on('touchmove', function(){
-		if (window.touched)
-			window.swiper.sliding = true;
-		else 
-			window.swiper.sliding = false;
-	});	
 	
 	if (window.applicationCache) {
 	    window.applicationCache.addEventListener('updateready', function() {
