@@ -7,7 +7,7 @@
 
 var QuranApp = (function($) {
 	var $this = this;
-	var version = 1511071007;
+	var version = 1511071023;
 	var versionSuffix = "?v=" + version;
 		
 	/**************************************
@@ -153,13 +153,7 @@ var QuranApp = (function($) {
 	                e.attr('bookmarked', true);
 	            }
 				
-				var showTooltip = function(w, forceShow) {
-					
-				};
-				// e.on("taphold", function(){
-				// 	e.trigger("click");					
-				// });
-				e.on("click", function(v){
+				var showTooltip = function(event){
 					if (window.suppressTooltip)
 						window.suppressTooltip = false;
 					else if(window.lastTooltip && e != window.lastTooltip){
@@ -170,14 +164,20 @@ var QuranApp = (function($) {
 						//window.lastTooltip = null;
 						//return;
 					}						
-					else 
-						window.lastTooltip = e.tooltipster('show');
-					v.preventDefault();
-   					v.stopPropagation();
-				});
-				e.on("tap", function(v){
-					v.preventDefault();
-   					v.stopPropagation();
+					else { 
+						window.lastTooltip = $(event.target).tooltipster('show');
+					}
+						
+					event.preventDefault();
+   					event.stopPropagation();
+				}
+				// e.on("taphold", function(){
+				// 	e.trigger("click");					
+				// });
+				e.on("click", showTooltip);
+				e.on("tap", function(event){
+					event.preventDefault();
+   					event.stopPropagation();
 					e.trigger("click");
 				});
 				
@@ -487,8 +487,6 @@ var QuranApp = (function($) {
 	function demo() {
 	    if ($.cookie('demo') != null) return;
 	
-	    $.cookie('demo', 'true', { path: '/', expires: 30 });
-	
 	    var deltaX = 39, deltaY = 15;
 	    var delay = 2000;
 	    var pageNo = getCurrentPageNo();
@@ -539,6 +537,9 @@ var QuranApp = (function($) {
 	            e: firstWord, f: function (e, resume) {
 	                e.tooltipster('show');
 	                bringHandOnTop();
+	
+				    $.cookie('demo', 'true', { path: '/', expires: 30 });
+	
 	                (function () {
 						e.tooltipster('hide');                    
 	                    resume();
