@@ -7,7 +7,7 @@
 
 var QuranApp = (function($) {
 	var $this = this;
-	var version = 1511070855;
+	var version = 1511070928;
 	var versionSuffix = "?v=" + version;
 		
 	/**************************************
@@ -152,11 +152,28 @@ var QuranApp = (function($) {
 	                e.addClass('bookmarked_word');
 	                e.attr('bookmarked', true);
 	            }
-	
+				
+				var showTooltip = function() {
+					if(window.lastTooltip){
+						window.lastTooltip.tooltipster('hide');
+						window.lastTooltip = null;
+					}
+					else
+						window.lastTooltip = e.tooltipster('show');
+				};
+				e.on("taphold", showTooltip);
+				e.on("click", showTooltip);
+				// e.on("tap", function(){
+				// 	if(window.lastTooltip){
+				// 		window.lastTooltip.tooltipster('hide');
+				// 		window.lastTooltip = null;
+				// 	}
+				// });
+				
 	            e.tooltipster({
 	                contentAsHTML: true,
 	                interactive: true,
-	                
+	                trigger: 'custom',
 	                functionBefore: function (origin, continueTooltip) {
 						var sura = $(this).attr("sura");
 						var ayah = $(this).attr("ayah");
@@ -188,16 +205,17 @@ var QuranApp = (function($) {
 							Options.applyLanguage(tooltipHtml);
 							origin.tooltipster("content", tooltipHtml);
 							
-							if(window.showTooltip)
-								window.showTooltip.cancel();
-								
-							window.showTooltip = function(){
-								if (window.swiper.sliding == true)
-									return;
-								continueTooltip();
-							}.delay(500);
+							// if(window.showTooltip)
+							// 	window.showTooltip.cancel();
+							// 	
+							// window.showTooltip = function(){
+							// 	if (window.swiper.sliding == true)
+							// 		return;
+							// 	continueTooltip();
+							// }.delay(500);
 							
-							//window.showTooltip();							
+							//window.showTooltip();		
+							continueTooltip();					
 						}						
 	                }
 	            });
@@ -984,8 +1002,14 @@ var QuranApp = (function($) {
 	}
 	
 	function hideAllTooltips() {
-		if(window.showTooltip)
-			window.showTooltip.cancel();							            	
+		if(window.lastTooltip) {
+			window.lastTooltip.tooltipster('hide');
+			window.lastTooltip = null;
+		}
+		if(window.showTooltip) {
+			window.showTooltip.cancel();
+			window.showTooltip = null;
+		}							            	
 		try {
 	    	$('.ayah_number').tooltipster('hide');
 			$('.word').tooltipster('hide');
@@ -1186,7 +1210,9 @@ var QuranApp = (function($) {
 	    });
 	});
 	
-	
+	$( window ).on( "swipe", function( event ) { 
+		hideAllTooltips();
+	} );
 	
 	if (window.applicationCache) {
 	    window.applicationCache.addEventListener('updateready', function() {
@@ -1195,7 +1221,6 @@ var QuranApp = (function($) {
 	        }
 	    });
 	}	
-
 	
 	$.mobile.popup.prototype.options.history = false;
 	$.ajaxSetup({ cache: true });
