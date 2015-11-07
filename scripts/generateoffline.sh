@@ -29,9 +29,9 @@ function common() {
 
 function pageData() {
 	find page/page$pattern -type f -exec echo {}$versionSuffix \;
+	find data/fonts/QCF_P$pattern -type f -print
 	find translations/bangla/$pattern -type f -exec echo {}$versionSuffix \;
 	find translations/english/$pattern -type f -exec echo {}$versionSuffix \;
-	find data/fonts/QCF_P$pattern -type f -print
 }
 
 function setVersion() {
@@ -68,5 +68,13 @@ footer >> $filename
 # put js css with version name
 setVersion
 
+# precache files for 10 pages at a time
+#for (( start=10; start<=600; start+=10 ))
+#do
+#  for (( end=start; end<=start+9; end++ ))
+#  do
+#    echo "Start $start and end $end"  
+#  done  
+#done
 
 # update index.html with latest appcache link
