@@ -7,7 +7,7 @@
 
 var QuranApp = (function($) {
 	var $this = this;
-	var version = 1511071029;
+	var version = 1511072237;
 	var versionSuffix = "?v=" + version;
 		
 	/**************************************
@@ -132,6 +132,27 @@ var QuranApp = (function($) {
 	    }
 	}
 	
+	function showTooltip(event){
+		var e = $(event.target);
+		if (window.suppressTooltip) {
+			window.suppressTooltip = false;
+		}
+		else if(window.lastTooltip && e != window.lastTooltip) {
+			window.lastTooltip.tooltipster('hide');
+			window.lastTooltip = null; //e.tooltipster('show');;
+		} else if (window.lastTooltip) {
+			//window.lastTooltip.tooltipster('hide');
+			//window.lastTooltip = null;
+			//return;
+		}						
+		else { 
+			window.lastTooltip = e.tooltipster('show');
+		}
+			
+		event.preventDefault();
+		event.stopPropagation();
+	}
+	
 	function loadPageJs(pageNo) {
 	    var pageStr = pageNo.pad(3), pageDiv = getPageDiv(pageNo);
 	    var pageDivId = '#' + $(pageDiv).attr("id");
@@ -153,27 +174,7 @@ var QuranApp = (function($) {
 	                e.attr('bookmarked', true);
 	            }
 				
-				var showTooltip = function(event){
-					if (window.suppressTooltip)
-						window.suppressTooltip = false;
-					else if(window.lastTooltip && e != window.lastTooltip){
-						window.lastTooltip.tooltipster('hide');
-						window.lastTooltip = null; //e.tooltipster('show');;
-					} else if (window.lastTooltip) {
-						//window.lastTooltip.tooltipster('hide');
-						//window.lastTooltip = null;
-						//return;
-					}						
-					else { 
-						window.lastTooltip = $(event.target).tooltipster('show');
-					}
-						
-					event.preventDefault();
-   					event.stopPropagation();
-				}
 				e.on("taphold", function(event){
-					event.preventDefault();
-   					event.stopPropagation();
 					if(window.lastTooltip){
 						window.lastTooltip.tooltipster('hide');
 						window.lastTooltip = null;
@@ -181,18 +182,13 @@ var QuranApp = (function($) {
 					showTooltip(event);					
 				});
 				e.on("click", showTooltip);
-				e.on("tap", function(event){
-					event.preventDefault();
-   					event.stopPropagation();
-					e.trigger("click");
-				});
+				e.on("tap", showTooltip);
 				
 	            e.tooltipster({
 	                contentAsHTML: true,
 	                interactive: true,
 	                trigger: 'custom',
-					hideOnClick: true,
-	                functionBefore: function (origin, continueTooltip) {
+					functionBefore: function (origin, continueTooltip) {
 						var sura = $(this).attr("sura");
 						var ayah = $(this).attr("ayah");
 						var word = $(this).attr("word");
@@ -253,10 +249,20 @@ var QuranApp = (function($) {
 	                $(this).attr('bookmarked', true);
 	            }
 				
+	            e.on("taphold", function(event){
+					if(window.lastTooltip){
+						window.lastTooltip.tooltipster('hide');
+						window.lastTooltip = null;
+					}
+					showTooltip(event);					
+				});
+				e.on("click", showTooltip);
+				e.on("tap", showTooltip);
+				
 	            e.tooltipster({
 	                contentAsHTML: true,
 	                interactive: true,
-	                delay: 1000,
+	                trigger: 'custom',
 	
 	                functionBefore: function (origin, continueTooltip) {
 	                    var sura = $(this).attr("sura");
