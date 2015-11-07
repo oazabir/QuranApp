@@ -7,7 +7,7 @@
 
 var QuranApp = (function($) {
 	var $this = this;
-	var version = 1511070956;
+	var version = 1511070957;
 	var versionSuffix = "?v=" + version;
 		
 	/**************************************
@@ -1222,6 +1222,8 @@ var QuranApp = (function($) {
 	
 	$( window ).on( "swipe", function( event ) { 
 		hideAllTooltips();
+		event.preventDefault();
+   		event.stopPropagation();
 	} );
 	
 	if (window.applicationCache) {
