@@ -7,7 +7,7 @@
 
 var QuranApp = (function($) {
 	var $this = this;
-	var version = 1511070928;
+	var version = 1511070956;
 	var versionSuffix = "?v=" + version;
 		
 	/**************************************
@@ -153,27 +153,37 @@ var QuranApp = (function($) {
 	                e.attr('bookmarked', true);
 	            }
 				
-				var showTooltip = function() {
-					if(window.lastTooltip){
-						window.lastTooltip.tooltipster('hide');
-						window.lastTooltip = null;
-					}
-					else
-						window.lastTooltip = e.tooltipster('show');
+				var showTooltip = function(w, forceShow) {
+					
 				};
-				e.on("taphold", showTooltip);
-				e.on("click", showTooltip);
-				// e.on("tap", function(){
-				// 	if(window.lastTooltip){
-				// 		window.lastTooltip.tooltipster('hide');
-				// 		window.lastTooltip = null;
-				// 	}
+				// e.on("taphold", function(){
+				// 	e.trigger("click");					
 				// });
+				e.on("click", function(v){
+					if(window.lastTooltip && e != window.lastTooltip){
+						window.lastTooltip.tooltipster('hide');
+						window.lastTooltip = null; //e.tooltipster('show');;
+					} else if (window.lastTooltip) {
+						//window.lastTooltip.tooltipster('hide');
+						//window.lastTooltip = null;
+						//return;
+					}						
+					else 
+						window.lastTooltip = e.tooltipster('show');
+					v.preventDefault();
+   					v.stopPropagation();
+				});
+				e.on("tap", function(v){
+					v.preventDefault();
+   					v.stopPropagation();
+					e.trigger("click");
+				});
 				
 	            e.tooltipster({
 	                contentAsHTML: true,
 	                interactive: true,
 	                trigger: 'custom',
+					hideOnClick: true,
 	                functionBefore: function (origin, continueTooltip) {
 						var sura = $(this).attr("sura");
 						var ayah = $(this).attr("ayah");
