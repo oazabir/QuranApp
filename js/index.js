@@ -7,7 +7,7 @@
 
 var QuranApp = (function($) {
 	var $this = this;
-	var version = 1511071023;
+	var version = 1511071025;
 	var versionSuffix = "?v=" + version;
 		
 	/**************************************
@@ -171,9 +171,16 @@ var QuranApp = (function($) {
 					event.preventDefault();
    					event.stopPropagation();
 				}
-				// e.on("taphold", function(){
-				// 	e.trigger("click");					
-				// });
+				e.on("taphold", function(){
+					event.preventDefault();
+   					event.stopPropagation();
+					if(window.lastTooltip){
+						window.lastTooltip.tooltipster('hide');
+						window.lastTooltip = null;
+					}
+					
+					e.trigger("click");					
+				});
 				e.on("click", showTooltip);
 				e.on("tap", function(event){
 					event.preventDefault();
