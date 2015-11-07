@@ -7,7 +7,7 @@
 
 var QuranApp = (function($) {
 	var $this = this;
-	var version = 1511070957;
+	var version = 1511071005;
 	var versionSuffix = "?v=" + version;
 		
 	/**************************************
@@ -160,7 +160,9 @@ var QuranApp = (function($) {
 				// 	e.trigger("click");					
 				// });
 				e.on("click", function(v){
-					if(window.lastTooltip && e != window.lastTooltip){
+					if (window.suppressTooltip)
+						window.suppressTooltip = false;
+					else if(window.lastTooltip && e != window.lastTooltip){
 						window.lastTooltip.tooltipster('hide');
 						window.lastTooltip = null; //e.tooltipster('show');;
 					} else if (window.lastTooltip) {
@@ -1194,12 +1196,14 @@ var QuranApp = (function($) {
 	        spaceBetween: 0,
 	        
 			onTransitionStart: function(swiper) {
+				window.suppressTooltip = true;
 				hideAllTooltips();
 			},
 			onTransitionEnd: function(swiper) {
 				hideAllTooltips();					            	
 			},
 	        onSlideChangeStart: function(swiper) {
+				window.suppressTooltip = true;
 				hideAllTooltips();
 	        },
 	        onSlideChangeEnd: function (swiper) {
@@ -1219,12 +1223,6 @@ var QuranApp = (function($) {
 	        }
 	    });
 	});
-	
-	$( window ).on( "swipe", function( event ) { 
-		hideAllTooltips();
-		event.preventDefault();
-   		event.stopPropagation();
-	} );
 	
 	if (window.applicationCache) {
 	    window.applicationCache.addEventListener('updateready', function() {
