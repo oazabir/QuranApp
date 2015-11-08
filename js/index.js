@@ -7,8 +7,9 @@
 
 var QuranApp = (function($) {
 	var $this = this;
-	var version = 1511072237;
+	var version = 1511081155;
 	var versionSuffix = "?v=" + version;
+	var maxPage = 604;
 		
 	/**************************************
 	*	
@@ -61,8 +62,7 @@ var QuranApp = (function($) {
 	
 	    // if page is already loading/loaded, nothing to do
 	    if (pageDiv.attr("status") == "loading" || pageDiv.attr("status") == "loaded") {
-	        postContentLoad(pageNo, precache);
-	        return;
+	        postContentLoad(pageNo, precache);	        
 	    } else {
 	        loadPageHtml(pageNo, precache);
 	    }
@@ -122,7 +122,7 @@ var QuranApp = (function($) {
 	        }
 	    }
 	    // ensure a page slide exists after this page
-	    if (pageNo < 604) {
+	    if (pageNo < maxPage) {
 	        var after = getPageDiv(pageNo + 1);
 	        if (after.length == 0) {
 	            after = makeSwiperDiv(pageNo + 1);
@@ -306,7 +306,7 @@ var QuranApp = (function($) {
 	function postContentLoad(pageNo, precache) {
 	    
 	    if (precache) {
-	
+			precachePages();
 	    } else {
 	        
 	        var pageDiv = getPageDiv(pageNo);
@@ -324,7 +324,7 @@ var QuranApp = (function($) {
 	        preCreateBeforeAfterSlide(pageNo);
 	
 	        pageNo > 1 ? +function () { loadPage(pageNo - 1, true) }.delay(1000) : {};
-	        pageNo < 604 ? +function () { loadPage(pageNo + 1, true) }.delay(1000) : {};
+	        pageNo < maxPage ? +function () { loadPage(pageNo + 1, true) }.delay(1000) : {};
 	    } 
 	}
 		
@@ -1239,6 +1239,10 @@ var QuranApp = (function($) {
 	    });
 	});
 	
+	/*******************************
+	 * 	Cache
+	 *******************************/
+	
 	if (window.applicationCache) {
 	    window.applicationCache.addEventListener('updateready', function() {
 	        if (confirm('An update is available. Update now?')) {
@@ -1246,6 +1250,20 @@ var QuranApp = (function($) {
 	        }
 	    });
 	}	
+	
+	window.cachedHtml = {};
+	function precachePages() {
+		var pageNo = getCurrentPageNo();
+		if (pageNo > 9) {
+			// e.g. if page number 29, then cache file is cache020.html
+			var cachehtml = "page/cache"+(Math.floor(pageNo/10)*10).pad(3)+".html";
+			AppCache.load(cachehtml, function(){					
+				
+			}, function(){
+				
+			});		
+		}
+	}
 	
 	$.mobile.popup.prototype.options.history = false;
 	$.ajaxSetup({ cache: true });
@@ -1260,30 +1278,61 @@ var QuranApp = (function($) {
 })(jQuery);
 
 var AppCache = (function($){
+	
+	var timerID;
+	var cachedUrls={};
+	
+	function stopTimer() {
+		window.clearInterval(timerID);
+		timerID=null;
+	}
+		
 	function load(url, success, failed) {
-		var iframe = document.createElement('IFRAME');
+		if (cachedUrls[url])
+			return true;
+		else
+			cachedUrls[url]=true;
+			
+		var iframe = document.getElementById('appcacheloader') || document.createElement('IFRAME');
 		iframe.setAttribute('style', 'width:0px; height:0px; visibility:hidden; position:absolute; border:none');
 		iframe.src = url;
 		iframe.id = 'appcacheloader';
-		document.body.appendChild(iframe);
+		iframe.parentElement == null ? document.body.appendChild(iframe) : 0;
 		
-		$(iframe.contentWindow.document).ready(function($) {
-		  	$(iframe.contentWindow.applicationCache).on('cached error noupdate', function(e) {
-				var message = '';
-				switch (e.type) { 
-					case 'error':
-						failed(e);
-						break;
-					case 'cached': 
-						success(e);
-					 break;
-					case 'noupdate':
-						success(e);
-					break;    
-				}
-				alert(message);
-		  	});
-		});
+		if(timerID) 
+			stopTimer();
+			
+		timerID = window.setInterval(function(){
+			var appCache = iframe.contentWindow.applicationCache;
+
+			switch (appCache.status) {
+				case appCache.UNCACHED: // UNCACHED == 0
+					failed('UNCACHED');
+					stopTimer();
+					break;
+				case appCache.IDLE: // IDLE == 1
+					success('IDLE');
+					stopTimer();
+					break;
+				// case appCache.CHECKING: // CHECKING == 2
+				// 	return 'CHECKING';
+				// 	break;
+				// case appCache.DOWNLOADING: // DOWNLOADING == 3
+				// 	return 'DOWNLOADING';
+				// 	break;
+				case appCache.UPDATEREADY:  // UPDATEREADY == 4
+					success('UPDATEREADY');
+					stopTimer();
+					break;
+				case appCache.OBSOLETE: // OBSOLETE == 5
+					failed('OBSOLETE');
+					stopTimer();
+					break;
+				default:
+					
+					break;
+			}
+		}, 1000);
 	}
 	
 	return {

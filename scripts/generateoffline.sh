@@ -28,10 +28,10 @@ function common() {
 }
 
 function pageData() {
-	find page/page$pattern -type f -exec echo {}$versionSuffix \;
-	find data/fonts/QCF_P$pattern -type f -print
-	find translations/bangla/$pattern -type f -exec echo {}$versionSuffix \;
-	find translations/english/$pattern -type f -exec echo {}$versionSuffix \;
+	find page/page$pattern -type f -exec echo /{}$versionSuffix \;
+	find data/fonts/QCF_P$pattern -type f -exec echo /{} \;
+	find translations/bangla/$pattern -type f -exec echo /{}$versionSuffix \;
+	find translations/english/$pattern -type f -exec echo /{}$versionSuffix \;
 }
 
 function setVersion() {
@@ -69,12 +69,23 @@ footer >> $filename
 setVersion
 
 # precache files for 10 pages at a time
-#for (( start=10; start<=600; start+=10 ))
-#do
-#  for (( end=start; end<=start+9; end++ ))
-#  do
-#    echo "Start $start and end $end"  
-#  done  
-#done
+if [ ! -z "$1" ]
+then
+	for (( i=10; i<=600; i+=10 ))
+	do
+		start="$(printf "%03d" $i)"
+		end=$(( i + 9 ))
+		end="$(printf "%03d" $end)"
+		filename=page/$start.appcache
+		pattern=${start:0:2}?.*
+		echo "Cache $start and end $end in $filename using $pattern" 	
+		header > $filename
+		pageData >> $filename
+		footer >> $filename
+		setVersion
+		cachehtml=page/cache$start.html
+		echo "<!DOCTYPE html><html manifest=\"$start.appcache$versionSuffix\"></html>" > $cachehtml
+	done
+fi
 
 # update index.html with latest appcache link
