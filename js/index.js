@@ -701,7 +701,7 @@ var QuranApp = (function($) {
 	
 	        BookmarkManager.saveLocalStorageObject(storeName, bookmarks);
 	
-	        BookmarkManager.refreshListViews();
+	        //BookmarkManager.refreshListViews();
 	    },
 	
 	    toggleAyahBookmark: function (suraNo, ayahNo) {
@@ -730,11 +730,11 @@ var QuranApp = (function($) {
 	
 	            bookmarks.push(newBookmark);
 	            BookmarkManager.saveLocalStorageObject(storeName, bookmarks);
-	            BookmarkManager.refreshListViews();
+	            //BookmarkManager.refreshListViews();
 	            return true;
 	        } else {
 	            BookmarkManager.saveLocalStorageObject(storeName, newBookmarks);
-	            BookmarkManager.refreshListViews();
+	            //BookmarkManager.refreshListViews();
 	            return false;
 	        }        
 	    },
@@ -769,11 +769,11 @@ var QuranApp = (function($) {
 	
 	            bookmarks.push(newBookmark);
 	            BookmarkManager.saveLocalStorageObject(storeName, bookmarks);
-	            BookmarkManager.refreshListViews();
+	            //BookmarkManager.refreshListViews();
 	            return true;
 	        } else {
 	            BookmarkManager.saveLocalStorageObject(storeName, newBookmarks);
-	            BookmarkManager.refreshListViews();
+	            //BookmarkManager.refreshListViews();
 	            return false;
 	        }
 	    },
