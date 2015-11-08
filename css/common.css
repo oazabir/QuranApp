@@ -17,7 +17,7 @@
     font-size: 18pt;
     text-align: center;
     line-height: 40px;
-    background: url('../images/SurahPartition.png') no-repeat 70px;
+    background: url('../images/SurahPartition.png') no-repeat 46px;
     padding-top: 10px;
 }
 
@@ -564,11 +564,12 @@ table {
 
 #translationContent .surah {
     line-height: 40px;
-    background: url('../images/SurahPartition.png') no-repeat 20px;
-    text-align: center;
+    background: url('../images/SurahPartition.png') no-repeat;
+    text-align: left;
     color: black;
     font-family: SolaimanLipiNormal, Nikosh2, SolaimanLipi, Nikosh, NikoshBAN, Georgia, sans-serif;
     font-size: 15px;
+    padding-left: 140px;
 }
 
 p.verse, p.bismillah {
