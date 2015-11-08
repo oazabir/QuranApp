@@ -1,15 +1,16 @@
 ﻿<!DOCTYPE html>
-<html manifest="index.appcache?v=1511081338">
+<html manifest="index.appcache?v=1511081723">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge"> 
     <meta name="viewport" content="width=514,user-scalable=0">
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
     
     <title>Mobile Quran Reading বাংলা অর্থ সহ কুরআন</title>
     <link rel="stylesheet" type="text/css" href="css/jquery.mobile-1.4.5.min.css" />
     <link rel="stylesheet" type="text/css" href="css/swiper.css">
     <link rel="stylesheet" type="text/css" href="css/tooltipster.css" />
-    <link rel="stylesheet" type="text/css" href="css/common.css?v=1511081338" />
+    <link rel="stylesheet" type="text/css" href="css/common.css?v=1511081723" />
     <script type="text/javascript">
         var isOperaMini = !!window['operamini'];
         if (isOperaMini) document.location.href="opera.html";        
@@ -278,9 +279,10 @@
 			    </fieldset>
 			</form>
 
-			<p>Download all content locally so that you can use it without Internet</p>
+			<!-- Browser app cache size is limited, e.g. Chrome 5MB only. Thus no point.
+            <p>Download all content locally so that you can use it without Internet</p>
 			<p>ইন্টারনেট না থাকলেও ব্যবহার করার জন্য সবকিছু একবারে ডাউনলোড করুন</p>
-			<button id="GoOffline">Download all pages</button>
+			<button id="GoOffline">Download all pages</button>-->
         </div>
 
         <div id="word_tooltip_template">
@@ -386,7 +388,7 @@
     <!-- Load swiper after the page markup is done -->
     <script src="js/swiper.js"></script>
 
-    <script src="js/index.js?v=1511081338"></script>
+    <script src="js/index.js?v=1511081723"></script>
 
     <script defer="defer" type="text/javascript" src="page/surahs.js"></script>
     <script defer="defer" type="text/javascript" src="js/sugar.js"></script>

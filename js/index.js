@@ -7,7 +7,7 @@
 
 var QuranApp = (function($) {
 	var $this = this;
-	var version = 1511081338;
+	var version = 1511081723;
 	var versionSuffix = "?v=" + version;
 	var maxPage = 604;
 		
@@ -79,7 +79,7 @@ var QuranApp = (function($) {
 	        var template = '<style type="text/css"> \
 						@font-face { \
 						 font-family: "page{pageStr}"; \
-						 src: url("./data/fonts/QCF_P{pageStr}.woff") format("woff"); \
+						 src: url("/data/fonts/QCF_P{pageStr}.woff") format("woff"); \
 						 font-weight: normal; \
 						 font-style: normal; \
 						} \
@@ -157,7 +157,7 @@ var QuranApp = (function($) {
 	    var pageStr = pageNo.pad(3), pageDiv = getPageDiv(pageNo);
 	    var pageDivId = '#' + $(pageDiv).attr("id");
 	
-	    var promise = $.cachedScript('page/page' + pageStr + '.js');
+	    var promise = $.cachedScript('page/page' + pageStr + '.js' + versionSuffix);
 	    promise.done(function () {
 	
 	        var wordBookmarks = BookmarkManager.getWordBookmarks();
@@ -1078,7 +1078,7 @@ var QuranApp = (function($) {
 	    options = $.extend(options || {}, {
 	        dataType: "script",
 	        cache: true,
-	        url: url + versionSuffix
+	        url: url
 	    });
 	
 	    // Use $.ajax() since it is more flexible than $.getScript
@@ -1266,6 +1266,31 @@ var QuranApp = (function($) {
 		$('#progressbarPopup').popup('open');
 		startCaching();		
 	}
+	
+	// function GoOffline(){
+	// 	var pagesToCache = [];
+	// 	for(var i = 600; i >= 1; i --)
+	// 		pagesToCache.push(i);
+	// 	var totalItems = pagesToCache.length;
+	// 	
+	// 	function startCaching(){
+	// 		if (pagesToCache.length > 0){
+	// 			var pageStr = pagesToCache.pop.pad(3);
+	// 			$.cachedScript('page/page' + pageStr + '.html'); //.done(startCaching).fail(startCaching);
+	// 			$.cachedScript('page/page' + pageStr + '.js'); //.done(startCaching).fail(startCaching);
+	//     		$.cachedScript('/data/fonts/QCF_P' + pageStr + '.woff').done(startCaching).fail(startCaching);
+	// 			
+	// 			var itemsDone = totalItems - pagesToCache.length;
+	// 			var percent = Math.ceil(itemsDone / totalItems * 100);
+	// 			$('#progressbar').css('width', percent+'%');
+	// 		} else {
+	// 			$('#progressbarPopup').popup('close');		
+	// 		}
+	// 	}
+	// 	
+	// 	$('#progressbarPopup').popup('open');
+	// 	startCaching();		
+	// }
 	
 	if (window.applicationCache) {
 	    window.applicationCache.addEventListener('updateready', function() {

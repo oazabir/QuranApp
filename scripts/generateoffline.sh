@@ -8,13 +8,18 @@ function header() {
 	echo "CACHE:"
 }
 
-function footer() {
+function network() {
+	echo "# Resources that require the user to be online."
+	echo "NETWORK:"
+	echo "*"	
+	
+}
+
+function pagefooter() {
 	echo "# Resources that require the user to be online."
 	echo "NETWORK:"
 	echo "*"
-	echo " "		
-	echo "FALLBACK:"
-	echo "index.html"
+	fallback
 }
 
 function common() {
@@ -25,6 +30,12 @@ function common() {
 	find js/* -type f -print 
 	find page/s*.js -type f 
 	find data/fonts/QCF_BSML.woff -print	
+}
+
+function fallback() {
+	echo " "		
+	echo "FALLBACK:"
+	find data/fonts/QCF_P$pattern -type f -exec echo {} /{} \;
 }
 
 function pageData() {
@@ -63,7 +74,15 @@ pageData >> $filename
 pattern=60?.*
 pageData >> $filename
 
-footer >> $filename
+network >> $filename
+
+# generate first couple of pages
+pattern=00?.*
+fallback >> $filename
+# generate last couple of pages
+pattern=60?.*
+fallback >> $filename
+
 
 # put js css with version name
 setVersion
@@ -81,7 +100,7 @@ then
 		echo "Cache $start and end $end in $filename using $pattern" 	
 		header > $filename
 		pageData >> $filename
-		footer >> $filename
+		pagefooter /page/cache$start.html >> $filename
 		setVersion
 		cachehtml=page/cache$start.html
 		echo "<!DOCTYPE html><html manifest=\"$start.appcache$versionSuffix\"></html>" > $cachehtml

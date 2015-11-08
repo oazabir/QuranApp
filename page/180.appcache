@@ -1,26 +1,26 @@
 CACHE MANIFEST
-# version 1511081155
+# version 1511081714
 CACHE:
-/page/page180.html?v=1511081155
-/page/page180.js?v=1511081155
-/page/page181.html?v=1511081155
-/page/page181.js?v=1511081155
-/page/page182.html?v=1511081155
-/page/page182.js?v=1511081155
-/page/page183.html?v=1511081155
-/page/page183.js?v=1511081155
-/page/page184.html?v=1511081155
-/page/page184.js?v=1511081155
-/page/page185.html?v=1511081155
-/page/page185.js?v=1511081155
-/page/page186.html?v=1511081155
-/page/page186.js?v=1511081155
-/page/page187.html?v=1511081155
-/page/page187.js?v=1511081155
-/page/page188.html?v=1511081155
-/page/page188.js?v=1511081155
-/page/page189.html?v=1511081155
-/page/page189.js?v=1511081155
+/page/page180.html?v=1511081714
+/page/page180.js?v=1511081714
+/page/page181.html?v=1511081714
+/page/page181.js?v=1511081714
+/page/page182.html?v=1511081714
+/page/page182.js?v=1511081714
+/page/page183.html?v=1511081714
+/page/page183.js?v=1511081714
+/page/page184.html?v=1511081714
+/page/page184.js?v=1511081714
+/page/page185.html?v=1511081714
+/page/page185.js?v=1511081714
+/page/page186.html?v=1511081714
+/page/page186.js?v=1511081714
+/page/page187.html?v=1511081714
+/page/page187.js?v=1511081714
+/page/page188.html?v=1511081714
+/page/page188.js?v=1511081714
+/page/page189.html?v=1511081714
+/page/page189.js?v=1511081714
 /data/fonts/QCF_P180.woff
 /data/fonts/QCF_P181.woff
 /data/fonts/QCF_P182.woff
@@ -31,29 +31,38 @@ CACHE:
 /data/fonts/QCF_P187.woff
 /data/fonts/QCF_P188.woff
 /data/fonts/QCF_P189.woff
-/translations/bangla/180.html?v=1511081155
-/translations/bangla/181.html?v=1511081155
-/translations/bangla/182.html?v=1511081155
-/translations/bangla/183.html?v=1511081155
-/translations/bangla/184.html?v=1511081155
-/translations/bangla/185.html?v=1511081155
-/translations/bangla/186.html?v=1511081155
-/translations/bangla/187.html?v=1511081155
-/translations/bangla/188.html?v=1511081155
-/translations/bangla/189.html?v=1511081155
-/translations/english/180.html?v=1511081155
-/translations/english/181.html?v=1511081155
-/translations/english/182.html?v=1511081155
-/translations/english/183.html?v=1511081155
-/translations/english/184.html?v=1511081155
-/translations/english/185.html?v=1511081155
-/translations/english/186.html?v=1511081155
-/translations/english/187.html?v=1511081155
-/translations/english/188.html?v=1511081155
-/translations/english/189.html?v=1511081155
+/translations/bangla/180.html?v=1511081714
+/translations/bangla/181.html?v=1511081714
+/translations/bangla/182.html?v=1511081714
+/translations/bangla/183.html?v=1511081714
+/translations/bangla/184.html?v=1511081714
+/translations/bangla/185.html?v=1511081714
+/translations/bangla/186.html?v=1511081714
+/translations/bangla/187.html?v=1511081714
+/translations/bangla/188.html?v=1511081714
+/translations/bangla/189.html?v=1511081714
+/translations/english/180.html?v=1511081714
+/translations/english/181.html?v=1511081714
+/translations/english/182.html?v=1511081714
+/translations/english/183.html?v=1511081714
+/translations/english/184.html?v=1511081714
+/translations/english/185.html?v=1511081714
+/translations/english/186.html?v=1511081714
+/translations/english/187.html?v=1511081714
+/translations/english/188.html?v=1511081714
+/translations/english/189.html?v=1511081714
 # Resources that require the user to be online.
 NETWORK:
 *
  
 FALLBACK:
-index.html
+data/fonts/QCF_P180.woff /data/fonts/QCF_P180.woff
+data/fonts/QCF_P181.woff /data/fonts/QCF_P181.woff
+data/fonts/QCF_P182.woff /data/fonts/QCF_P182.woff
+data/fonts/QCF_P183.woff /data/fonts/QCF_P183.woff
+data/fonts/QCF_P184.woff /data/fonts/QCF_P184.woff
+data/fonts/QCF_P185.woff /data/fonts/QCF_P185.woff
+data/fonts/QCF_P186.woff /data/fonts/QCF_P186.woff
+data/fonts/QCF_P187.woff /data/fonts/QCF_P187.woff
+data/fonts/QCF_P188.woff /data/fonts/QCF_P188.woff
+data/fonts/QCF_P189.woff /data/fonts/QCF_P189.woff
