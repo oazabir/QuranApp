@@ -174,20 +174,20 @@ var QuranApp = (function($) {
 	                e.attr('bookmarked', true);
 	            }
 				
-				e.on("taphold", function(event){
-					if(window.lastTooltip){
-						window.lastTooltip.tooltipster('hide');
-						window.lastTooltip = null;
-					}
-					showTooltip(event);					
-				});
-				e.on("click", showTooltip);
-				e.on("tap", showTooltip);
+				// e.on("taphold", function(event){
+				// 	if(window.lastTooltip){
+				// 		window.lastTooltip.tooltipster('hide');
+				// 		window.lastTooltip = null;
+				// 	}
+				// 	showTooltip(event);					
+				// });
+				// e.on("click", showTooltip);
+				// e.on("tap", showTooltip);
 				
 	            e.tooltipster({
 	                contentAsHTML: true,
 	                interactive: true,
-	                trigger: 'custom',
+	                hideOnClick: true,
 					functionBefore: function (origin, continueTooltip) {
 						var sura = $(this).attr("sura");
 						var ayah = $(this).attr("ayah");
@@ -249,20 +249,20 @@ var QuranApp = (function($) {
 	                $(this).attr('bookmarked', true);
 	            }
 				
-	            e.on("taphold", function(event){
-					if(window.lastTooltip){
-						window.lastTooltip.tooltipster('hide');
-						window.lastTooltip = null;
-					}
-					showTooltip(event);					
-				});
-				e.on("click", showTooltip);
-				e.on("tap", showTooltip);
+	            // e.on("taphold", function(event){
+				// 	if(window.lastTooltip){
+				// 		window.lastTooltip.tooltipster('hide');
+				// 		window.lastTooltip = null;
+				// 	}
+				// 	showTooltip(event);					
+				// });
+				// e.on("click", showTooltip);
+				// e.on("tap", showTooltip);
 				
 	            e.tooltipster({
 	                contentAsHTML: true,
 	                interactive: true,
-	                trigger: 'custom',
+	                hidOnClick: true,
 	
 	                functionBefore: function (origin, continueTooltip) {
 	                    var sura = $(this).attr("sura");
@@ -1036,8 +1036,7 @@ var QuranApp = (function($) {
 			window.showTooltip = null;
 		}							            	
 		try {
-	    	$('.ayah_number').tooltipster('hide');
-			$('.word').tooltipster('hide');
+	    	$('.tooltipstered').tooltipster('hide');			
 		} catch(e) {
 			
 		}
