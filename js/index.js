@@ -7,7 +7,7 @@
 
 var QuranApp = (function($) {
 	var $this = this;
-	var version = 1511081222;
+	var version = 1511081338;
 	var versionSuffix = "?v=" + version;
 	var maxPage = 604;
 		
@@ -1179,6 +1179,10 @@ var QuranApp = (function($) {
 	        updateSurahPanel();       
 			Options.onshow();
 	    });
+		
+		$("#GoOffline").click(function(){
+			GoOffline();
+		});
 	    
 	    jQueryMobileHack();
 	});
@@ -1242,6 +1246,27 @@ var QuranApp = (function($) {
 	 * 	Cache
 	 *******************************/
 	
+	function GoOffline(){
+		var pagesToCache = [];
+		for(var i = 600; i >= 10; i -= 10)
+			pagesToCache.push(i);
+		var totalItems = pagesToCache.length;
+		
+		function startCaching(){
+			if (pagesToCache.length > 0){
+				precachePages(pagesToCache.pop(), startCaching, startCaching);
+				var itemsDone = totalItems - pagesToCache.length;
+				var percent = Math.ceil(itemsDone / totalItems * 100);
+				$('#progressbar').css('width', percent+'%');
+			} else {
+				$('#progressbarPopup').popup('close');		
+			}
+		}
+		
+		$('#progressbarPopup').popup('open');
+		startCaching();		
+	}
+	
 	if (window.applicationCache) {
 	    window.applicationCache.addEventListener('updateready', function() {
 	        if (confirm('An update is available. Update now?')) {
@@ -1250,19 +1275,97 @@ var QuranApp = (function($) {
 	    });
 	}	
 	
-	window.cachedHtml = {};
-	function precachePages() {
-		var pageNo = getCurrentPageNo();
+	function precachePages(currentPage, success, failure) {
+		var pageNo = currentPage || getCurrentPageNo();
+		
 		if (pageNo > 9) {
 			// e.g. if page number 29, then cache file is cache020.html
 			var cachehtml = "page/cache"+(Math.floor(pageNo/10)*10).pad(3)+".html";
-			AppCache.load(cachehtml, function(){					
+			AppCache.load(cachehtml, success || function(){					
 				
-			}, function(){
+			}, failure || function(){
 				
 			});		
 		}
 	}
+	
+	
+	var AppCache = (function($){
+		
+		var timerID;
+		var cachedUrls={};
+		
+		function stopTimer() {
+			if(timerID) {
+				window.clearInterval(timerID);
+				window.clearTimeout(timerID);
+			}
+			timerID=null;
+		}
+			
+		function load(url, success, failed) {
+			if (cachedUrls[url])
+				return success();
+			else
+				cachedUrls[url]=true;
+				
+			var existing = document.getElementById('appcacheloader');
+			if(existing)
+				existing.remove();
+				
+			var iframe = document.createElement('IFRAME');
+			iframe.setAttribute('style', 'width:0px; height:0px; visibility:hidden; position:absolute; border:none');
+			iframe.src = url;
+			iframe.id = 'appcacheloader';
+			document.body.appendChild(iframe);
+			
+			if(timerID) 
+				stopTimer();		
+					
+			function checkProgress() {
+				var iframe = document.getElementById('appcacheloader');
+				var appCache = iframe.contentWindow.applicationCache;
+				var url = iframe.contentWindow.document.location.href;
+	
+				switch (appCache.status) {
+					case appCache.UNCACHED: // UNCACHED == 0
+						console.log('UNCACHED: ' + url);
+						return failed('UNCACHED');						
+						break;
+					case appCache.IDLE: // IDLE == 1
+						console.log('IDLE: ' + url);
+						return success('IDLE');						
+						break;
+					case appCache.CHECKING: // CHECKING == 2
+						console.log('CHECKING: ' + url);
+						break;
+					case appCache.DOWNLOADING: // DOWNLOADING == 3
+						console.log('DOWNLOADING: ' + url);
+						break;
+					case appCache.UPDATEREADY:  // UPDATEREADY == 4
+						console.log('UPDATEREADY: ' + url);
+						return success('UPDATEREADY');						
+						break;
+					case appCache.OBSOLETE: // OBSOLETE == 5
+						console.log('OBSOLETE: ' + url);
+						failed('OBSOLETE');
+						return stopTimer();
+						break;
+					default:
+						console.log('UNKNOWN: ' + appCache.status + ":" + url);
+						break;
+				}
+				
+				timerID = window.setTimeout(checkProgress, 1000);
+			}
+			timerID = window.setTimeout(checkProgress, 1000);
+		}
+		
+		return {
+			load: load
+		}
+	})(jQuery);
+
 	
 	$.mobile.popup.prototype.options.history = false;
 	$.ajaxSetup({ cache: true });
@@ -1273,68 +1376,5 @@ var QuranApp = (function($) {
 		showWordDetails: showWordDetails,
 		slideToPage: slideToPage,
 		toggleWordBookmark: toggleWordBookmark
-	}
-})(jQuery);
-
-var AppCache = (function($){
-	
-	var timerID;
-	var cachedUrls={};
-	
-	function stopTimer() {
-		window.clearInterval(timerID);
-		timerID=null;
-	}
-		
-	function load(url, success, failed) {
-		if (cachedUrls[url])
-			return true;
-		else
-			cachedUrls[url]=true;
-			
-		var iframe = document.getElementById('appcacheloader') || document.createElement('IFRAME');
-		iframe.setAttribute('style', 'width:0px; height:0px; visibility:hidden; position:absolute; border:none');
-		iframe.src = url;
-		iframe.id = 'appcacheloader';
-		iframe.parentElement == null ? document.body.appendChild(iframe) : 0;
-		
-		if(timerID) 
-			stopTimer();
-			
-		timerID = window.setInterval(function(){
-			var appCache = iframe.contentWindow.applicationCache;
-
-			switch (appCache.status) {
-				case appCache.UNCACHED: // UNCACHED == 0
-					failed('UNCACHED');
-					stopTimer();
-					break;
-				case appCache.IDLE: // IDLE == 1
-					success('IDLE');
-					stopTimer();
-					break;
-				// case appCache.CHECKING: // CHECKING == 2
-				// 	return 'CHECKING';
-				// 	break;
-				// case appCache.DOWNLOADING: // DOWNLOADING == 3
-				// 	return 'DOWNLOADING';
-				// 	break;
-				case appCache.UPDATEREADY:  // UPDATEREADY == 4
-					success('UPDATEREADY');
-					stopTimer();
-					break;
-				case appCache.OBSOLETE: // OBSOLETE == 5
-					failed('OBSOLETE');
-					stopTimer();
-					break;
-				default:
-					
-					break;
-			}
-		}, 1000);
-	}
-	
-	return {
-		load: load
 	}
 })(jQuery);

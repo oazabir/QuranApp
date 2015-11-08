@@ -1,5 +1,5 @@
 ﻿<!DOCTYPE html>
-<html manifest="index.appcache?v=1511081222">
+<html manifest="index.appcache?v=1511081338">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge"> 
@@ -9,7 +9,7 @@
     <link rel="stylesheet" type="text/css" href="css/jquery.mobile-1.4.5.min.css" />
     <link rel="stylesheet" type="text/css" href="css/swiper.css">
     <link rel="stylesheet" type="text/css" href="css/tooltipster.css" />
-    <link rel="stylesheet" type="text/css" href="css/common.css?v=1511081222" />
+    <link rel="stylesheet" type="text/css" href="css/common.css?v=1511081338" />
     <script type="text/javascript">
         var isOperaMini = !!window['operamini'];
         if (isOperaMini) document.location.href="opera.html";        
@@ -118,6 +118,13 @@
                 </form>
                 <a class="ui-btn ui-btn-inline" href="#home" data-role="back" data-rel="button" onclick="QuranApp.slideToPage($('#pagenumberToJump').val())">Goto যাও</a>
                 <a class="ui-btn ui-btn-inline" href="#home" data-role="back" data-rel="button">Close বন্ধ</a>
+            </div>
+        </div>
+        
+        <div data-role="popup" id="progressbarPopup" data-theme="b">
+            <p>Downloading...</p>
+            <div class="meter animate">
+                <span id="progressbar" style="width: 50%"><span></span></span>
             </div>
         </div>
 
@@ -271,9 +278,9 @@
 			    </fieldset>
 			</form>
 
-			<p>Download all content locally so that you can use it offline</p>
+			<p>Download all content locally so that you can use it without Internet</p>
 			<p>ইন্টারনেট না থাকলেও ব্যবহার করার জন্য সবকিছু একবারে ডাউনলোড করুন</p>
-			<button>Use without Internet</button>
+			<button id="GoOffline">Download all pages</button>
         </div>
 
         <div id="word_tooltip_template">
@@ -379,7 +386,7 @@
     <!-- Load swiper after the page markup is done -->
     <script src="js/swiper.js"></script>
 
-    <script src="js/index.js?v=1511081222"></script>
+    <script src="js/index.js?v=1511081338"></script>
 
     <script defer="defer" type="text/javascript" src="page/surahs.js"></script>
     <script defer="defer" type="text/javascript" src="js/sugar.js"></script>
