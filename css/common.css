@@ -18,7 +18,7 @@
     text-align: center;
     line-height: 40px;
     background: url('../images/SurahPartition.png') no-repeat 46px;
-    padding-top: 10px;
+    padding-top: 5px;
 }
 
     .surah_name a {
@@ -556,7 +556,7 @@ table {
     overflow: auto;
     /*background-color:rgba(0,0,0,0.8);*/
     background-color: #faefe5;
-    padding: 15px;
+    padding: 5px 15px 15px 45px; 
     color: black;
 }
 
@@ -604,11 +604,14 @@ p.verse.highlighted {
 #translationPopup {
 	position: fixed;
 	bottom: 0px;
-	left: 10px;
-	right: 10px;
+	left: 0px;
+	right: 0px;
 	padding: 0px;
-	width: 100%;
+	width: 99%;
+    border: lightgrey 4px solid;
 	background-color: #f7f1e5;
+    z-index: 65000;
+    display: none;
 }
 
 #progressbarPopup {

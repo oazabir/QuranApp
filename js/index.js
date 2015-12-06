@@ -7,7 +7,7 @@
 
 var QuranApp = (function($) {
 	var $this = this;
-	var version = 1511081729;
+	var version = 1512061700;
 	var versionSuffix = "?v=" + version;
 	var maxPage = 604;
 		
@@ -232,7 +232,13 @@ var QuranApp = (function($) {
 							continueTooltip();					
 						}						
 	                }
-	            });
+	            }).click(function(){
+					e = $(this);
+					var sura = e.attr("sura");
+					var ayah = e.attr("ayah");
+					
+					TranslationManager.sync(sura, ayah);
+				});
 	        });
 	
 	        var bookmarkedAyat = BookmarkManager.getAyahBookmarks();
@@ -292,7 +298,13 @@ var QuranApp = (function($) {
 						origin.tooltipster("content", tooltipHtml);
 	                    continueTooltip();
 	                }	
-	            });
+	            }).click(function(){
+					e = $(this);
+					var sura = e.attr("sura");
+					var ayah = e.attr("ayah");
+					
+					TranslationManager.sync(sura, ayah);
+				});
 	        });
 	        
 	        demo();
@@ -434,61 +446,102 @@ var QuranApp = (function($) {
 	*	
 	***************************************/
 		
-	$('#translationPopup').on("popupbeforeposition", function (event) {
-	    var maxHeight = $(window).height() - 30;
-	    $('#translationContent').height(maxHeight * 0.3);
-		$('#swiper').css("margin-bottom", $(this).outerHeight()+"px");
+	var TranslationManager = (function(){
+		var shown = false;
+		
+		function show(sura, ayah) {
+			shown = true;	
+				
+			// restore translation source if saved in cookie
+			var translation = $.cookie('t');
+			if (translation) {
+				$('#translationSource').val(translation).selectmenu('refresh');
+			}
+			
+			$('#translationSource').off('change').on('change', function () {
+				loadTranslation();
+				$(this).selectmenu('refresh');
+			});
+		
+			position();
+			
+			loadTranslation(sura, ayah);				
+		}
+	
+		function position() {
+			var maxHeight = $(window).height() - 30;
+			$('#translationContent').height(maxHeight * 0.3);
+			$('#swiper').css("margin-bottom", $("#translationPopup").outerHeight()+"px");
+			$('#translationPopup').css('display', 'block');	
+		}
+		
+		function close() {
+			$('#swiper').css("margin-bottom", "0px");
+			$('#translationPopup').css('display', 'none');	
+			shown = false;
+		}
+		
+		function loadTranslation(sura, ayah) {
+			var pageNo = getCurrentPageNo();
+			
+			var currentSource = $('#translationSource').val();
+			var url = "translations/" + currentSource + "/" + (pageNo.pad(3)) + ".html" + versionSuffix;
+			var contentArea = $('#translationContent');
+			
+			contentArea.load(url, function () {
+				sync(sura, ayah);     
+		
+				$.cookie('t', currentSource, { path: '/', expires: 30 });
+			});
+		}
+		
+		function sync(sura, ayah)
+		{
+			if(!shown)
+				return;
+			
+			var pageNo = getCurrentPageNo();
+			
+			var firstWord = getPageDiv(pageNo).find('.word').first();
+			var suraNo = sura || firstWord.attr('sura');
+			var ayahNo = ayah || firstWord.attr('ayah');
+			
+			var contentArea = $('#translationContent');
+			
+			var ayahBookmark = $('#translationContent a[name="' + suraNo + ':' + ayahNo + '"]');
+			var surahNameHeight = $('#translationContent .surah').first().outerHeight();
+			var bismillahHeight = $('#translationContent .bismillah').first().outerHeight();
+			var verseP = ayahBookmark.parent();
+			var scrollY = ayahBookmark.offset().top - contentArea.offset().top - 15 * 2 - surahNameHeight - bismillahHeight;
+			contentArea.scrollTop(scrollY);
+	
+			verseP.addClass('highlighted');
+			+function() { verseP.removeClass('highlighted'); }.delay(3000);   
+		}
+	
+		return {
+			show: show,
+			position: position,
+			close: close,
+			sync: sync
+		}	
+	})();
+		
+	$('#translation_link').click(TranslationManager.show);
+	
+	$('#closeTranslationPopup').click(TranslationManager.close);
+	
+	/*$('#translationPopup').on("popupbeforeposition", function (event) {
+	    TranslationManager.position();
 	});
 
 	$('#translationPopup').on("popupafterclose", function (event) {
-		$('#swiper').css("margin-bottom", "0px");
+		TranslationManager.close();
 	});
-	
-	function loadTranslation() {
-	    var pageNo = getCurrentPageNo();
-	    var currentSource = $('#translationSource').val();
-	    var url = "translations/" + currentSource + "/" + (pageNo.pad(3)) + ".html" + versionSuffix;
-	    var contentArea = $('#translationContent');
-		
-	    contentArea.load(url, function () {
-	        var firstWord = getPageDiv(pageNo).find('.word').first();
-	        var suraNo = firstWord.attr('sura');
-	        var ayahNo = firstWord.attr('ayah');
-	
-	        if ($this.translationJump) {
-	            suraNo = $this.translationJump.sura;
-	            ayahNo = $this.translationJump.ayah;
-	            $this.translationJump = null;
-	        }
-	
-	        var ayahBookmark = $('#translationContent a[name="' + suraNo + ':' + ayahNo + '"]');
-	        var surahNameHeight = $('#translationContent .surah').first().outerHeight();
-	        var bismillahHeight = $('#translationContent .bismillah').first().outerHeight();
-	        var verseP = ayahBookmark.parent();
-	        var scrollY = ayahBookmark.offset().top - contentArea.offset().top - 15 * 2 - surahNameHeight - bismillahHeight;
-	        contentArea.scrollTop(scrollY);
-	
-	        verseP.addClass('highlighted');
-	        +function() { verseP.removeClass('highlighted'); }.delay(3000);        
-	
-	        $.cookie('t', currentSource, { path: '/', expires: 30 });
-	    });
-	}
 	
 	$('#translationPopup').on("popupafteropen", function (event) {
-		// restore translation source if saved in cookie
-		var translation = $.cookie('t');
-		if (translation) {
-			$('#translationSource').val(translation).selectmenu('refresh');
-		}
-		
-	    $('#translationSource').off('change').on('change', function () {
-	        loadTranslation();
-	        $(this).selectmenu('refresh');
-	    });
-	
-	    loadTranslation();
-	});
+		TranslationManager.show();
+	});*/
 
 	/**************************************
 	*	
@@ -497,6 +550,7 @@ var QuranApp = (function($) {
 	***************************************/
 	
 	function demo() {
+		
 	    if ($.cookie('demo') != null) return;
 	
 	    var deltaX = 39, deltaY = 15;
@@ -550,10 +604,8 @@ var QuranApp = (function($) {
 	                e.tooltipster('show');
 	                bringHandOnTop();
 	
-				    $.cookie('demo', 'true', { path: '/', expires: 30 });
-	
 	                (function () {
-						e.tooltipster('hide');                    
+						//e.tooltipster('hide');                    
 	                    resume();
 	                }).delay(delay);                
 	            }
@@ -595,7 +647,7 @@ var QuranApp = (function($) {
 	        },
 	        {
 	            e: '#translationSource', f: function (e, resume) {
-	                //e.trigger('click');
+	                e.val(e.val()+1);
 	                resume.delay(delay);
 	            }
 	        },
@@ -603,6 +655,8 @@ var QuranApp = (function($) {
 	            e: '#closeTranslationPopup', f: function (e, resume) {
 	                e.click();
 	                resume();
+					
+					$.cookie('demo', 'true', { path: '/', expires: 30 });
 	            }
 	        }        
 	    ].reverse());
@@ -897,8 +951,8 @@ var QuranApp = (function($) {
         jQueryMobileHack();
 		
     }
-
-    function showTranslationAyah() {
+	
+	function showTranslationAyah() {
 		hideAllTooltips();
 		
         var e = $.event.fix(event || window.event);
@@ -906,10 +960,10 @@ var QuranApp = (function($) {
 
         var sura = link.attr("sura");
         var ayah = link.attr("ayah");
-        $this.translationJump = { sura: sura, ayah: ayah };
-
-        $('#translationPopup').popup('open', { positionTo: '#pagejumpbutton' });
-        return true;
+        
+		TranslationManager.show(sura, ayah);
+		
+	    return true;
     }
 
 	function showWordDetails(key) {
