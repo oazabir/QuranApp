@@ -7,7 +7,7 @@
 
 var QuranApp = (function($) {
 	var $this = this;
-	var version = 1512061700;
+	var version = 1512061724;
 	var versionSuffix = "?v=" + version;
 	var maxPage = 604;
 		
@@ -523,11 +523,14 @@ var QuranApp = (function($) {
 			show: show,
 			position: position,
 			close: close,
-			sync: sync
+			sync: sync,
+			isShown: function() { return shown; }
 		}	
 	})();
 		
-	$('#translation_link').click(TranslationManager.show);
+	$('#translation_link').click(function(){
+		TranslationManager.isShown() ? TranslationManager.close() : TranslationManager.show();
+	});
 	
 	$('#closeTranslationPopup').click(TranslationManager.close);
 	
@@ -647,8 +650,16 @@ var QuranApp = (function($) {
 	        },
 	        {
 	            e: '#translationSource', f: function (e, resume) {
-	                e.val(e.val()+1);
-	                resume.delay(delay);
+	                // Select the relevant option, de-select any others
+					e.val('bangla').attr('selected', true).siblings('option').removeAttr('selected');
+					e.selectmenu("refresh", true);
+					
+					+function(){
+						e.val('english').attr('selected', true).siblings('option').removeAttr('selected');
+						e.selectmenu("refresh", true);
+						resume();
+					}.delay(delay);
+	                
 	            }
 	        },
 	        {
