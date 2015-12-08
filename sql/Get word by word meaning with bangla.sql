@@ -1,4 +1,4 @@
-﻿use Quran
+﻿use QuranApp
 go
 
 
@@ -148,7 +148,9 @@ SELECT @json = COALESCE(@json + char(13), '') + json FROM
 		,replace(
 		replace(
 		ltrim(rtrim(ISNULL((
-			select top 1 bangla from [BanglaWordbyWord] b where b.Word = w.Text 
+			--select top 1 bangla from [BanglaWordbyWord] b where b.Word = w.Text 
+			select [translate_bn] from [dbo].[BanglaWordbyWordOS]
+			where surah_id = w.Chapter and verse_id = w.Verse and words_id = w.Word
 		), '')))
 		,'"', '')
 		,'''', '')
@@ -280,7 +282,7 @@ declare @path varchar(100)
 declare @filename varchar(100)
 
 -- html
-set @path = 'E:\GitHub\QuranApp\page'
+set @path = 'c:\QuranApp\page'
 set @filename = 'page' + @pagestr + '.html'
 exec [dbo].[spWriteStringToFile]  @html, @path, @filename
 -- json
@@ -292,11 +294,11 @@ exec [dbo].[spWriteStringToFile]  @content, @path, @filename
 
 
 -- translation
-set @path = 'E:\GitHub\QuranApp\translations\bangla'
+set @path = 'c:\QuranApp\translations\bangla'
 set @filename = @pagestr + '.html'
 exec [dbo].[spWriteStringToFile]  @bangla_translation, @path, @filename
 
-set @path = 'E:\GitHub\QuranApp\translations\english'
+set @path = 'c:\QuranApp\translations\english'
 set @filename = @pagestr + '.html'
 exec [dbo].[spWriteStringToFile]  @english_translation, @path, @filename
 
