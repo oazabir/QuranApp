@@ -332,11 +332,13 @@ html {
     font-family: /*'Arabic Typesetting',*/ Georgia, 'Times New Roman', Arial;
     direction: rtl;
 }
-#meaningPopup a {
-    text-decoration: dotted;
+#meaningPopup a.arabic_word, #meaningPopup a.lemma {
+    text-decoration: none;
     font-weight: normal;
     color: cyan;
+    border-bottom: 1px cyan dotted;
 }
+
 #meaningPopup .frequency_wrap {
     margin-left: 5px; 
     font-size: 80%;
