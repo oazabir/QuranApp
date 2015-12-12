@@ -188,7 +188,7 @@ var QuranApp = (function($) {
 	                contentAsHTML: true,
 	                interactive: true,
 	                hideOnClick: true,
-					delay: 10				delay: 1000,00,
+					delay: 1000,
 					functionBefore: function (origin, continueTooltip) {
 						var sura = $(this).attr("sura");
 						var ayah = $(this).attr("ayah");
@@ -222,7 +222,7 @@ var QuranApp = (function($) {
 							
 							// if(window.showTooltip)
 							// 	window.showTooltip.cancel();
-							// 					delay: 1000,
+							// 	
 							// window.showTooltip = function(){
 							// 	if (window.swiper.sliding == true)
 							// 		return;
@@ -262,7 +262,7 @@ var QuranApp = (function($) {
 				// 		window.lastTooltip = null;
 				// 	}
 				// 	showTooltip(event);					
-				// });				delay: 1000,
+				// });
 				// e.on("click", showTooltip);
 				// e.on("tap", showTooltip);
 				
@@ -270,7 +270,7 @@ var QuranApp = (function($) {
 	                contentAsHTML: true,
 	                interactive: true,
 	                hidOnClick: true,
-					delay: 1000,
+	
 	                functionBefore: function (origin, continueTooltip) {
 	                    var sura = $(this).attr("sura");
 	                    var ayah = $(this).attr("ayah");
