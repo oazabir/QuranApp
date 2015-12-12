@@ -1,5 +1,5 @@
 CACHE MANIFEST
-# version 1512121641
+# version 1512121652
 CACHE:
 index.html
 favicon.ico
@@ -19,7 +19,7 @@ css/SolaimanLipiNormal.eot
 css/SolaimanLipiNormal.ttf
 css/SolaimanLipiNormal.woff
 css/SolaimanLipiNormal.woff2
-css/common.css?v=1512121641
+css/common.css?v=1512121652
 css/images/ajax-loader.gif
 css/jquery.mobile-1.4.5.min.css
 css/large.css
@@ -31,7 +31,7 @@ css/themes/tooltipster-shadow.css
 css/tooltipster.css
 css/windowschrome.css
 js/fontspy.js
-js/index.js?v=1512121641
+js/index.js?v=1512121652
 js/jquery-1.11.3.min.js
 js/jquery.cookie.js
 js/jquery.mobile-1.4.5.min.js
@@ -39,8 +39,8 @@ js/jquery.mobile-1.4.5.min.map
 js/jquery.tooltipster.min.js
 js/sugar.js
 js/swiper.js
-page/sura_ayah_map.js?v=1512121641
-page/surahs.js?v=1512121641
+page/sura_ayah_map.js?v=1512121652
+page/surahs.js?v=1512121652
 data/fonts/QCF_BSML.woff
 /page/page001.html?v=1512121633
 /page/page001.js?v=1512121633

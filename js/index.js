@@ -362,17 +362,23 @@ var QuranApp = (function($) {
 	$('#searchPopup').popup({
 	    afteropen: function (event, ui) {
 	        
-	        $('#gotoSurahAyahButton').one('click', function () {
+	        $('#gotoSurahAyahButton').on('click', function () {
 	            gotoSurahAyah($('#jumpTo').val());
 	        })
 	        $('#searchPopup .error').hide();
 	
-	    }
+	    }, afterclose: function (event, ui) {
+			$('#gotoSurahAyahButton').off('click');
+		}
 	});
 
 	function gotoSurahAyah(surahAyah) {
 	    if (window.suraayahmap) {
 	        var result = /(\d+)[^0-9]*(\d*)/.exec(surahAyah);
+			if (result == null) {
+				$('#searchPopup .error').show();
+				return;
+			}
 	        var sura = result[1];
 	        var ayah = result[2] || 1;
 	
@@ -714,6 +720,7 @@ var QuranApp = (function($) {
 	    refreshListViews: function () {
 	        $('#addPageBookmark').off('click').on('click', function () {
 	            BookmarkManager.addPageBookmark();
+				BookmarkManager.refreshListViews();
 	        }).show();
 	
 	        BookmarkManager.populateListView(BookmarkManager.pageBoomarksName, '#pageBookmarkListView', BookmarkManager.pageBookmarkRender);
