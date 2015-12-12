@@ -372,17 +372,20 @@ var QuranApp = (function($) {
 
 	function gotoSurahAyah(surahAyah) {
 	    if (window.suraayahmap) {
-	        var result = /(\d+).(\d+)/.exec(surahAyah);
+	        var result = /(\d+)[^0-9]*(\d*)/.exec(surahAyah);
 	        var sura = result[1];
-	        var ayah = result[2];
+	        var ayah = result[2] || 1;
 	
 	        var searchReg = new RegExp(',' + sura + ':' + ayah + '=(\\d+)', "g");
 	        var pageMatch = searchReg.exec(window.suraayahmap);
 	        if (pageMatch) {
-	            var pageNo = pageMatch[1];
+	            $('#searchPopup .error').hide();
+				
+				var pageNo = pageMatch[1];
 	            $this.highlight = { sura: sura, ayah: ayah };
 	            $('#searchPopup').popup('close');
 	            slideToPage(pageNo);
+				
 	        } else {
 	            $('#searchPopup .error').show();
 	        }
