@@ -1,15 +1,23 @@
 ﻿<!DOCTYPE html>
-<html manifest="index.appcache?v=1510131128">
+<html manifest="index.appcache?v=1512131627">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge"> 
-    <meta name="viewport" content="width=550,user-scalable=0">
+    <meta name="viewport" content="width=514,user-scalable=0">
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta property="og:title" content="Quran Mus'haf Reader বাংলা শব্দার্থ সহ কুরআন মুসহাফ"/>
+    <meta property="og:image" content="http://alquranu.com/images/screenshot.png"/>
+    <meta property="og:site_name" content="Quran Mus'haf Reader বাংলা শব্দার্থ সহ কুরআন মুসহাফ"/>
+    <meta property="og:url" content="http://alquranu.com/"/>
     
-    <title>Mobile Quran Reading বাংলা অর্থ সহ কুরআন</title>
+    <meta property="og:description" content="Quran Mus'haf Reader বাংলা শব্দার্থ সহ কুরআন মুসহাফ"/>
+    
+	
+    <title>Quran Mus'haf Reader বাংলা শব্দার্থ সহ কুরআন মুসহাফ</title>
     <link rel="stylesheet" type="text/css" href="css/jquery.mobile-1.4.5.min.css" />
     <link rel="stylesheet" type="text/css" href="css/swiper.css">
     <link rel="stylesheet" type="text/css" href="css/tooltipster.css" />
-    <link rel="stylesheet" type="text/css" href="css/common.css?v=1510131128" />
+    <link rel="stylesheet" type="text/css" href="css/common.css?v=1512131627" />
     <script type="text/javascript">
         var isOperaMini = !!window['operamini'];
         if (isOperaMini) document.location.href="opera.html";        
@@ -49,13 +57,13 @@
             <div class="feature_bar">
                 <a href="#searchPopup" data-rel="popup" id="searchsurah_link">&#x1f50d;</a>
                 <a href="#bookmarkPopup" data-rel="popup" id="bookmark_link">&#x1f516;</a>
-                <a href="#translationPopup" data-rel="popup" id="translation_link" >&#x1f4d6;</a>
+                <a href="#translationPopup" id="translation_link" >&#x1f4d6;</a>
             </div>
            
         </div>
 		
-        <div data-role="popup" id="translationPopup"  data-theme="none" data-corners="false" data-dismissible="false">
-            <a id="closeTranslationPopup" href="#" data-rel="back" class="ui-btn ui-btn-b ui-corner-all ui-shadow ui-btn-a ui-icon-delete ui-btn-icon-notext ui-btn-left">Close</a>
+        <div id="translationPopup" data-theme="none">
+            <a id="closeTranslationPopup" href="#" class="ui-btn ui-btn-b ui-corner-all ui-shadow ui-btn-a ui-icon-delete ui-btn-icon-notext ui-btn-left">Close</a>
             <div id="translationContent"></div>
             <select id="translationSource" data-mini="true" data-corners="false" >
                 <option value="english" selected="selected">English - Abdel Haleem</option>
@@ -99,7 +107,7 @@
 
             <form>
                 <label for="jumpTo">Surah and Ayah সূরা এবং আয়াত নম্বর</label>
-                <input data-clear-btn="false" name="jumpTo" pattern="\d+.*\d+" id="jumpTo" value="1:1" />
+                <input data-clear-btn="false" name="jumpTo" pattern="\d+.*(\d*)" id="jumpTo" value="1:1" />
                 <label for="jumpTo" class="error" generated="true">Invalid surah or ayah number.<br /> সূরা বা আয়াত নম্বরটি ঠিক হয়নি।</label>
             </form>
 
@@ -118,6 +126,13 @@
                 </form>
                 <a class="ui-btn ui-btn-inline" href="#home" data-role="back" data-rel="button" onclick="QuranApp.slideToPage($('#pagenumberToJump').val())">Goto যাও</a>
                 <a class="ui-btn ui-btn-inline" href="#home" data-role="back" data-rel="button">Close বন্ধ</a>
+            </div>
+        </div>
+        
+        <div data-role="popup" id="progressbarPopup" data-theme="b">
+            <p>Downloading...</p>
+            <div class="meter animate">
+                <span id="progressbar" style="width: 50%"><span></span></span>
             </div>
         </div>
 
@@ -271,9 +286,10 @@
 			    </fieldset>
 			</form>
 
-			<p>Download all content locally so that you can use it offline</p>
+			<!-- Browser app cache size is limited, e.g. Chrome 5MB only. Thus no point.
+            <p>Download all content locally so that you can use it without Internet</p>
 			<p>ইন্টারনেট না থাকলেও ব্যবহার করার জন্য সবকিছু একবারে ডাউনলোড করুন</p>
-			<button>Use without Internet</button>
+			<button id="GoOffline">Download all pages</button>-->
         </div>
 
         <div id="word_tooltip_template">
@@ -379,15 +395,14 @@
     <!-- Load swiper after the page markup is done -->
     <script src="js/swiper.js"></script>
 
-    <script src="js/index.js?v=1510131128"></script>
+    <script src="js/index.js?v=1512131627"></script>
 
-    <script defer="defer" type="text/javascript" src="page/surahs.js"></script>
+    <script defer="defer" type="text/javascript" src="page/surahs.js?v=1512131627"></script>
     <script defer="defer" type="text/javascript" src="js/sugar.js"></script>
-    <script defer="defer" type="text/javascript" src="page/sura_ayah_map.js"></script>
+    <script defer="defer" type="text/javascript" src="page/sura_ayah_map.js?v=1512131627"></script>
 
     <script defer="defer" type="text/javascript" src="cordova.js"></script>
     <script defer="defer" type="text/javascript" src="js/audio-helper.js"></script>
-
     
     <script type="text/javascript">
     if (navigator.userAgent.indexOf("Chrome") !== -1 && 

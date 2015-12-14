@@ -1,0 +1,68 @@
+CACHE MANIFEST
+# version 1512121633
+CACHE:
+/page/page060.html?v=1512121633
+/page/page060.js?v=1512121633
+/page/page061.html?v=1512121633
+/page/page061.js?v=1512121633
+/page/page062.html?v=1512121633
+/page/page062.js?v=1512121633
+/page/page063.html?v=1512121633
+/page/page063.js?v=1512121633
+/page/page064.html?v=1512121633
+/page/page064.js?v=1512121633
+/page/page065.html?v=1512121633
+/page/page065.js?v=1512121633
+/page/page066.html?v=1512121633
+/page/page066.js?v=1512121633
+/page/page067.html?v=1512121633
+/page/page067.js?v=1512121633
+/page/page068.html?v=1512121633
+/page/page068.js?v=1512121633
+/page/page069.html?v=1512121633
+/page/page069.js?v=1512121633
+/data/fonts/QCF_P060.woff
+/data/fonts/QCF_P061.woff
+/data/fonts/QCF_P062.woff
+/data/fonts/QCF_P063.woff
+/data/fonts/QCF_P064.woff
+/data/fonts/QCF_P065.woff
+/data/fonts/QCF_P066.woff
+/data/fonts/QCF_P067.woff
+/data/fonts/QCF_P068.woff
+/data/fonts/QCF_P069.woff
+/translations/bangla/060.html?v=1512121633
+/translations/bangla/061.html?v=1512121633
+/translations/bangla/062.html?v=1512121633
+/translations/bangla/063.html?v=1512121633
+/translations/bangla/064.html?v=1512121633
+/translations/bangla/065.html?v=1512121633
+/translations/bangla/066.html?v=1512121633
+/translations/bangla/067.html?v=1512121633
+/translations/bangla/068.html?v=1512121633
+/translations/bangla/069.html?v=1512121633
+/translations/english/060.html?v=1512121633
+/translations/english/061.html?v=1512121633
+/translations/english/062.html?v=1512121633
+/translations/english/063.html?v=1512121633
+/translations/english/064.html?v=1512121633
+/translations/english/065.html?v=1512121633
+/translations/english/066.html?v=1512121633
+/translations/english/067.html?v=1512121633
+/translations/english/068.html?v=1512121633
+/translations/english/069.html?v=1512121633
+# Resources that require the user to be online.
+NETWORK:
+*
+ 
+FALLBACK:
+data/fonts/QCF_P060.woff /data/fonts/QCF_P060.woff
+data/fonts/QCF_P061.woff /data/fonts/QCF_P061.woff
+data/fonts/QCF_P062.woff /data/fonts/QCF_P062.woff
+data/fonts/QCF_P063.woff /data/fonts/QCF_P063.woff
+data/fonts/QCF_P064.woff /data/fonts/QCF_P064.woff
+data/fonts/QCF_P065.woff /data/fonts/QCF_P065.woff
+data/fonts/QCF_P066.woff /data/fonts/QCF_P066.woff
+data/fonts/QCF_P067.woff /data/fonts/QCF_P067.woff
+data/fonts/QCF_P068.woff /data/fonts/QCF_P068.woff
+data/fonts/QCF_P069.woff /data/fonts/QCF_P069.woff

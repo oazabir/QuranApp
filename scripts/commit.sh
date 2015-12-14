@@ -1,6 +1,6 @@
 cd ~/QuranApp
 git pull
-scripts/generateoffline.sh
+scripts/generateoffline.sh $2
 git add -A
 git commit -m "$1"
 git push

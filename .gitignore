@@ -1,6 +1,7 @@
+*.swp
+*.tmp
 apps/CordovaApp/platforms
 apps/CordovaApp/plugins
-*.tmp
 apps/CordovaApp/extra/.gradle
 
 apps/CordovaApp/www/*

@@ -5,10 +5,11 @@
 /// <reference path="fontspy.js" />
 /// <reference path="jquery.cookie.js" />
 
-QuranApp = (function($) {
+var QuranApp = (function($) {
 	var $this = this;
-	var version = 1510131128;
+	var version = 1512121633;
 	var versionSuffix = "?v=" + version;
+	var maxPage = 604;
 		
 	/**************************************
 	*	
@@ -26,7 +27,8 @@ QuranApp = (function($) {
 	    var pageDivId = '#page' + pageStr;
 	
 	    // ensure the page div is there. if not, then create that page div 
-	    // and one before and after for smoother swipe. 
+	    // and one before and after for smoother swipe.
+		var swiperDiv; 
 	    var pageDiv = $(pageDivId);
 	    if (pageDiv.length == 0) {
 	        swiperDiv = makeSwiperDiv(pageNo);
@@ -60,8 +62,7 @@ QuranApp = (function($) {
 	
 	    // if page is already loading/loaded, nothing to do
 	    if (pageDiv.attr("status") == "loading" || pageDiv.attr("status") == "loaded") {
-	        postContentLoad(pageNo, precache);
-	        return;
+	        postContentLoad(pageNo, precache);	        
 	    } else {
 	        loadPageHtml(pageNo, precache);
 	    }
@@ -78,7 +79,7 @@ QuranApp = (function($) {
 	        var template = '<style type="text/css"> \
 						@font-face { \
 						 font-family: "page{pageStr}"; \
-						 src: url("./data/fonts/QCF_P{pageStr}.woff") format("woff"); \
+						 src: url("/data/fonts/QCF_P{pageStr}.woff") format("woff"); \
 						 font-weight: normal; \
 						 font-style: normal; \
 						} \
@@ -121,7 +122,7 @@ QuranApp = (function($) {
 	        }
 	    }
 	    // ensure a page slide exists after this page
-	    if (pageNo < 604) {
+	    if (pageNo < maxPage) {
 	        var after = getPageDiv(pageNo + 1);
 	        if (after.length == 0) {
 	            after = makeSwiperDiv(pageNo + 1);
@@ -131,78 +132,180 @@ QuranApp = (function($) {
 	    }
 	}
 	
+	function showTooltip(event){
+		var e = $(event.target);
+		if (window.suppressTooltip) {
+			window.suppressTooltip = false;
+		}
+		else if(window.lastTooltip && e != window.lastTooltip) {
+			window.lastTooltip.tooltipster('hide');
+			window.lastTooltip = null; //e.tooltipster('show');;
+		} else if (window.lastTooltip) {
+			//window.lastTooltip.tooltipster('hide');
+			//window.lastTooltip = null;
+			//return;
+		}						
+		else { 
+			window.lastTooltip = e.tooltipster('show');
+		}
+			
+		event.preventDefault();
+		event.stopPropagation();
+	}
+	
 	function loadPageJs(pageNo) {
 	    var pageStr = pageNo.pad(3), pageDiv = getPageDiv(pageNo);
 	    var pageDivId = '#' + $(pageDiv).attr("id");
 	
-	    var promise = $.cachedScript('page/page' + pageStr + '.js');
+	    var promise = $.cachedScript('page/page' + pageStr + '.js' + versionSuffix);
 	    promise.done(function () {
 	
 	        var wordBookmarks = BookmarkManager.getWordBookmarks();
 	
 	        $(pageDivId + " .word").each(function (i, e) {
-	            var sura = $(this).attr("sura");
-	            var ayah = $(this).attr("ayah");
-	            var word = $(this).attr("word");
+				e = $(e);
+	            var sura = e.attr("sura");
+	            var ayah = e.attr("ayah");
+	            var word = e.attr("word");
 	            var bookmark = wordBookmarks.find(function (b) { return b.sura == sura && b.ayah == ayah && b.word == word; })
 	            var isBookmarked = bookmark != null;
 	            if (isBookmarked) {
-	                $(this).addClass('bookmarked_word');
-	                $(this).attr('bookmarked', true);
+	                e.addClass('bookmarked_word');
+	                e.attr('bookmarked', true);
 	            }
-	
-	            $(this).tooltipster({
+				
+				// e.on("taphold", function(event){
+				// 	if(window.lastTooltip){
+				// 		window.lastTooltip.tooltipster('hide');
+				// 		window.lastTooltip = null;
+				// 	}
+				// 	showTooltip(event);					
+				// });
+				// e.on("click", showTooltip);
+				// e.on("tap", showTooltip);
+				
+	            e.tooltipster({
 	                contentAsHTML: true,
 	                interactive: true,
-	                delay: 1000,
+	                hideOnClick: true,
+					delay: 1000,
+					functionBefore: function (origin, continueTooltip) {
+						var sura = $(this).attr("sura");
+						var ayah = $(this).attr("ayah");
+						var word = $(this).attr("word");
+						var isBookmarked = $(this).attr('bookmarked');
+	
+						var key = sura + ":" + ayah + ":" + word;
+						var meaning = window.wordbyword[key];
+	
+						if (meaning) {
+							var templateDiv = $('#word_tooltip_template');
+							var template = templateDiv.data("html") || (function() {
+								var html = templateDiv.html();
+								templateDiv.html("");
+								templateDiv.data("html", html);
+								return html;
+							})();
+								
+							var root = meaning.r ? meaning.r[0] + ' ' + meaning.r[1] + ' ' + meaning.r[2] + ' ' + (meaning.r[3] || "") : "";
+	
+							var output = template.assign(meaning, {
+								root: root,
+								sura: sura, ayah: ayah, word: word,
+								pageDivId: pageDivId, key: key,
+								isBookmarked: isBookmarked,
+								bookmarkedClass: isBookmarked ? 'bookmarked_word' : ''
+							});
+							var tooltipHtml = $(output);
+							Options.applyLanguage(tooltipHtml);
+							origin.tooltipster("content", tooltipHtml);
+							
+							// if(window.showTooltip)
+							// 	window.showTooltip.cancel();
+							// 	
+							// window.showTooltip = function(){
+							// 	if (window.swiper.sliding == true)
+							// 		return;
+							// 	continueTooltip();
+							// }.delay(500);
+							
+							//window.showTooltip();		
+							continueTooltip();					
+						}						
+	                }
+	            }).click(function(){
+					e = $(this);
+					var sura = e.attr("sura");
+					var ayah = e.attr("ayah");
+					
+					TranslationManager.sync(sura, ayah);
+				});
+	        });
+	
+	        var bookmarkedAyat = BookmarkManager.getAyahBookmarks();
+			
+	        $(pageDivId + " .ayah_number").each(function (i, e) {
+				e = $(e);
+	            var sura = e.attr("sura");
+	            var ayah = e.attr("ayah");
+				
+	            var bookmark = bookmarkedAyat.find(function (b) { return b.sura == sura && b.ayah == ayah });
+				var isBookmarked = bookmark != null;
+	            if (isBookmarked) {
+	                $(this).addClass('bookmarked_ayah');
+	                $(this).attr('bookmarked', true);
+	            }
+				
+	            // e.on("taphold", function(event){
+				// 	if(window.lastTooltip){
+				// 		window.lastTooltip.tooltipster('hide');
+				// 		window.lastTooltip = null;
+				// 	}
+				// 	showTooltip(event);					
+				// });
+				// e.on("click", showTooltip);
+				// e.on("tap", showTooltip);
+				
+	            e.tooltipster({
+	                contentAsHTML: true,
+	                interactive: true,
+	                hidOnClick: true,
 	
 	                functionBefore: function (origin, continueTooltip) {
 	                    var sura = $(this).attr("sura");
 	                    var ayah = $(this).attr("ayah");
-	                    var word = $(this).attr("word");
 	                    var isBookmarked = $(this).attr('bookmarked');
 	
-	                    var key = sura + ":" + ayah + ":" + word;
-	                    var meaning = window.wordbyword[key];
+	                    var key = sura + ":" + ayah;
+						
+						var template = '<div> \
+											<div class="bangla_meaning" language="bangla">{b}</div> \
+											<div class="english_meaning" language="english">({key}) {e}</div> \
+											<div id="ayah_actions"> \
+											<a href="#bookmarkPopup" class="{bookmarked}" id="bookmark_ayah" sura="{sura}" ayah="{ayah}" onclick="QuranApp.toggleAyahBookmark()">&#x1f516;</a> \
+											<a href="#" id="translation_ayah" sura="{sura}" ayah="{ayah}" onclick="QuranApp.showTranslationAyah()">&#x1f4d6;</a> \
+											</div> \
+										</div>';
 	
-	                    if (meaning) {
-		                    var templateDiv = $('#word_tooltip_template');
-	                        var template = templateDiv.data("html") || (function() {
-		                        var html = templateDiv.html();
-		                        templateDiv.html("");
-		                        templateDiv.data("html", html);
-		                        return html;
-		                    })();
-		                        
-	                        var root = meaning.r ? meaning.r[0] + ' ' + meaning.r[1] + ' ' + meaning.r[2] + ' ' + (meaning.r[3] || "") : "";
-	
-	                        var output = template.assign(meaning, {
-	                            root: root,
-	                            sura: sura, ayah: ayah, word: word,
+						var translation = window.translation[key];						
+						var output = template.assign(translation, {
+	                            sura: sura, ayah: ayah, 
 	                            pageDivId: pageDivId, key: key,
 	                            isBookmarked: isBookmarked,
-	                            bookmarkedClass: isBookmarked ? 'bookmarked_word' : ''
-	                        });
-							var tooltipHtml = $(output);
-							Options.applyLanguage(tooltipHtml);
-	                        origin.tooltipster("content", tooltipHtml);
-	                        continueTooltip();
-	                    }
-	                }
-	
-	            });
-	
-	        });
-	
-	        var bookmarkedAyat = BookmarkManager.getAyahBookmarks();
-	
-	        $(pageDivId + " .ayah_number").each(function (i, e) {
-	            var ayahMark = $(this);
-	            var sura = ayahMark.attr("sura");
-	            var ayah = ayahMark.attr("ayah");
-	            var bookmark = bookmarkedAyat.find(function (b) { return b.sura == sura && b.ayah == ayah });
-	
-	            buildAyahNumberTooltip(ayahMark, sura, ayah, bookmark != null);
+	                            bookmarkedClass: isBookmarked ? 'bookmarked_ayah' : ''
+	                    });
+						var tooltipHtml = $(output);
+						Options.applyLanguage(tooltipHtml);
+						origin.tooltipster("content", tooltipHtml);
+	                    continueTooltip();
+	                }	
+	            }).click(function(){
+					e = $(this);
+					var sura = e.attr("sura");
+					var ayah = e.attr("ayah");
+					
+					TranslationManager.sync(sura, ayah);
+				});
 	        });
 	        
 	        demo();
@@ -216,7 +319,7 @@ QuranApp = (function($) {
 	function postContentLoad(pageNo, precache) {
 	    
 	    if (precache) {
-	
+			precachePages();
 	    } else {
 	        
 	        var pageDiv = getPageDiv(pageNo);
@@ -234,7 +337,7 @@ QuranApp = (function($) {
 	        preCreateBeforeAfterSlide(pageNo);
 	
 	        pageNo > 1 ? +function () { loadPage(pageNo - 1, true) }.delay(1000) : {};
-	        pageNo < 604 ? +function () { loadPage(pageNo + 1, true) }.delay(1000) : {};
+	        pageNo < maxPage ? +function () { loadPage(pageNo + 1, true) }.delay(1000) : {};
 	    } 
 	}
 		
@@ -259,27 +362,36 @@ QuranApp = (function($) {
 	$('#searchPopup').popup({
 	    afteropen: function (event, ui) {
 	        
-	        $('#gotoSurahAyahButton').one('click', function () {
+	        $('#gotoSurahAyahButton').on('click', function () {
 	            gotoSurahAyah($('#jumpTo').val());
 	        })
 	        $('#searchPopup .error').hide();
 	
-	    }
+	    }, afterclose: function (event, ui) {
+			$('#gotoSurahAyahButton').off('click');
+		}
 	});
 
 	function gotoSurahAyah(surahAyah) {
 	    if (window.suraayahmap) {
-	        var result = /(\d+).(\d+)/.exec(surahAyah);
+	        var result = /(\d+)[^0-9]*(\d*)/.exec(surahAyah);
+			if (result == null) {
+				$('#searchPopup .error').show();
+				return;
+			}
 	        var sura = result[1];
-	        var ayah = result[2];
+	        var ayah = result[2] || 1;
 	
 	        var searchReg = new RegExp(',' + sura + ':' + ayah + '=(\\d+)', "g");
 	        var pageMatch = searchReg.exec(window.suraayahmap);
 	        if (pageMatch) {
-	            var pageNo = pageMatch[1];
+	            $('#searchPopup .error').hide();
+				
+				var pageNo = pageMatch[1];
 	            $this.highlight = { sura: sura, ayah: ayah };
 	            $('#searchPopup').popup('close');
 	            slideToPage(pageNo);
+				
 	        } else {
 	            $('#searchPopup .error').show();
 	        }
@@ -309,7 +421,6 @@ QuranApp = (function($) {
 		var tooltipHtml = $(output);
 		Options.applyLanguage(tooltipHtml);
         
-	    
 	    ayahMark.tooltipster({
 	        contentAsHTML: true,
 	        content: $(tooltipHtml).html(),
@@ -333,7 +444,8 @@ QuranApp = (function($) {
 	        content: actionContent,
 	        multiple: true,
 	        position: 'right',
-	        delay: 1000
+	        delay: 1000,
+			hideOnClick: true
 	    });
 	}
 
@@ -344,61 +456,105 @@ QuranApp = (function($) {
 	*	
 	***************************************/
 		
-	$('#translationPopup').on("popupbeforeposition", function (event) {
-	    var maxHeight = $(window).height() - 30;
-	    $('#translationContent').height(maxHeight * 0.3);
-		$('#swiper').css("margin-bottom", $(this).outerHeight()+"px");
+	var TranslationManager = (function(){
+		var shown = false;
+		
+		function show(sura, ayah) {
+			shown = true;	
+				
+			// restore translation source if saved in cookie
+			var translation = $.cookie('t');
+			if (translation) {
+				$('#translationSource').val(translation).selectmenu('refresh');
+			}
+			
+			$('#translationSource').off('change').on('change', function () {
+				loadTranslation();
+				$(this).selectmenu('refresh');
+			});
+		
+			position();
+			
+			loadTranslation(sura, ayah);				
+		}
+	
+		function position() {
+			var maxHeight = $(window).height() - 30;
+			$('#translationContent').height(maxHeight * 0.3);
+			$('#swiper').css("margin-bottom", $("#translationPopup").outerHeight()+"px");
+			$('#translationPopup').css('display', 'block');	
+		}
+		
+		function close() {
+			$('#swiper').css("margin-bottom", "0px");
+			$('#translationPopup').css('display', 'none');	
+			shown = false;
+		}
+		
+		function loadTranslation(sura, ayah) {
+			var pageNo = getCurrentPageNo();
+			
+			var currentSource = $('#translationSource').val();
+			var url = "translations/" + currentSource + "/" + (pageNo.pad(3)) + ".html" + versionSuffix;
+			var contentArea = $('#translationContent');
+			
+			contentArea.load(url, function () {
+				sync(sura, ayah);     
+		
+				$.cookie('t', currentSource, { path: '/', expires: 30 });
+			});
+		}
+		
+		function sync(sura, ayah)
+		{
+			if(!shown)
+				return;
+			
+			var pageNo = getCurrentPageNo();
+			
+			var firstWord = getPageDiv(pageNo).find('.word').first();
+			var suraNo = sura || firstWord.attr('sura');
+			var ayahNo = ayah || firstWord.attr('ayah');
+			
+			var contentArea = $('#translationContent');
+			
+			var ayahBookmark = $('#translationContent a[name="' + suraNo + ':' + ayahNo + '"]');
+			var surahNameHeight = $('#translationContent .surah').first().outerHeight();
+			var bismillahHeight = $('#translationContent .bismillah').first().outerHeight();
+			var verseP = ayahBookmark.parent();
+			var scrollY = ayahBookmark.offset().top - contentArea.offset().top - 15 * 2 - surahNameHeight - bismillahHeight;
+			contentArea.scrollTop(scrollY);
+	
+			verseP.addClass('highlighted');
+			+function() { verseP.removeClass('highlighted'); }.delay(3000);   
+		}
+	
+		return {
+			show: show,
+			position: position,
+			close: close,
+			sync: sync,
+			isShown: function() { return shown; }
+		}	
+	})();
+		
+	$('#translation_link').click(function(){
+		TranslationManager.isShown() ? TranslationManager.close() : TranslationManager.show();
+	});
+	
+	$('#closeTranslationPopup').click(TranslationManager.close);
+	
+	/*$('#translationPopup').on("popupbeforeposition", function (event) {
+	    TranslationManager.position();
 	});
 
 	$('#translationPopup').on("popupafterclose", function (event) {
-		$('#swiper').css("margin-bottom", "0px");
+		TranslationManager.close();
 	});
-	
-	function loadTranslation() {
-	    var pageNo = getCurrentPageNo();
-	    var currentSource = $('#translationSource').val();
-	    var url = "translations/" + currentSource + "/" + (pageNo.pad(3)) + ".html" + versionSuffix;
-	    var contentArea = $('#translationContent');
-		
-	    contentArea.load(url, function () {
-	        var firstWord = getPageDiv(pageNo).find('.word').first();
-	        var suraNo = firstWord.attr('sura');
-	        var ayahNo = firstWord.attr('ayah');
-	
-	        if ($this.translationJump) {
-	            suraNo = $this.translationJump.sura;
-	            ayahNo = $this.translationJump.ayah;
-	            $this.translationJump = null;
-	        }
-	
-	        var ayahBookmark = $('#translationContent a[name="' + suraNo + ':' + ayahNo + '"]');
-	        var surahNameHeight = $('#translationContent .surah').first().outerHeight();
-	        var bismillahHeight = $('#translationContent .bismillah').first().outerHeight();
-	        var verseP = ayahBookmark.parent();
-	        var scrollY = ayahBookmark.offset().top - contentArea.offset().top - 15 * 2 - surahNameHeight - bismillahHeight;
-	        contentArea.scrollTop(scrollY);
-	
-	        verseP.addClass('highlighted');
-	        +function() { verseP.removeClass('highlighted'); }.delay(3000);        
-	
-	        $.cookie('t', currentSource, { path: '/', expires: 30 });
-	    });
-	}
 	
 	$('#translationPopup').on("popupafteropen", function (event) {
-		// restore translation source if saved in cookie
-		var translation = $.cookie('t');
-		if (translation) {
-			$('#translationSource').val(translation).selectmenu('refresh');
-		}
-		
-	    $('#translationSource').off('change').on('change', function () {
-	        loadTranslation();
-	        $(this).selectmenu('refresh');
-	    });
-	
-	    loadTranslation();
-	});
+		TranslationManager.show();
+	});*/
 
 	/**************************************
 	*	
@@ -407,9 +563,8 @@ QuranApp = (function($) {
 	***************************************/
 	
 	function demo() {
+		
 	    if ($.cookie('demo') != null) return;
-	
-	    $.cookie('demo', 'true', { path: '/', expires: 30 });
 	
 	    var deltaX = 39, deltaY = 15;
 	    var delay = 2000;
@@ -461,7 +616,9 @@ QuranApp = (function($) {
 	            e: firstWord, f: function (e, resume) {
 	                e.tooltipster('show');
 	                bringHandOnTop();
-	                (function () {                    
+	
+	                (function () {
+						//e.tooltipster('hide');                    
 	                    resume();
 	                }).delay(delay);                
 	            }
@@ -503,14 +660,24 @@ QuranApp = (function($) {
 	        },
 	        {
 	            e: '#translationSource', f: function (e, resume) {
-	                //e.trigger('click');
-	                resume.delay(delay);
+	                // Select the relevant option, de-select any others
+					e.val('bangla').attr('selected', true).siblings('option').removeAttr('selected');
+					e.selectmenu("refresh", true);
+					
+					+function(){
+						e.val('english').attr('selected', true).siblings('option').removeAttr('selected');
+						e.selectmenu("refresh", true);
+						resume();
+					}.delay(delay);
+	                
 	            }
 	        },
 	        {
 	            e: '#closeTranslationPopup', f: function (e, resume) {
 	                e.click();
 	                resume();
+					
+					$.cookie('demo', 'true', { path: '/', expires: 30 });
 	            }
 	        }        
 	    ].reverse());
@@ -543,9 +710,9 @@ QuranApp = (function($) {
 	    },
 	
 	    clearBookmarks: function () {
-	        BookmarkManager.saveLocalStorageObject(pageBoomarksName, null);
-	        BookmarkManager.saveLocalStorageObject(ayahBookmarksName, null);
-	        BookmarkManager.saveLocalStorageObject(wordBookmarksName, null);
+	        BookmarkManager.saveLocalStorageObject(BookmarkManager.pageBoomarksName, null);
+	        BookmarkManager.saveLocalStorageObject(BookmarkManager.ayahBookmarksName, null);
+	        BookmarkManager.saveLocalStorageObject(BookmarkManager.wordBookmarksName, null);
 	
 	        BookmarkManager.refreshListViews();
 	    },
@@ -553,6 +720,7 @@ QuranApp = (function($) {
 	    refreshListViews: function () {
 	        $('#addPageBookmark').off('click').on('click', function () {
 	            BookmarkManager.addPageBookmark();
+				BookmarkManager.refreshListViews();
 	        }).show();
 	
 	        BookmarkManager.populateListView(BookmarkManager.pageBoomarksName, '#pageBookmarkListView', BookmarkManager.pageBookmarkRender);
@@ -609,7 +777,7 @@ QuranApp = (function($) {
 	
 	        BookmarkManager.saveLocalStorageObject(storeName, bookmarks);
 	
-	        BookmarkManager.refreshListViews();
+	        //BookmarkManager.refreshListViews();
 	    },
 	
 	    toggleAyahBookmark: function (suraNo, ayahNo) {
@@ -638,11 +806,11 @@ QuranApp = (function($) {
 	
 	            bookmarks.push(newBookmark);
 	            BookmarkManager.saveLocalStorageObject(storeName, bookmarks);
-	            BookmarkManager.refreshListViews();
+	            //BookmarkManager.refreshListViews();
 	            return true;
 	        } else {
 	            BookmarkManager.saveLocalStorageObject(storeName, newBookmarks);
-	            BookmarkManager.refreshListViews();
+	            //BookmarkManager.refreshListViews();
 	            return false;
 	        }        
 	    },
@@ -677,11 +845,11 @@ QuranApp = (function($) {
 	
 	            bookmarks.push(newBookmark);
 	            BookmarkManager.saveLocalStorageObject(storeName, bookmarks);
-	            BookmarkManager.refreshListViews();
+	            //BookmarkManager.refreshListViews();
 	            return true;
 	        } else {
 	            BookmarkManager.saveLocalStorageObject(storeName, newBookmarks);
-	            BookmarkManager.refreshListViews();
+	            //BookmarkManager.refreshListViews();
 	            return false;
 	        }
 	    },
@@ -778,7 +946,9 @@ QuranApp = (function($) {
     // 4. Change the tooltip to show (un)bookmarked bookmark icon.
     // 5. Hide the tooltip
     function toggleAyahBookmark(event) {
-        var e = jQuery.event.fix(event || window.event);
+		hideAllTooltips();
+		
+        var e = $.event.fix(event || window.event);
         var link = $(e.target);
 
         var sura = link.attr("sura");
@@ -801,29 +971,33 @@ QuranApp = (function($) {
 
         buildAyahNumberTooltip(ayahNumber, sura, ayah, bookmarkAdded);
         jQueryMobileHack();
+		
     }
-
-    function showTranslationAyah() {
-        var e = jQuery.event.fix(event || window.event);
+	
+	function showTranslationAyah() {
+		hideAllTooltips();
+		
+        var e = $.event.fix(event || window.event);
         var link = $(e.target);
 
         var sura = link.attr("sura");
         var ayah = link.attr("ayah");
-        $this.translationJump = { sura: sura, ayah: ayah };
-
-        $('#translationPopup').popup('open', { positionTo: '#pagejumpbutton' });
-        return true;
+        
+		TranslationManager.show(sura, ayah);
+		
+	    return true;
     }
 
 	function showWordDetails(key) {
 		hideAllTooltips();
+		
 	    var meaning = window.wordbyword[key];
 	    if (meaning) {
 	        var popup = $('#meaningPopup');
 	        // pickup the template from saved location, if the html has been modified during last popup show
 	        var template = $('#meaning_popup_template').html();
 	        var templateDiv = $('#meaning_popup_template');
-	        var template = templateDiv.data("html") || (function() {
+	        template = templateDiv.data("html") || (function() {
 	            var html = templateDiv.html();
 	            templateDiv.html("");
 	            templateDiv.data("html", html);
@@ -849,7 +1023,9 @@ QuranApp = (function($) {
     // 3. Make the word show (un)bookmarked color.
     // 5. Hide the tooltip
     function toggleWordBookmark(event) {
-        var e = jQuery.event.fix(event || window.event);
+		hideAllTooltips();
+		
+        var e = $.event.fix(event || window.event);
         var link = $(e.target);
 
         var sura = link.attr("sura");
@@ -880,7 +1056,7 @@ QuranApp = (function($) {
 	***************************************/
 	
 	function getCurrentPageNo() {
-	    var swiperDiv = swiper.slides[swiper.activeIndex];
+	    var swiperDiv = window.swiper.slides[window.swiper.activeIndex];
 	    var pageNo = parseInt($(swiperDiv).find('div.page').attr('pageno'));
 	    return pageNo;
 	}
@@ -927,7 +1103,19 @@ QuranApp = (function($) {
 	}
 	
 	function hideAllTooltips() {
-	    $('.tooltipstered').tooltipster('hide');
+		if(window.lastTooltip) {
+			window.lastTooltip.tooltipster('hide');
+			window.lastTooltip = null;
+		}
+		if(window.showTooltip) {
+			window.showTooltip.cancel();
+			window.showTooltip = null;
+		}							            	
+		try {
+	    	$('.tooltipstered').tooltipster('hide');			
+		} catch(e) {
+			
+		}
 	}
 	
 	function highlightSurahAyah(highlight) {
@@ -960,18 +1148,18 @@ QuranApp = (function($) {
 	    return $('#page' + pageStr);
 	}
 
-	jQuery.cachedScript = function (url, options) {
+	$.cachedScript = function (url, options) {
 	
 	    // Allow user to set any option except for dataType, cache, and url
 	    options = $.extend(options || {}, {
 	        dataType: "script",
 	        cache: true,
-	        url: url + versionSuffix
+	        url: url
 	    });
 	
 	    // Use $.ajax() since it is more flexible than $.getScript
 	    // Return the jqXHR object so we can chain callbacks
-	    return jQuery.ajax(options);
+	    return $.ajax(options);
 	};
 	
 	/**************************************
@@ -1067,6 +1255,10 @@ QuranApp = (function($) {
 	        updateSurahPanel();       
 			Options.onshow();
 	    });
+		
+		$("#GoOffline").click(function(){
+			GoOffline();
+		});
 	    
 	    jQueryMobileHack();
 	});
@@ -1079,6 +1271,12 @@ QuranApp = (function($) {
 	  }
 	});
 
+	/************************************
+	 * 
+	 * 	Swiper
+	 * 
+	 ************************************/
+	
 	$(document).ready(function () {
 	    window.swiper = new Swiper('.swiper-container', {
 	        nextButton: '.swiper-button-next',
@@ -1088,13 +1286,25 @@ QuranApp = (function($) {
 	        scrollbar: '.swiper-scrollbar',
 	        scrollbarHide: false,
 	        spaceBetween: 0,
-	        //loop: true ,
+	        
+			onTransitionStart: function(swiper) {
+				window.suppressTooltip = true;
+				hideAllTooltips();
+			},
+			onTransitionEnd: function(swiper) {
+				hideAllTooltips();					            	
+			},
 	        onSlideChangeStart: function(swiper) {
-	            hideAllTooltips();
+				window.suppressTooltip = true;
+				hideAllTooltips();
 	        },
 	        onSlideChangeEnd: function (swiper) {
-	            pageNo = getCurrentPageNo();
+				hideAllTooltips();
+				window.swiper.sliding = false;
+				var pageNo = getCurrentPageNo();
 	            loadPage(pageNo);
+				
+				window.suppressTooltip = false;
 	        },
 	        onInit: function (swiper) {
 	            +function () {
@@ -1108,6 +1318,56 @@ QuranApp = (function($) {
 	    });
 	});
 	
+	/*******************************
+	 * 	Cache
+	 *******************************/
+	
+	function GoOffline(){
+		var pagesToCache = [];
+		for(var i = 600; i >= 10; i -= 10)
+			pagesToCache.push(i);
+		var totalItems = pagesToCache.length;
+		
+		function startCaching(){
+			if (pagesToCache.length > 0){
+				precachePages(pagesToCache.pop(), startCaching, startCaching);
+				var itemsDone = totalItems - pagesToCache.length;
+				var percent = Math.ceil(itemsDone / totalItems * 100);
+				$('#progressbar').css('width', percent+'%');
+			} else {
+				$('#progressbarPopup').popup('close');		
+			}
+		}
+		
+		$('#progressbarPopup').popup('open');
+		startCaching();		
+	}
+	
+	// function GoOffline(){
+	// 	var pagesToCache = [];
+	// 	for(var i = 600; i >= 1; i --)
+	// 		pagesToCache.push(i);
+	// 	var totalItems = pagesToCache.length;
+	// 	
+	// 	function startCaching(){
+	// 		if (pagesToCache.length > 0){
+	// 			var pageStr = pagesToCache.pop.pad(3);
+	// 			$.cachedScript('page/page' + pageStr + '.html'); //.done(startCaching).fail(startCaching);
+	// 			$.cachedScript('page/page' + pageStr + '.js'); //.done(startCaching).fail(startCaching);
+	//     		$.cachedScript('/data/fonts/QCF_P' + pageStr + '.woff').done(startCaching).fail(startCaching);
+	// 			
+	// 			var itemsDone = totalItems - pagesToCache.length;
+	// 			var percent = Math.ceil(itemsDone / totalItems * 100);
+	// 			$('#progressbar').css('width', percent+'%');
+	// 		} else {
+	// 			$('#progressbarPopup').popup('close');		
+	// 		}
+	// 	}
+	// 	
+	// 	$('#progressbarPopup').popup('open');
+	// 	startCaching();		
+	// }
+	
 	if (window.applicationCache) {
 	    window.applicationCache.addEventListener('updateready', function() {
 	        if (confirm('An update is available. Update now?')) {
@@ -1115,6 +1375,97 @@ QuranApp = (function($) {
 	        }
 	    });
 	}	
+	
+	function precachePages(currentPage, success, failure) {
+		var pageNo = currentPage || getCurrentPageNo();
+		
+		if (pageNo > 9) {
+			// e.g. if page number 29, then cache file is cache020.html
+			var cachehtml = "page/cache"+(Math.floor(pageNo/10)*10).pad(3)+".html";
+			AppCache.load(cachehtml, success || function(){					
+				
+			}, failure || function(){
+				
+			});		
+		}
+	}
+	
+	
+	var AppCache = (function($){
+		
+		var timerID;
+		var cachedUrls={};
+		
+		function stopTimer() {
+			if(timerID) {
+				window.clearInterval(timerID);
+				window.clearTimeout(timerID);
+			}
+			timerID=null;
+		}
+			
+		function load(url, success, failed) {
+			if (cachedUrls[url])
+				return success();
+			else
+				cachedUrls[url]=true;
+				
+			var existing = document.getElementById('appcacheloader');
+			if(existing)
+				existing.remove();
+				
+			var iframe = document.createElement('IFRAME');
+			iframe.setAttribute('style', 'width:0px; height:0px; visibility:hidden; position:absolute; border:none');
+			iframe.src = url;
+			iframe.id = 'appcacheloader';
+			document.body.appendChild(iframe);
+			
+			if(timerID) 
+				stopTimer();		
+					
+			function checkProgress() {
+				var iframe = document.getElementById('appcacheloader');
+				var appCache = iframe.contentWindow.applicationCache;
+				var url = iframe.contentWindow.document.location.href;
+	
+				switch (appCache.status) {
+					case appCache.UNCACHED: // UNCACHED == 0
+						console.log('UNCACHED: ' + url);
+						return failed('UNCACHED');						
+						break;
+					case appCache.IDLE: // IDLE == 1
+						console.log('IDLE: ' + url);
+						return success('IDLE');						
+						break;
+					case appCache.CHECKING: // CHECKING == 2
+						console.log('CHECKING: ' + url);
+						break;
+					case appCache.DOWNLOADING: // DOWNLOADING == 3
+						console.log('DOWNLOADING: ' + url);
+						break;
+					case appCache.UPDATEREADY:  // UPDATEREADY == 4
+						console.log('UPDATEREADY: ' + url);
+						return success('UPDATEREADY');						
+						break;
+					case appCache.OBSOLETE: // OBSOLETE == 5
+						console.log('OBSOLETE: ' + url);
+						failed('OBSOLETE');
+						return stopTimer();
+						break;
+					default:
+						console.log('UNKNOWN: ' + appCache.status + ":" + url);
+						break;
+				}
+				
+				timerID = window.setTimeout(checkProgress, 1000);
+			}
+			timerID = window.setTimeout(checkProgress, 1000);
+		}
+		
+		return {
+			load: load
+		}
+	})(jQuery);
 
 	
 	$.mobile.popup.prototype.options.history = false;
@@ -1128,35 +1479,3 @@ QuranApp = (function($) {
 		toggleWordBookmark: toggleWordBookmark
 	}
 })(jQuery);
-
-AppCache = (function(){
-	function load(url, success, failed) {
-		var iframe = document.createElement('IFRAME');
-		iframe.setAttribute('style', 'width:0px; height:0px; visibility:hidden; position:absolute; border:none');
-		iframe.src = url;
-		iframe.id = 'appcacheloader';
-		document.body.appendChild(iframe);
-		
-		$(iframe.contentWindow.document).ready(function($) {
-		  	$(iframe.contentWindow.applicationCache).on('cached error noupdate', function(e) {
-				var message = '';
-				switch (e.type) { 
-					case 'error':
-						failed(e);
-						break;
-					case 'cached': 
-						success(e);
-					 break;
-					case 'noupdate':
-						success(e);
-					break;    
-				}
-				alert(message);
-		  	});
-		});
-	}
-	
-	return {
-		load: load
-	}
-});
