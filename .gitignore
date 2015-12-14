@@ -1,2 +1,8 @@
 *.swp
 *.tmp
+apps/CordovaApp/platforms
+apps/CordovaApp/plugins
+apps/CordovaApp/extra/.gradle
+
+apps/CordovaApp/www/*
+!apps/CordovaApp/www/js/audio-helper.js
