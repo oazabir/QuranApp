@@ -150,7 +150,10 @@ SELECT @json = COALESCE(@json + char(13), '') + json FROM
 		ltrim(rtrim(ISNULL((
 			--select top 1 bangla from [BanglaWordbyWord] b where b.Word = w.Text 
 			select [translate_bn] from [dbo].[BanglaWordbyWordOS]
-			where surah_id = w.Chapter and verse_id = w.Verse and words_id = w.Word
+			where surah_id = w.Chapter and verse_id = w.Verse 
+			and words_id = (case  
+			when w.chapter > 1 and w.verse = 1 then w.word-4 
+			else w.word end )
 		), '')))
 		,'"', '')
 		,'''', '')
@@ -195,7 +198,9 @@ SELECT @json = COALESCE(@json + char(13), '') + json FROM
 		left join Meanings m ON 
 			m.SurahNo = w.chapter and 
 			m.VerseNo = w.verse and 
-			m.WordNo = w.word
+			m.WordNo = (case  
+			when w.chapter > 1 and w.verse = 1 then w.word-4 
+			else w.word end )
 		left join RootTextCount rtc on rtc.root = w.root and rtc.text = w.text
 		where w.word > 0
 		and exists (select * FROM surah_page 
