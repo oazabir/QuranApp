@@ -1,2 +1,6 @@
 *.swp
 *.tmp
+apps/Cordova/platforms/android/assets/www/page/*
+apps/Cordova/platforms/android/assets/www/data/*
+apps/Cordova/platforms/android/assets/www/css/*
+apps/Cordova/platforms/android/assets/www/images/*
