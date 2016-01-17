@@ -1174,13 +1174,15 @@ var QuranApp = (function($) {
 				bangla: true,
 				english: true,
 				indonesia: false
-			}
+			},
+            nightMode: false
 		},
 		load: function() {
 			var savedData = localStorage.getItem("options");
 			if (savedData) {
 				Options.settings = JSON.parse(savedData);
 				Options.applyFontSize();
+                Options.applyNightMode();
 			}
 		},
 		save: function() {
@@ -1210,6 +1212,19 @@ var QuranApp = (function($) {
 						Options.applyFontSize();
 					});
 			});
+            $('#NightModeList input').each(function(i, e){
+				$(e)
+					.prop( "checked", Options.settings.nightMode )
+					.checkboxradio( "refresh" )
+					.off('click')
+					.on('click', function(){
+						Options.settings.nightMode = $(this).prop("checked");
+						Options.save();
+						
+						Options.applyNightMode();
+					});
+			});
+            Options.applyLanguage('#surahpanel');
 		},
 		applyLanguage: function(container){
 			container = $(container);
@@ -1231,7 +1246,17 @@ var QuranApp = (function($) {
 					$(style).appendTo("head");
 				}
 			}
-		}
+		},
+        applyNightMode: function() {
+            if (Options.settings.nightMode == 0) {
+				$('#style_nightmode').remove();
+			} else {
+				if ($('#style_nightmode').length == 0) {
+					var style = '<link id="style_nightmode" rel="stylesheet" type="text/css" href="css/nightmode.css" />';
+					$(style).appendTo("head");
+				}
+			}
+        }
 	};
 	
 	Options.load();

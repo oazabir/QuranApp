@@ -1,0 +1,8 @@
+.ui-overlay-a, .ui-page-theme-a, .ui-page-theme-a .ui-panel-wrapper, .ui-body-a, .ui-page-theme-a .ui-body-inherit, html .ui-bar-a .ui-body-inherit, html .ui-body-a .ui-body-inherit, html body .ui-group-theme-a .ui-body-inherit, html .ui-panel-page-container-a {
+     background-color: #333;
+     color: white; 
+}
+.word { color: #eee; text-shadow: none; }
+.page { background: none }
+.surah_title a { color: #eee; }
+.surah_name { background: none }
