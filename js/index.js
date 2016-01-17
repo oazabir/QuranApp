@@ -187,7 +187,7 @@ var QuranApp = (function($) {
 	            e.tooltipster({
 	                contentAsHTML: true,
 	                interactive: true,
-	                hideOnClick: true,
+	                hideOnClick: false,
 					delay: 1000,
 					functionBefore: function (origin, continueTooltip) {
 						var sura = $(this).attr("sura");
