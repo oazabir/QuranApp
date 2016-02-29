@@ -56,6 +56,7 @@ function setVersion() {
 	local versionMatch="\(?v=[0-9]*\)\{0,1\}"
 	sed -i.tmp "s/index.js$versionMatch/index.js$resourceVersionSuffix/" $filename
 	sed -i.tmp "s/common.css$versionMatch/common.css$resourceVersionSuffix/" $filename
+    sed -i.tmp "s/nightmode.css$versionMatch/common.css$resourceVersionSuffix/" $filename
 	sed -i.tmp "s/index.appcache$versionMatch/index.appcache$resourceVersionSuffix/" $filename
 	sed -i.tmp "s/surahs.js$versionMatch/surahs.js$resourceVersionSuffix/" $filename
 	sed -i.tmp "s/sura_ayah_map.js$versionMatch/sura_ayah_map.js$resourceVersionSuffix/" $filename

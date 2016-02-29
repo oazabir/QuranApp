@@ -6,3 +6,11 @@
 .page { background: none }
 .surah_title a { color: #eee; }
 .surah_name { background: none }
+
+.bookmarked_word {
+    color: red;
+}
+
+.bookmarked_ayah {
+    color: red;
+}
