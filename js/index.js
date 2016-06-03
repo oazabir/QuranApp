@@ -187,7 +187,7 @@ var QuranApp = (function($) {
 	            e.tooltipster({
 	                contentAsHTML: true,
 	                interactive: true,
-	                hideOnClick: false,
+	                hideOnClick: true,
 					delay: 1000,
 					functionBefore: function (origin, continueTooltip) {
 						var sura = $(this).attr("sura");
@@ -1048,6 +1048,10 @@ var QuranApp = (function($) {
         }
         jQueryMobileHack();
     }
+    
+    $(window).scroll(function(){
+        hideAllTooltips();
+    })
 	
 	/**************************************
 	*	
@@ -1103,16 +1107,22 @@ var QuranApp = (function($) {
 	}
 	
 	function hideAllTooltips() {
-		if(window.lastTooltip) {
-			window.lastTooltip.tooltipster('hide');
-			window.lastTooltip = null;
-		}
-		if(window.showTooltip) {
-			window.showTooltip.cancel();
-			window.showTooltip = null;
-		}							            	
 		try {
-	    	$('.tooltipstered').tooltipster('hide');			
+			if(window.lastTooltip) {
+				window.lastTooltip.tooltipster('hide');
+				window.lastTooltip = null;
+			}
+			if(window.showTooltip) {
+				window.showTooltip.cancel();
+				window.showTooltip = null;
+			}	
+		} catch(e) {
+			
+		}						            	
+		try {
+	    	$('.tooltipstered').each(function(i, e) {
+				e.tooltipster('hide');
+			});			
 		} catch(e) {
 			
 		}

@@ -14,3 +14,8 @@
 .bookmarked_ayah {
     color: red;
 }
+
+#translationContent {
+    background-color: #333;
+    color: ivory;
+}
