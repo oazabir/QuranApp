@@ -1121,7 +1121,7 @@ var QuranApp = (function($) {
 		}						            	
 		try {
 	    	$('.tooltipstered').each(function(i, e) {
-				e.tooltipster('hide');
+				$(e).tooltipster('hide');
 			});			
 		} catch(e) {
 			
