@@ -1097,7 +1097,7 @@ var QuranApp = (function($) {
 	function hideAllTooltips() {
 		try {
 			if(window.lastTooltip) {
-				window.lastTooltip.tooltipster('hide');
+				window.lastTooltip.tooltipster('close');
 				window.lastTooltip = null;
 			}
 			if(window.showTooltip) {
@@ -1109,7 +1109,7 @@ var QuranApp = (function($) {
 		}						            	
 		try {
 	    	$('.tooltipstered').each(function(i, e) {
-				$(e).tooltipster('hide');
+				$(e).tooltipster('close');
 			});			
 		} catch(e) {
 			
