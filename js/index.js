@@ -188,12 +188,11 @@ var QuranApp = (function($) {
 	                contentAsHTML: true,
 	                interactive: true,
 	                hideOnClick: true,
-					delay: 1000,
-					functionBefore: function (origin, continueTooltip) {
-						var sura = $(this).attr("sura");
-						var ayah = $(this).attr("ayah");
-						var word = $(this).attr("word");
-						var isBookmarked = $(this).attr('bookmarked');
+					functionBefore: function(instance, helper) {
+						var sura = $(helper.origin).attr("sura");
+						var ayah = $(helper.origin).attr("ayah");
+						var word = $(helper.origin).attr("word");
+						var isBookmarked = $(helper.origin).attr('bookmarked');
 	
 						var key = sura + ":" + ayah + ":" + word;
 						var meaning = window.wordbyword[key];
@@ -218,22 +217,11 @@ var QuranApp = (function($) {
 							});
 							var tooltipHtml = $(output);
 							Options.applyLanguage(tooltipHtml);
-							origin.tooltipster("content", tooltipHtml);
-							
-							// if(window.showTooltip)
-							// 	window.showTooltip.cancel();
-							// 	
-							// window.showTooltip = function(){
-							// 	if (window.swiper.sliding == true)
-							// 		return;
-							// 	continueTooltip();
-							// }.delay(500);
-							
-							//window.showTooltip();		
-							continueTooltip();					
+							instance.content(tooltipHtml.html());							
+							return true;		
 						}						
 	                }
-	            }).click(function(){
+	            }).click(function(instance, helper){
 					e = $(this);
 					var sura = e.attr("sura");
 					var ayah = e.attr("ayah");
@@ -271,10 +259,10 @@ var QuranApp = (function($) {
 	                interactive: true,
 	                hidOnClick: true,
 	
-	                functionBefore: function (origin, continueTooltip) {
-	                    var sura = $(this).attr("sura");
-	                    var ayah = $(this).attr("ayah");
-	                    var isBookmarked = $(this).attr('bookmarked');
+	                functionBefore: function(instance, helper) {
+	                    var sura = $(helper.origin).attr("sura");
+	                    var ayah = $(helper.origin).attr("ayah");
+	                    var isBookmarked = $(helper.origin).attr('bookmarked');
 	
 	                    var key = sura + ":" + ayah;
 						
@@ -296,10 +284,10 @@ var QuranApp = (function($) {
 	                    });
 						var tooltipHtml = $(output);
 						Options.applyLanguage(tooltipHtml);
-						origin.tooltipster("content", tooltipHtml);
-	                    continueTooltip();
+						instance.content(tooltipHtml.html());
+	                    return true;
 	                }	
-	            }).click(function(){
+	            }).click(function(instance,helper){
 					e = $(this);
 					var sura = e.attr("sura");
 					var ayah = e.attr("ayah");

@@ -1,0 +1,25 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "QuranApp",
+            "type": "chrome",
+            "request": "launch",
+            "url": "http://misho.com/index.html"
+        },
+        {
+            "name": "Launch localhost with sourcemaps",
+            "type": "chrome",
+            "request": "launch",
+            "url": "http://localhost/mypage.html",
+            "sourceMaps": true,
+            "webRoot": "wwwroot"
+        },
+        {
+            "name": "Attach",
+            "type": "chrome",
+            "request": "attach",
+            "port": 9222
+        }
+    ]
+}
