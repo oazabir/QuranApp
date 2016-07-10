@@ -189,6 +189,9 @@ var QuranApp = (function($) {
 	                interactive: true,
 	                hideOnClick: true,
 					delay: 1000,
+					functionReady: function(instance, helper) {
+						if (window.scrolling) return false;
+					},
 					functionBefore: function(instance, helper) {
 						if (window.scrolling) return false;
 
