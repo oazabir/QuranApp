@@ -7,7 +7,7 @@
 
 var QuranApp = (function($) {
 	var $this = this;
-	var version = 1606031849;
+	var version = 1607101526;
 	var versionSuffix = "?v=" + version;
 	var maxPage = 604;
 		
