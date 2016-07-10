@@ -1038,9 +1038,12 @@ var QuranApp = (function($) {
         jQueryMobileHack();
     }
     
-    $(window).scroll(function(){
-        hideAllTooltips();
-    })
+	$(document).ready(function(){
+		$(window).on("scroll", function(){
+        	hideAllTooltips();
+    	});
+	})
+    
 	
 	/**************************************
 	*	
