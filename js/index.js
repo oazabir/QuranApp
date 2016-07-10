@@ -1044,7 +1044,7 @@ var QuranApp = (function($) {
 		$(window).on("scroll", function(){
 			window.scrolling = true;
 			+function(){ window.scrolling = false; }.delay(2000);
-        	hideAllTooltips();
+        	hideAllTooltips.delay(1000);
     	});
 	})
     
