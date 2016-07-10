@@ -190,6 +190,8 @@ var QuranApp = (function($) {
 	                hideOnClick: true,
 					delay: 1000,
 					functionBefore: function(instance, helper) {
+						if (window.scrolling) return false;
+						
 						var sura = $(helper.origin).attr("sura");
 						var ayah = $(helper.origin).attr("ayah");
 						var word = $(helper.origin).attr("word");
@@ -1040,6 +1042,8 @@ var QuranApp = (function($) {
     
 	$(document).ready(function(){
 		$(window).on("scroll", function(){
+			window.scrolling = true;
+			+function(){ window.scrolling = false; }.delay(1000);
         	hideAllTooltips();
     	});
 	})
