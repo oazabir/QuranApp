@@ -188,6 +188,7 @@ var QuranApp = (function($) {
 	                contentAsHTML: true,
 	                interactive: true,
 	                hideOnClick: true,
+					delay: 1000,
 					functionBefore: function(instance, helper) {
 						var sura = $(helper.origin).attr("sura");
 						var ayah = $(helper.origin).attr("ayah");
