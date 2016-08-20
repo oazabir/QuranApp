@@ -189,12 +189,8 @@ var QuranApp = (function($) {
 	                interactive: true,
 	                hideOnClick: true,
 					delay: 1000,
-					functionReady: function(instance, helper) {
-						if (window.scrolling) return false;
-					},
 					functionBefore: function(instance, helper) {
-						if (window.scrolling) return false;
-
+					
 						var sura = $(helper.origin).attr("sura");
 						var ayah = $(helper.origin).attr("ayah");
 						var word = $(helper.origin).attr("word");
@@ -1043,13 +1039,11 @@ var QuranApp = (function($) {
         jQueryMobileHack();
     }
     
-	$(document).ready(function(){
+	/*$(document).ready(function(){
 		$(window).on("scroll", function(){
-			window.scrolling = true;
-			+function(){ window.scrolling = false; }.delay(2000);
-        	hideAllTooltips.delay(1000);
+			hideAllTooltips();
     	});
-	})
+	})*/
     
 	
 	/**************************************
