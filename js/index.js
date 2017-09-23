@@ -79,7 +79,7 @@ var QuranApp = (function($) {
 	        var template = '<style type="text/css"> \
 						@font-face { \
 						 font-family: "page{pageStr}"; \
-						 src: url("/data/fonts/QCF_P{pageStr}.woff") format("woff"); \
+						 src: url("data/fonts/QCF_P{pageStr}.woff") format("woff"); \
 						 font-weight: normal; \
 						 font-style: normal; \
 						} \
