@@ -5,7 +5,7 @@ Mobile friendly Quran Reader web site.
 
 ## Demo
 
-http://quranapp.omaralzabir.com
+https://oazabir.github.io/QuranApp/
 
 ## Features
 
